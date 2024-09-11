@@ -4,21 +4,24 @@ import './App.css'
 
 import Header from "./componets/Header"
 import Login from './componets/Login'
-import LoginForm from './componets/LoginForm'
-import SignUpForm from './componets/SignUpForm'
+
 import SignUp from './componets/SignUp'
+import { Route, Routes } from 'react-router-dom'
 
 
 
 function App() {
   return (
     <>
-      <Header></Header>
+      <Header />
+      <Routes>
+        <Route path='/' element={<Header />} />
 
-      <Login />
 
+        <Route path='/login' element={<Login />} />
+        <Route path='/signup' element={<SignUp />} />
 
-
+      </Routes>
     </>
   )
 }

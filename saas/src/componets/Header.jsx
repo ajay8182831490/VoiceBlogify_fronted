@@ -53,7 +53,7 @@ export default function Header() {
                             <div className="hidden sm:ml-6 sm:block">
                                 <div className="flex space-x-4">
                                     <a
-                                        href="#login"
+                                        href="/login"
                                         className="bg-gray-800 text-white rounded-md px-3 py-2 text-sm font-medium hover:bg-gray-700 hover:text-white"
                                     >
                                         Pricing
@@ -109,7 +109,7 @@ export default function Header() {
                                 <div className="hidden sm:ml-6 sm:block">
                                     <div className="flex space-x-4">
                                         <a
-                                            href="#login"
+                                            href="/logout"
                                             className="bg-red-500 text-white rounded-md px-3 py-2 text-sm font-medium hover:bg-gray-700 hover:text-white"
                                         >
                                             LogOut
@@ -122,7 +122,7 @@ export default function Header() {
                             <div className="hidden sm:ml-6 sm:block">
                                 <div className="flex space-x-4">
                                     <a
-                                        href="#login"
+                                        href="/login"
                                         className="bg-gray-800 text-white rounded-md px-3 py-2 text-sm font-medium hover:bg-gray-700 hover:text-white"
                                     >
                                         Login
