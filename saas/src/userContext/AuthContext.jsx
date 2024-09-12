@@ -1,39 +1,38 @@
 import { useState, createContext, useEffect } from "react";
 
-
-
 const AuthContext = createContext();
 
-
 export function AuthProvider({ children }) {
-    const [isAuthenticated, setIsAuthenticated] = useState(false)
-    const [user, setUser] = useState(null);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [user, setUser] = useState();
 
-    useEffect((effect) => {
+    useEffect(() => {
+        async function checkAuth() {
+            try {
+                const response = await fetch('http://localhost:4000/status', {
+                    credentials: 'include'
+                });
+                const data = await response.json();
+                console.log(data)
 
-        try {
-            async function checkAuth() {
-                try {
-                    const response = await fetch('http://localhost:4000/status');
-                    const data = await response.json();
-                    if (data.isAuthenticated) {
-                        setIsAuthenticated(true);
-                        setUser(data.user);
-                    }
-                } catch (error) {
-                    console.error('Error checking auth:', error);
+                if (data.isAuthenticated) {
+                    setIsAuthenticated(true);
+                    setUser({ name: data.name, profilepicurl: data.profilepic, UserId: data.id })
+
                 }
+            } catch (error) {
+                console.error('Error checking auth:', error);
             }
-            checkAuth();
-        } catch (error) {
-            console.error('Error checking auth:', error);
         }
-    }, [])
+
+        checkAuth();
+    }, []);
+
+    return (
+        <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated, user, setUser }}>
+            {children}
+        </AuthContext.Provider>
+    );
 }
 
-
-return (
-    <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated, user, setUser }}>
-        {children}
-    </AuthContext.Provider>
-);
+export default AuthContext;

@@ -7,6 +7,8 @@ import Login from './componets/Login'
 
 import SignUp from './componets/SignUp'
 import { Route, Routes } from 'react-router-dom'
+import ResetPassword from './componets/ResetPassword'
+import ResetPassword1 from './componets/Reset'
 
 
 
@@ -20,6 +22,7 @@ function App() {
 
         <Route path='/login' element={<Login />} />
         <Route path='/signup' element={<SignUp />} />
+        <Route path='/resetPassword' element={<ResetPassword1 />} />
 
       </Routes>
     </>
