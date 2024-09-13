@@ -9,6 +9,7 @@ import SignUp from './componets/SignUp'
 import { Route, Routes } from 'react-router-dom'
 import ResetPassword from './componets/ResetPassword'
 import ResetPassword1 from './componets/Reset'
+import LandingPage from './componets/LandingPage'
 
 
 
@@ -16,8 +17,10 @@ function App() {
   return (
     <>
       <Header />
+      <LandingPage />
+
       <Routes>
-        <Route path='/' element={<Header />} />
+
 
 
         <Route path='/login' element={<Login />} />
