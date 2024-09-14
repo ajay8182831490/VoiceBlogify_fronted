@@ -1,6 +1,9 @@
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { useState } from 'react'
+import { useAuth } from '@/userContext/AuthContext'
+import { useNavigation } from 'react-router-dom'
+import profilepng from '../assets/profile.png'
 
 
 const navigation = [
@@ -16,8 +19,11 @@ function classNames(...classes) {
 
 export default function Header() {
 
-    const [isLogged, setIslogged] = useState(false)
-    const [isPaidMember, setIsPaidMember] = useState(false)
+    // // const [isLogged, setIslogged] = useState(false)
+    // const [isPaidMember, setIsPaidMember] = useState(false)
+
+    const { handleLogout, isAuthenticated, isPaid, user } = useAuth();
+
 
     return (
         <Disclosure as="nav" className="bg-gray-800 sticky top-0 z-50">
@@ -58,16 +64,16 @@ export default function Header() {
                         </div>
                     </div>
                     <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                        {isLogged ? (
+                        {isAuthenticated ? (
                             <>
                                 <Menu as="div" className="relative ml-3">
                                     <div>
-                                        <MenuButton className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                                        <MenuButton className="relative flex items-center justify-center w-10 h-10 rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                                             <span className="sr-only">Open user menu</span>
                                             <img
                                                 alt="User"
-                                                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                                className="h-8 w-8 rounded-full"
+                                                src={user && user.profilepicurl || profilepng}
+                                                className="w-full h-full object-cover rounded-full" // Ensure the image is round and covers the container
                                                 onError={() => {
                                                     const parent = document.querySelector('.parent-element'); // Ensure you apply this to the parent
                                                     if (parent) {
@@ -76,23 +82,32 @@ export default function Header() {
                                                 }}
                                             />
                                         </MenuButton>
+
                                     </div>
                                     <MenuItems
                                         transition
                                         className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
                                     >
                                         <MenuItem>
-                                            <a href="#profile" className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100">
+                                            <a href="/user" className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100">
                                                 Your Profile
                                             </a>
                                         </MenuItem>
                                         <MenuItem>
-                                            <a href="#settings" className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100">
+                                            <a href="/setting" className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100">
                                                 Settings
                                             </a>
                                         </MenuItem>
                                         <MenuItem>
-                                            <a href="#logout" className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100">
+                                            <a
+                                                href="#"
+                                                className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+                                                onClick={async (e) => {
+                                                    e.preventDefault();
+                                                    await handleLogout();
+
+                                                }}
+                                            >
                                                 Log Out
                                             </a>
                                         </MenuItem>
@@ -100,12 +115,27 @@ export default function Header() {
                                 </Menu>
                                 <div className="hidden sm:ml-6 sm:block">
                                     <div className="flex space-x-4">
+
+                                        {!isPaid && (
+                                            <a
+                                                href="/main"
+                                                className="bg-green-500 text-white rounded-xl px-3 py-2 text-sm font-medium hover:bg-green-700"
+                                            >
+                                                Start Free
+                                            </a>
+                                        )}
                                         <a
-                                            href="#logout"
+                                            href="#"
                                             className="bg-red-500 text-white rounded-md px-3 py-2 text-sm font-medium hover:bg-red-700"
+                                            onClick={async (e) => {
+                                                e.preventDefault();
+                                                await handleLogout();
+
+                                            }}
                                         >
                                             Log Out
                                         </a>
+
                                     </div>
                                 </div>
                             </>
@@ -113,14 +143,14 @@ export default function Header() {
                             <div className="hidden sm:ml-6 sm:block">
                                 <div className="flex space-x-4">
                                     <a
-                                        href="#login"
+                                        href="/login"
                                         className="bg-gray-800 text-white rounded-md px-3 py-2 text-sm font-medium hover:bg-gray-700"
                                     >
                                         Login
                                     </a>
-                                    {!isPaidMember && (
+                                    {!isPaid && (
                                         <a
-                                            href="#start-free"
+                                            href="/main"
                                             className="bg-green-500 text-white rounded-xl px-3 py-2 text-sm font-medium hover:bg-green-700"
                                         >
                                             Start Free
@@ -149,25 +179,29 @@ export default function Header() {
                             {item.name}
                         </DisclosureButton>
                     ))}
-                    {isLogged ? (
+                    {isAuthenticated ? (
                         <>
-                            <DisclosureButton as="a" href="#profile" className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">
+                            <DisclosureButton as="a" href="/user" className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">
                                 Your Profile
                             </DisclosureButton>
-                            <DisclosureButton as="a" href="#settings" className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">
+                            <DisclosureButton as="a" href="/setting" className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">
                                 Settings
                             </DisclosureButton>
-                            <DisclosureButton as="a" href="#logout" className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">
+                            <DisclosureButton as="a" href="/#" className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white" onClick={async (e) => {
+                                e.preventDefault();
+                                await handleLogout();
+
+                            }}>
                                 Log Out
                             </DisclosureButton>
                         </>
                     ) : (
                         <>
-                            <DisclosureButton as="a" href="#login" className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">
+                            <DisclosureButton as="a" href="/login" className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">
                                 Login
                             </DisclosureButton>
-                            {!isPaidMember && (
-                                <DisclosureButton as="a" href="#start-free" className="block rounded-md px-3 py-2 text-base font-medium text-white bg-green-500 hover:bg-green-700">
+                            {!isPaid && (
+                                <DisclosureButton as="a" href="/main" className="block rounded-md px-3 py-2 text-base font-medium text-white bg-green-500 hover:bg-green-700">
                                     Start Free
                                 </DisclosureButton>
                             )}

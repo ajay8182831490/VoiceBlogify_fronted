@@ -9,8 +9,8 @@ export default function Login() {
         <div className="flex w-screen flex-wrap text-slate-800">
             <FeaturePanel />
             <LoginForm />
-            <ResetPassword />
-            <OtpPage />
+            {/* <ResetPassword />
+            <OtpPage /> */}
         </div>
     );
 }

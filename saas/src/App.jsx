@@ -10,24 +10,26 @@ import { Route, Routes } from 'react-router-dom'
 import ResetPassword from './componets/ResetPassword'
 import ResetPassword1 from './componets/Reset'
 import LandingPage from './componets/LandingPage'
-
+import MyAudioRecordingComponent from './componets/AudioRecorder'
 
 
 function App() {
   return (
     <>
       <Header />
-      <LandingPage />
-
-      <Routes>
+      <MyAudioRecordingComponent />
 
 
+      {/* <Routes>
 
+
+
+        //<Route path='/' element={<LandingPage />} />
         <Route path='/login' element={<Login />} />
         <Route path='/signup' element={<SignUp />} />
         <Route path='/resetPassword' element={<ResetPassword1 />} />
 
-      </Routes>
+      </Routes> */}
     </>
   )
 }

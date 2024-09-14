@@ -1,6 +1,7 @@
 import { Trophy } from 'lucide-react';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '@/userContext/AuthContext';
 
 
 export default function SignUpForm() {
@@ -37,7 +38,13 @@ export function GoogleButton() {
                 <path fill="#3c79e6" d="M512 256a258.24 258.24 0 0 0-4.192-46.377l-2.251-12.299H256v120h121.452a135.385 135.385 0 0 1-51.884 55.638l86.216 86.216a260.085 260.085 0 0 0 25.235-22.158C485.371 388.667 512 324.38 512 256z" />
                 <path fill="#cf2d48" d="m352.167 159.833 10.606 10.606 84.853-84.852-10.606-10.606C388.668 26.629 324.381 0 256 0l-60 60 60 60c36.326 0 70.479 14.146 96.167 39.833z" />
                 <path fill="#eb4132" d="M256 120V0C187.62 0 123.333 26.629 74.98 74.98a259.849 259.849 0 0 0-22.158 25.235l86.308 86.308C162.883 146.72 206.376 120 256 120z" />
-                <line strokeWidth="2" stroke="black" />
+                <path
+                    d="M10 10 H 90 V 90 H 10 L 10 10"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    stroke="black"
+                />
             </svg>
             Get started with Google
         </button>
@@ -59,6 +66,8 @@ function LoginForm1() {
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
+
+    const { setIsAuthenticated, setUser } = useAuth();
 
     const handleSubmitForm = async (e) => {
         e.preventDefault();
@@ -84,13 +93,21 @@ function LoginForm1() {
                 // Otherwise, treat it as plain text
                 data = await response.text();
             }
-            if (data.ok) {
+
+            console.log("login", data);
+            if (data.authenticated) {
                 alert('account created succesfully');
+                setIsAuthenticated(true);
+                setUser({
+                    name: data.user.name,
+                    userId: data.user.id,
+
+                });
                 navigate('/');
             }
             else {
-                alert("something error");
-                navigate('/signup')
+                alert("user already exist")
+                navigate('/login')
             }
         } catch (error) {
             console.log('Error occurred during registration', error);
