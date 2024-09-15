@@ -1,11 +1,13 @@
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
+import { useLocation } from 'react-router-dom'
 
 import { useAuth } from '@/userContext/AuthContext'
 
 import profilepng from '../assets/profile.png'
 
 import { Notify } from './NotifyToast.jsx'
+import { useEffect } from 'react'
 
 
 const navigation = [
@@ -20,6 +22,15 @@ function classNames(...classes) {
 }
 
 export default function Header() {
+
+    const location = useLocation();
+    useEffect((effect => {
+        const queryParams = new URLSearchParams(location.search);
+        if (queryParams.get('login') === 'success') {
+            Notify('Login successful with Google!');
+            // Optionally use a more user-friendly notification library here
+        }
+    }), [location])
 
     // // const [isLogged, setIslogged] = useState(false)
     // const [isPaidMember, setIsPaidMember] = useState(false)
@@ -46,7 +57,7 @@ export default function Header() {
                                 src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
                                 className="h-8 w-auto"
                             /> */}
-                            <h1 className="text-white text-xl font-semibold ml-2">VoiceBlogify</h1> {/* Project Name */}
+                            <h1 className="text-white text-xl font-semibold ml-2"> <a href="/">VoiceBlogify</a></h1> {/* Project Name */}
                         </div>
                         <div className="hidden sm:ml-6 sm:block">
                             <div className="flex space-x-4">

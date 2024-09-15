@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { SubmitButton } from "./SignUpForm";
 import { useNavigate } from "react-router-dom";
-
+import { Notify, NotifyFalse } from './NotifyToast.jsx'
 export default function ResetPassword1() {
     const [email, setEmail] = useState("");
     const [otp, setOtp] = useState("");
@@ -27,11 +27,15 @@ export default function ResetPassword1() {
                 setMessage("OTP has been sent to your email.");
                 setStep(2); // Move to the next step (OTP entry)
                 setSendOtp(true);
+                Notify("OTP has been sent to your email")
+
             } else {
                 setMessage(data.message || "Something went wrong, please try again.");
+                NotifyFalse("Something went wrong, please try again")
             }
         } catch (error) {
             setMessage("An error occurred. Please try again.");
+            NotifyFalse("Something went wrong, please try again")
         }
     };
 
@@ -49,11 +53,14 @@ export default function ResetPassword1() {
             if (response.ok) {
                 setMessage("OTP has been resent to your email.");
                 setSendOtp(true);
+                NotifyFalse("OTP has been resent to your email.")
             } else {
                 setMessage(data.message || "Failed to resend OTP. Please try again.");
+                NotifyFalse("Failed to resend OTP. Please try again.")
             }
         } catch (error) {
             setMessage("An error occurred while resending the OTP. Please try again.");
+            NotifyFalse("Failed to resend OTP. Please try again.")
         }
     };
 
@@ -71,12 +78,15 @@ export default function ResetPassword1() {
             const data = await response.json();
             if (response.ok) {
                 setMessage("Password has been reset successfully!");
+                Notify("Password has been reset successfully!")
                 navigate('/login');
             } else {
                 setMessage(data.message || "Invalid OTP or something went wrong.");
+                NotifyFalse("Invalid OTP or something went wrong.")
             }
         } catch (error) {
             setMessage("An error occurred. Please try again.");
+
         }
     };
 

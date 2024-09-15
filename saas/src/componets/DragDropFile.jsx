@@ -1,9 +1,10 @@
-import React, { useCallback, useRef, useEffect, useState } from 'react';
+import React, { useCallback, useState, useRef, useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { motion } from 'framer-motion';
 import WaveSurfer from 'wavesurfer.js';
 
 const AudioDropzone = ({ onFileUploaded }) => {
+    const [uploadedFile, setUploadedFile] = useState(null);
     const [errorMessage, setErrorMessage] = useState('');
     const [audioUrl, setAudioUrl] = useState('');
     const [duration, setDuration] = useState(null);
@@ -12,12 +13,15 @@ const AudioDropzone = ({ onFileUploaded }) => {
 
     const onDrop = useCallback((acceptedFiles) => {
         setErrorMessage('');
+        setUploadedFile(null);
         setAudioUrl('');
         setDuration(null);
 
         const file = acceptedFiles[0];
 
         if (file && file.type.startsWith('audio/')) {
+            setUploadedFile(file);
+
             const url = URL.createObjectURL(file);
             setAudioUrl(url);
 
@@ -52,6 +56,7 @@ const AudioDropzone = ({ onFileUploaded }) => {
     }, [onFileUploaded]);
 
     useEffect(() => {
+        // Cleanup WaveSurfer instance on component unmount
         return () => {
             if (wavesurfer.current) {
                 wavesurfer.current.destroy();
@@ -67,7 +72,7 @@ const AudioDropzone = ({ onFileUploaded }) => {
 
     return (
         <motion.div
-            className="w-full max-w-lg mx-auto p-6 border-2 border-dashed rounded-lg flex flex-col justify-center items-center text-center cursor-pointer transition-colors bg-gray-100 "
+            className="w-full max-w-lg mx-auto p-6 border-2 border-dashed rounded-lg flex flex-col justify-center items-center text-center cursor-pointer transition-colors"
             animate={{ scale: isDragActive ? 1.05 : 1 }}
             transition={{ duration: 0.3 }}
         >
@@ -94,7 +99,25 @@ const AudioDropzone = ({ onFileUploaded }) => {
                 </motion.div>
             )}
 
-
+            {uploadedFile && (
+                <div className="mt-4 w-full text-left">
+                    {audioUrl && (
+                        <div className="mt-4">
+                            <h4 className="text-lg font-semibold">Playback:</h4>
+                            <audio controls className="w-full mt-2">
+                                <source src={audioUrl} type={uploadedFile.type} />
+                                Your browser does not support the audio element.
+                            </audio>
+                            <div ref={waveformRef} className="mt-4"></div>
+                            {duration && (
+                                <div className="mt-2 text-gray-700">
+                                    <strong>Duration:</strong> {Math.round(duration)} seconds
+                                </div>
+                            )}
+                        </div>
+                    )}
+                </div>
+            )}
         </motion.div>
     );
 };

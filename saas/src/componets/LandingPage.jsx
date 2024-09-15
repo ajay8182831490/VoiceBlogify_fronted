@@ -36,7 +36,7 @@ export default function LandingPage() {
                     transition={{ duration: 0.8, delay: 0.6 }}
                     whileHover={{ scale: 1.1 }}
                 >
-                    <Link to="/get-started" className="mt-4 inline-block bg-gradient-to-r from-purple-600 to-indigo-600 text-white text-lg font-medium py-3 px-10 rounded-full shadow-lg hover:from-indigo-500 hover:to-purple-500 transition-transform transform hover:scale-105">
+                    <Link to="/main" className="mt-4 inline-block bg-gradient-to-r from-purple-600 to-indigo-600 text-white text-lg font-medium py-3 px-10 rounded-full shadow-lg hover:from-indigo-500 hover:to-purple-500 transition-transform transform hover:scale-105">
                         Get Started
                     </Link>
                 </motion.div>
@@ -139,7 +139,7 @@ export default function LandingPage() {
                     <p className="text-lg text-gray-600 max-w-3xl mx-auto mb-10">
                         It's perfect for personal blogs, tech updates, or marketing content – tailor your message and let us transform it into a captivating blog post with ease.
                     </p>
-                    <Link to="/get-started" className="bg-indigo-600 text-white font-medium py-3 px-8 rounded-full shadow-lg hover:bg-indigo-500 transition-transform transform hover:scale-105">
+                    <Link to="/main" className="bg-indigo-600 text-white font-medium py-3 px-8 rounded-full shadow-lg hover:bg-indigo-500 transition-transform transform hover:scale-105">
                         Start Recording Now
                     </Link>
                 </div>
@@ -158,7 +158,7 @@ export default function LandingPage() {
                         With VoiceBlogify, content creation has never been easier. Start for free and see how your audio can transform into captivating blog posts.
                     </p>
                     <motion.div whileHover={{ scale: 1.1 }}>
-                        <Link to="/get-started" className="bg-white text-indigo-600 font-medium py-3 px-8 rounded-full shadow-lg hover:bg-indigo-100 transition-transform transform hover:scale-105">
+                        <Link to="/main" className="bg-white text-indigo-600 font-medium py-3 px-8 rounded-full shadow-lg hover:bg-indigo-100 transition-transform transform hover:scale-105">
                             Start Free Trial
                         </Link>
                     </motion.div>
