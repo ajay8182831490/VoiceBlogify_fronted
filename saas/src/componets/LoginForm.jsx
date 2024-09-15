@@ -1,9 +1,11 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { InputField, SubmitButton } from './SignUpForm';
 
-import { userContext } from '@/userContext/UserContext';
-import { Navigate, useNavigate } from 'react-router-dom';
+
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/userContext/AuthContext';
+
+import { Notify, NotifyFalse } from './NotifyToast.jsx'
 
 export default function LoginForm() {
     return (
@@ -31,7 +33,8 @@ export default function LoginForm() {
 
 export function GoogleButton() {
     return (
-        <button className="-2 mt-8 flex items-center justify-center rounded-md border px-4 py-1 outline-none ring-gray-400 ring-offset-2 transition hover:border-transparent hover:bg-black hover:text-white focus:ring-2" onClick={() => window.location.href = 'http://localhost:4000/auth/google'}>
+        <button className="-2 mt-8 flex items-center justify-center rounded-md border px-4 py-1 outline-none ring-gray-400 ring-offset-2 transition hover:border-transparent hover:bg-black hover:text-white focus:ring-2" onClick={() => window.location.href = 'http://localhost:4000/auth/google'
+        }>
             <svg xmlns="http://www.w3.org/2000/svg" width="32px" viewBox="0 0 512 512">
                 <path fill="#fbbd00" d="M120 256c0-25.367 6.989-49.13 19.131-69.477v-86.308H52.823C18.568 144.703 0 198.922 0 256s18.568 111.297 52.823 155.785h86.308v-86.308C126.989 305.13 120 281.367 120 256z" />
                 <path fill="#0f9d58" d="m256 392-60 60 60 60c57.079 0 111.297-18.568 155.785-52.823v-86.216h-86.216C305.044 385.147 281.181 392 256 392z" />
@@ -70,6 +73,7 @@ export function LoginForm1() {
 
 
 
+
     const [email, setEmail] = useState(null)
     const [password, setPassword] = useState(null);
 
@@ -86,6 +90,8 @@ export function LoginForm1() {
             })
             const data = await response.json()
 
+            console.log(data)
+
 
             if (response.ok) {
                 alert("succesfully logged");
@@ -95,10 +101,11 @@ export function LoginForm1() {
                     profilepicurl: data.profilepic,
                     userId: data.id
                 });
+                Notify('You have successfully loggedIn')
                 navigate('/')
             }
             else {
-                alert("EITHER EMAIL OR PASSWORFD ERROR");
+                NotifyFalse(data.message)
                 navigate('/login')
             }
         } catch (error) {

@@ -17,19 +17,21 @@ function App() {
   return (
     <>
       <Header />
-      <MyAudioRecordingComponent />
-
-
-      {/* <Routes>
 
 
 
-        //<Route path='/' element={<LandingPage />} />
+      <Routes>
+
+
+
+        <Route path='/' element={<LandingPage />} />
         <Route path='/login' element={<Login />} />
+        <Route path='/main' element={<MyAudioRecordingComponent />} />
+
         <Route path='/signup' element={<SignUp />} />
         <Route path='/resetPassword' element={<ResetPassword1 />} />
 
-      </Routes> */}
+      </Routes>
     </>
   )
 }

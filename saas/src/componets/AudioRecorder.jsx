@@ -10,7 +10,7 @@ const MyAudioRecordingComponent = () => {
         isRecording,
         isPaused,
         recordingTime,
-        mediaRecorder
+        mediaRecorder, showVisualizer
     } = useAudioRecorder();
 
     const [isDiscardModalOpen, setIsDiscardModalOpen] = useState(false);
@@ -54,13 +54,12 @@ const MyAudioRecordingComponent = () => {
 
                 <AudioRecorder
                     recorderControls={{
-                        startRecording,
-                        stopRecording,
-                        togglePauseResume,
+
                         isRecording,
                         isPaused,
                         recordingBlob
                     }}
+
                     audioTrackConstraints={{
                         noiseSuppression: true,
                         echoCancellation: true,

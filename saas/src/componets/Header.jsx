@@ -1,9 +1,11 @@
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
-import { useState } from 'react'
+
 import { useAuth } from '@/userContext/AuthContext'
-import { useNavigation } from 'react-router-dom'
+
 import profilepng from '../assets/profile.png'
+
+import { Notify } from './NotifyToast.jsx'
 
 
 const navigation = [
@@ -106,6 +108,10 @@ export default function Header() {
                                                     e.preventDefault();
                                                     await handleLogout();
 
+
+                                                    Notify("You have logged out successfully")
+
+
                                                 }}
                                             >
                                                 Log Out
@@ -130,6 +136,7 @@ export default function Header() {
                                             onClick={async (e) => {
                                                 e.preventDefault();
                                                 await handleLogout();
+                                                Notify("You have logged out successfully")
 
                                             }}
                                         >
@@ -190,6 +197,8 @@ export default function Header() {
                             <DisclosureButton as="a" href="/#" className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white" onClick={async (e) => {
                                 e.preventDefault();
                                 await handleLogout();
+                                Notify("You have logged out successfully")
+
 
                             }}>
                                 Log Out
