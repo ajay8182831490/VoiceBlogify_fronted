@@ -67,7 +67,7 @@ const AudioDropzone = ({ onFileUploaded }) => {
 
     return (
         <motion.div
-            className="w-full max-w-lg mx-auto p-6 border-2 border-dashed rounded-lg flex flex-col justify-center items-center text-center cursor-pointer transition-colors bg-gray-100 "
+            className="w-full max-w-lg mx-auto p-6 border-2 border-dashed rounded-lg flex flex-col justify-center items-center text-center cursor-pointer transition-colors bg-gray-400 "
             animate={{ scale: isDragActive ? 1.05 : 1 }}
             transition={{ duration: 0.3 }}
         >

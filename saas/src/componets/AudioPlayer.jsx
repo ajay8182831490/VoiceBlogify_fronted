@@ -8,8 +8,7 @@ const AudioPlayer = ({ file }) => {
     const mediaUrl = URL.createObjectURL(file);
 
     return (
-        <div className="mt-4 w-full text-left bg-gray-50 p-4 rounded-lg shadow-lg">
-
+        <div className="mt-4 w-full text-left bg-gray-50 p-4 rounded-lg shadow-lg max-w-lg mx-auto">
             {file.type.startsWith('audio/') ? (
                 <audio controls className="w-full mt-2">
                     <source src={mediaUrl} type={file.type} />

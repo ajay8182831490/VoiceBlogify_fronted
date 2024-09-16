@@ -1,15 +1,12 @@
-import React, { useCallback, useState, useRef, useEffect } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { motion } from 'framer-motion';
-import WaveSurfer from 'wavesurfer.js';
 
 const AudioDropzone = ({ onFileUploaded }) => {
     const [uploadedFile, setUploadedFile] = useState(null);
     const [errorMessage, setErrorMessage] = useState('');
     const [audioUrl, setAudioUrl] = useState('');
     const [duration, setDuration] = useState(null);
-    const waveformRef = useRef(null);
-    const wavesurfer = useRef(null);
 
     const onDrop = useCallback((acceptedFiles) => {
         setErrorMessage('');
@@ -35,38 +32,16 @@ const AudioDropzone = ({ onFileUploaded }) => {
             audio.onloadedmetadata = () => {
                 setDuration(audio.duration);
             };
-
-            // Initialize WaveSurfer.js
-            if (wavesurfer.current) {
-                wavesurfer.current.load(url);
-            } else {
-                wavesurfer.current = WaveSurfer.create({
-                    container: waveformRef.current,
-                    waveColor: '#ddd',
-                    progressColor: '#4A90E2',
-                    height: 100,
-                    barWidth: 2,
-                    barRadius: 3,
-                });
-                wavesurfer.current.load(url);
-            }
         } else {
             setErrorMessage('Please upload a valid audio file (e.g., .mp3, .wav).');
         }
     }, [onFileUploaded]);
 
-    useEffect(() => {
-        // Cleanup WaveSurfer instance on component unmount
-        return () => {
-            if (wavesurfer.current) {
-                wavesurfer.current.destroy();
-            }
-        };
-    }, []);
-
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         onDrop,
-        accept: 'audio/*',
+        accept: {
+            'audio/*': ['.mp3', '.wav', '.ogg', '.aac', '.m4a', '.flac'],
+        },
         multiple: false,
     });
 
@@ -108,7 +83,6 @@ const AudioDropzone = ({ onFileUploaded }) => {
                                 <source src={audioUrl} type={uploadedFile.type} />
                                 Your browser does not support the audio element.
                             </audio>
-                            <div ref={waveformRef} className="mt-4"></div>
                             {duration && (
                                 <div className="mt-2 text-gray-700">
                                     <strong>Duration:</strong> {Math.round(duration)} seconds

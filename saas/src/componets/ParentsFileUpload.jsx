@@ -10,7 +10,7 @@ const ParentComponent = () => {
     };
 
     return (
-        <div className="p-6 bg-gray-200 ">
+        <div className="p-6 bg-gray-100  ">
 
             <AudioDropzone onFileUploaded={handleFileUploaded} />
             {uploadedFile && <AudioPlayer file={uploadedFile} />}
