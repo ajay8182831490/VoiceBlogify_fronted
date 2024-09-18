@@ -1,12 +1,15 @@
 import React, { useCallback, useRef, useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { motion } from 'framer-motion';
+import { Navigate, useNavigate } from 'react-router-dom';
+const Url = "http://localhost:4000"
 
 const AudioDropzone = ({ onFileUploaded }) => {
     const [audioUrl, setAudioUrl] = useState('');  // Define audioUrl and setter
     const [duration, setDuration] = useState(null);  // Define duration and setter
     const [selectedFile, setSelectedFile] = useState(null);  // Define selectedFile to store the uploaded file
     const [errorMessage, setErrorMessage] = useState('');
+    const navigate = useNavigate();
 
     const onDrop = useCallback((acceptedFiles) => {
         setErrorMessage('');
@@ -37,23 +40,38 @@ const AudioDropzone = ({ onFileUploaded }) => {
         }
     }, [onFileUploaded]);
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if (!selectedFile) {
             setErrorMessage('No file selected for processing.');
             return;
         }
 
-        // Process the audio file (e.g., upload to a server)
-        console.log('Processing audio file:', selectedFile);
+        // Create FormData to send the audio file to the backend
+        const formData = new FormData();
+        formData.append('audio', selectedFile);
 
-        // Add your logic for processing the audio file here.
-        // Example: API call to process the audio
+        try {
+            const response = await fetch(`${Url}/transcription/audioRecord`, {
+                method: 'POST',
+                body: formData,
+                credentials: 'include', // If you're handling authentication
+            });
+
+            if (response.ok) {
+                // If the response is successful (status 200–299), navigate to the loading page
+                navigate('/loading');
+            } else {
+                // If response is not ok, throw an error
+                const errorMessage = await response.text(); // Optional: Retrieve the error message from the response body
+                throw new Error(`Failed to upload the audio file: ${errorMessage}`);
+            }
+        } catch (error) {
+            console.error(error); // Log the actual error for debugging
+            setErrorMessage('There was an issue uploading the audio file.');
+        }
     };
-    const formatDuration = (duration) => {
-        const minutes = Math.floor(duration / 60);
-        const seconds = Math.floor(duration % 60);
-        return `${minutes}:${seconds.toString().padStart(2, '0')}`;
-    };
+
+
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         onDrop,
         accept: {
@@ -98,7 +116,7 @@ const AudioDropzone = ({ onFileUploaded }) => {
             {audioUrl && (
                 <div className="mt-4">
                     <audio controls src={audioUrl} />
-                    {duration && <p>Duration: {formatDuration(duration)}</p>}
+
                 </div>
             )}
             {audioUrl && (

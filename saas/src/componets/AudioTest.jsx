@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { MicrophoneIcon, PauseIcon, PlayIcon, StopIcon, ArrowPathIcon, ArrowDownTrayIcon } from '@heroicons/react/24/outline';
-
+const Url = "http://localhost:4000";
 export default function MyAudioRecordingComponent() {
     const [isRecording, setIsRecording] = useState(false);
     const [isPaused, setIsPaused] = useState(false);
@@ -88,11 +88,15 @@ export default function MyAudioRecordingComponent() {
         const formData = new FormData();
         formData.append('audio', audioBlob, 'recording.wav');
 
+        alert("audio file upload")
+
         try {
-            await fetch('/api/upload-audio', {
+            const response = await fetch(`${Url}/transcription/audioRecord`, {
                 method: 'POST',
+                credentials: 'include',
                 body: formData,
             });
+            console.log(response)
             handleReset();
         } catch (error) {
             console.error('Error uploading audio:', error);

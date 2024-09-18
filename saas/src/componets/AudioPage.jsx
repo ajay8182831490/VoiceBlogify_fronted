@@ -5,6 +5,8 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom'; // for navigation
 import MyAudioRecordingComponent from './AudioTest';
 
+const Url = "http://localhost:4000"
+
 export default function AudioPage() {
     const [selectedOption, setSelectedOption] = useState('record');
     const [file, setFile] = useState(null);
@@ -46,12 +48,14 @@ export default function AudioPage() {
     };
 
     const handleUrlSubmit = async (url) => {
-        const response = await fetch('/api/submit-url', {
+
+        console.log(url)
+        const response = await fetch(`${Url}/transcription/url`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ url }),
         });
-
+        console.log(response)
         return await response.json();
     };
 
@@ -59,7 +63,7 @@ export default function AudioPage() {
         const formData = new FormData();
         formData.append('audio', audioData);
 
-        const response = await fetch('/api/upload-recording', {
+        const response = await fetch(`${Url}/transcription/url`, {
             method: 'POST',
             body: formData,
         });

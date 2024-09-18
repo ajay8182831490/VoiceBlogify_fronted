@@ -1,167 +1,237 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { FaMicrophone, FaYoutube, FaFileAudio, FaMedium, FaBlogger, FaLinkedin, FaEdit, FaCode } from 'react-icons/fa';
 
 export default function LandingPage() {
     return (
-        <div className="min-h-screen bg-gradient-to-r from-indigo-50 to-blue-50 flex flex-col justify-center items-center">
+        <div className="min-h-screen bg-gradient-to-r from-indigo-50 to-blue-50 flex flex-col items-center">
             {/* Hero Section */}
             <motion.section
-                className="text-center px-6"
-                style={{ paddingBottom: '2rem', paddingTop: '2rem' }}  // Custom padding
-                initial={{ opacity: 0, y: -50 }}
-                animate={{ opacity: 1, y: 0 }}
+                className="relative w-full bg-gradient-to-r from-blue-500 to-teal-500 text-white py-24 overflow-hidden"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
                 transition={{ duration: 1, ease: "easeOut" }}
             >
-                <motion.h2
-                    className="text-5xl font-bold text-gray-800 mb-4"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.8, delay: 0.2 }}
-                >
-                    Welcome to VoiceBlogify
-                </motion.h2>
-                <motion.p
-                    className="text-lg text-gray-700 mb-8 max-w-2xl mx-auto"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.8, delay: 0.4 }}
-                >
-                    Transform your audio recordings into engaging blog posts effortlessly. Whether it's personal, tech, or product-related, create professional content anytime, anywhere.
-                </motion.p>
-                {/* Centered Get Started Button */}
-                <motion.div
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.8, delay: 0.6 }}
-                    whileHover={{ scale: 1.1 }}
-                >
-                    <Link to="/main" className="mt-4 inline-block bg-gradient-to-r from-purple-600 to-indigo-600 text-white text-lg font-medium py-3 px-10 rounded-full shadow-lg hover:from-indigo-500 hover:to-purple-500 transition-transform transform hover:scale-105">
-                        Get Started
-                    </Link>
-                </motion.div>
+                <div className="absolute inset-0 bg-black opacity-20 z-0"></div>
+                <div className="relative z-10 container mx-auto px-6 text-center">
+                    <motion.h2
+                        className="text-5xl font-bold mb-6"
+                        initial={{ opacity: 0, y: -50 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 1, delay: 0.2 }}
+                    >
+                        Welcome to <span className="text-yellow-300">VoiceBlogify</span>
+                    </motion.h2>
+                    <motion.p
+                        className="text-lg mb-8 max-w-4xl mx-auto"
+                        initial={{ opacity: 0, y: -30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 1, delay: 0.4 }}
+                    >
+                        VoiceBlogify transforms your audio recordings into captivating blog posts effortlessly. Whether you want to share personal insights, tech tutorials, or professional updates, our platform makes content creation simple and efficient.
+                    </motion.p>
+                    <motion.div
+                        className="flex justify-center"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 1, delay: 0.6 }}
+                    >
+                        <Link to="/main" className="bg-gradient-to-r from-yellow-400 to-red-500 text-white font-medium py-3 px-6 rounded-full shadow-lg hover:from-red-400 hover:to-yellow-500 transition-transform transform hover:scale-105">
+                            Get Started
+                        </Link>
+                    </motion.div>
+                </div>
+                <div className="absolute inset-0 flex items-center justify-center">
+                    <svg className="w-full h-full absolute bottom-0 left-0" viewBox="0 0 1440 320" xmlns="http://www.w3.org/2000/svg" fill="#ffffff">
+                        <path fill-opacity="0.3" d="M0,256L1440,320L1440,0L0,0Z"></path>
+                    </svg>
+                </div>
             </motion.section>
 
-
-            {/* Features Section */}
+            {/* Key Features Section */}
             <motion.section
                 className="container mx-auto px-6 py-16"
-                style={{ paddingBottom: '2rem', paddingTop: '2rem' }}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 1, delay: 1.5 }}
             >
-                <div className="mb-6">
-                    <h3 className="text-3xl font-bold text-gray-800 mb-4 text-center">Why Choose VoiceBlogify?</h3>
-                    <p className="text-lg text-gray-600 text-center max-w-3xl mx-auto">
-                        VoiceBlogify allows you to record your voice from anywhere and convert it into professional content. It can be your personal diary, tech blog, or even marketing content for your product – all within minutes.
+                <div className="text-center mb-12">
+                    <h3 className="text-4xl font-bold text-gray-800 mb-4">Key Features</h3>
+                    <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+                        Explore the powerful features that make VoiceBlogify a versatile tool for all your content creation needs.
                     </p>
                 </div>
 
                 <div className="grid md:grid-cols-3 gap-10">
                     <motion.div
-                        className="p-8 bg-white rounded-lg shadow-lg hover:shadow-2xl transition relative overflow-hidden"
+                        className="p-8 bg-white rounded-lg shadow-lg hover:shadow-2xl transition relative overflow-hidden text-center"
                         whileHover={{ scale: 1.05 }}
                     >
-                        <motion.h3
-                            className="text-xl font-semibold text-purple-600 mb-4"
-                            whileHover={{ color: '#5B21B6', rotate: -2, scale: 1.1, transition: { duration: 0.3 } }}
-                        >
-                            Generate HTML & Markdown
-                        </motion.h3>
-                        <motion.p
-                            className="text-gray-600"
-                            whileHover={{ color: '#4F46E5', rotate: 1, scale: 1.05, transition: { duration: 0.3 } }}
-                        >
-                            With a single click, generate HTML and Markdown code from your blog. Copy it with the "Copy" button and paste anywhere you like.
-                        </motion.p>
+                        <FaMicrophone className="text-5xl text-purple-600 mb-4 mx-auto" />
+                        <h4 className="text-xl font-semibold text-gray-800 mb-2">Record</h4>
+                        <p className="text-gray-600">
+                            Capture your thoughts instantly with our recording feature. Speak and let VoiceBlogify transcribe it into a draft.
+                        </p>
                     </motion.div>
                     <motion.div
-                        className="p-8 bg-white rounded-lg shadow-lg hover:shadow-2xl transition relative overflow-hidden"
+                        className="p-8 bg-white rounded-lg shadow-lg hover:shadow-2xl transition relative overflow-hidden text-center"
                         whileHover={{ scale: 1.05 }}
                     >
-                        <motion.h3
-                            className="text-xl font-semibold text-purple-600 mb-4"
-                            whileHover={{ color: '#5B21B6', rotate: -2, scale: 1.1, transition: { duration: 0.3 } }}
-                        >
-                            Share Across Platforms
-                        </motion.h3>
-                        <motion.p
-                            className="text-gray-600"
-                            whileHover={{ color: '#4F46E5', rotate: 1, scale: 1.05, transition: { duration: 0.3 } }}
-                        >
-                            Seamlessly share your content on platforms like LinkedIn and Reddit directly from VoiceBlogify. Expand your reach with a few clicks.
-                        </motion.p>
-                        <motion.div
-                            className="absolute inset-0 bg-gradient-to-r from-yellow-200 to-pink-200 opacity-20 transform scale-110"
-                            whileHover={{ opacity: 0.5, scale: 1.2 }}
-                            transition={{ duration: 0.4 }}
-                        />
+                        <FaYoutube className="text-5xl text-purple-600 mb-4 mx-auto" />
+                        <h4 className="text-xl font-semibold text-gray-800 mb-2">Paste YouTube URL</h4>
+                        <p className="text-gray-600">
+                            Convert YouTube videos into written content by pasting their URLs. Extract and transcribe audio directly.
+                        </p>
                     </motion.div>
-                    {/* New Section: Organize Your Thoughts */}
                     <motion.div
-                        className="p-8 bg-white rounded-lg shadow-lg hover:shadow-2xl transition relative overflow-hidden"
+                        className="p-8 bg-white rounded-lg shadow-lg hover:shadow-2xl transition relative overflow-hidden text-center"
                         whileHover={{ scale: 1.05 }}
                     >
-                        <motion.h3
-                            className="text-xl font-semibold text-purple-600 mb-4"
-                            whileHover={{ color: '#5B21B6', rotate: -2, scale: 1.1, transition: { duration: 0.3 } }}
-                        >
-                            Organize Your Thoughts
-                        </motion.h3>
-                        <motion.p
-                            className="text-gray-600"
-                            whileHover={{ color: '#4F46E5', rotate: 1, scale: 1.05, transition: { duration: 0.3 } }}
-                        >
-                            Convert scattered ideas into structured blog posts. Record your thoughts and let VoiceBlogify help you organize them into polished content.
-                        </motion.p>
-                        <motion.div
-                            className="absolute inset-0 bg-gradient-to-r from-blue-200 to-green-200 opacity-20 transform scale-110"
-                            whileHover={{ opacity: 0.5, scale: 1.2 }}
-                            transition={{ duration: 0.4 }}
-                        />
+                        <FaFileAudio className="text-5xl text-purple-600 mb-4 mx-auto" />
+                        <h4 className="text-xl font-semibold text-gray-800 mb-2">Upload Audio File</h4>
+                        <p className="text-gray-600">
+                            Upload pre-recorded audio files to generate blog posts. Ideal for batch processing or importing existing content.
+                        </p>
                     </motion.div>
                 </div>
             </motion.section>
 
-            {/* Record Anytime, Anywhere Section */}
+            {/* Why Choose VoiceBlogify Section */}
             <motion.section
-                className="bg-blue-50 py-16 px-6"
+                className="bg-gradient-to-r from-green-50 to-teal-50 py-16 px-6"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ duration: 1, delay: 0.6 }}
+                transition={{ duration: 1, delay: 2 }}
             >
                 <div className="container mx-auto text-center">
-                    <h2 className="text-3xl font-bold text-gray-800 mb-4">Anytime, Anywhere</h2>
-                    <p className="text-lg text-gray-600 max-w-3xl mx-auto mb-10">
-                        With VoiceBlogify, you can create your content whenever inspiration strikes. Whether it's from your smartphone on the go, or in front of your desktop at home, we've got you covered. Start recording your voice, and we'll handle the rest.
+                    <h3 className="text-4xl font-bold text-gray-800 mb-6">Why Choose VoiceBlogify?</h3>
+                    <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-8">
+                        At VoiceBlogify, we transform your unorganized thoughts into professional, polished posts. Our AI-driven platform ensures that the content generated is indistinguishable from human-written posts, preserving the natural flow and authenticity of your voice.
                     </p>
-                    <p className="text-lg text-gray-600 max-w-3xl mx-auto mb-10">
-                        It's perfect for personal blogs, tech updates, or marketing content – tailor your message and let us transform it into a captivating blog post with ease.
+                    <ul className="text-left mx-auto max-w-xl">
+                        <li className="mb-4 flex items-start">
+                            <svg className="w-6 h-6 text-green-500 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span className="text-gray-600">Convert your audio into polished, professional blog posts effortlessly.</span>
+                        </li>
+                        <li className="mb-4 flex items-start">
+                            <svg className="w-6 h-6 text-green-500 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span className="text-gray-600">Achieve a human-like quality in content, maintaining natural flow and coherence.</span>
+                        </li>
+                        <li className="mb-4 flex items-start">
+                            <svg className="w-6 h-6 text-green-500 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span className="text-gray-600">Streamline your content creation process with multiple input options.</span>
+                        </li>
+                    </ul>
+                </div>
+            </motion.section>
+
+            {/* Editor and Export Options Section */}
+            <motion.section
+                className="container mx-auto px-6 py-16"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 1, delay: 2.5 }}
+            >
+                <div className="text-center mb-12">
+                    <h3 className="text-4xl font-bold text-gray-800 mb-4">Edit and Export with Ease</h3>
+                    <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+                        Enhance your articles with our rich text editor, available even on your phone. Customize and refine your content to perfection before publishing.
                     </p>
-                    <Link to="/main" className="bg-indigo-600 text-white font-medium py-3 px-8 rounded-full shadow-lg hover:bg-indigo-500 transition-transform transform hover:scale-105">
-                        Start Recording Now
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-10">
+                    <motion.div
+                        className="p-8 bg-white rounded-lg shadow-lg hover:shadow-2xl transition relative overflow-hidden text-center"
+                        whileHover={{ scale: 1.05 }}
+                    >
+                        <FaEdit className="text-5xl text-blue-600 mb-4 mx-auto" />
+                        <h4 className="text-xl font-semibold text-gray-800 mb-2">Edit with Ease</h4>
+                        <p className="text-gray-600">
+                            Our rich text editor allows you to make modifications to your articles seamlessly. Whether on desktop or mobile, adjust your content as needed.
+                        </p>
+                    </motion.div>
+                    <motion.div
+                        className="p-8 bg-white rounded-lg shadow-lg hover:shadow-2xl transition relative overflow-hidden text-center"
+                        whileHover={{ scale: 1.05 }}
+                    >
+                        <FaCode className="text-5xl text-blue-600 mb-4 mx-auto" />
+                        <h4 className="text-xl font-semibold text-gray-800 mb-2">Export Anywhere</h4>
+                        <p className="text-gray-600">
+                            Export your articles in Rich Text, plain HTML, or Markdown format. Perfect for publishing directly on any platform or website.
+                        </p>
+                    </motion.div>
+                </div>
+            </motion.section>
+
+            {/* Platform Integrations Section */}
+            <motion.section
+                className="bg-gradient-to-r from-gray-100 to-gray-200 py-16 px-6"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 1, delay: 3 }}
+            >
+                <div className="container mx-auto text-center">
+                    <h3 className="text-4xl font-bold text-gray-800 mb-6">Seamless Integrations</h3>
+                    <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-8">
+                        Connect with your favorite platforms to share your content effortlessly. Whether it's Medium, LinkedIn, or Blogger, our integrations ensure you reach your audience effectively.
+                    </p>
+                    <div className="grid md:grid-cols-3 gap-10">
+                        <motion.div
+                            className="p-8 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-lg shadow-lg hover:shadow-2xl transition relative overflow-hidden text-center"
+                            whileHover={{ scale: 1.05 }}
+                        >
+                            <FaMedium className="text-5xl text-white mb-4 mx-auto" />
+                            <h4 className="text-xl font-semibold text-white mb-2">Medium</h4>
+                            <p className="text-white">
+                                Publish your posts directly to Medium and reach a broader audience interested in high-quality content.
+                            </p>
+                        </motion.div>
+                        <motion.div
+                            className="p-8 bg-gradient-to-r from-blue-500 to-teal-400 rounded-lg shadow-lg hover:shadow-2xl transition relative overflow-hidden text-center"
+                            whileHover={{ scale: 1.05 }}
+                        >
+                            <FaLinkedin className="text-5xl text-white mb-4 mx-auto" />
+                            <h4 className="text-xl font-semibold text-white mb-2">LinkedIn</h4>
+                            <p className="text-white">
+                                Share professional updates and articles with your LinkedIn network to enhance your professional presence.
+                            </p>
+                        </motion.div>
+                        <motion.div
+                            className="p-8 bg-gradient-to-r from-red-400 to-pink-400 rounded-lg shadow-lg hover:shadow-2xl transition relative overflow-hidden text-center"
+                            whileHover={{ scale: 1.05 }}
+                        >
+                            <FaBlogger className="text-5xl text-white mb-4 mx-auto" />
+                            <h4 className="text-xl font-semibold text-white mb-2">Blogger</h4>
+                            <p className="text-white">
+                                Integrate with Blogger to post your content directly on your blog and reach your audience effectively.
+                            </p>
+                        </motion.div>
+                    </div>
+                </div>
+            </motion.section>
+
+            {/* Call to Action */}
+            <motion.section
+                className="bg-gradient-to-r from-indigo-500 to-purple-600 py-16 px-6"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 1, delay: 3.5 }}
+            >
+                <div className="container mx-auto text-center">
+                    <h3 className="text-4xl font-bold text-white mb-6">Ready to Transform Your Content?</h3>
+                    <p className="text-lg text-white max-w-2xl mx-auto mb-8">
+                        Don’t miss out on the opportunity to streamline your content creation process and achieve professional-quality results with VoiceBlogify.
+                    </p>
+                    <Link to="/main" className="bg-gradient-to-r from-pink-500 to-yellow-500 text-white font-medium py-3 px-6 rounded-full shadow-lg hover:from-yellow-500 hover:to-pink-500 transition-transform transform hover:scale-105">
+                        Get Started
                     </Link>
-                </div>
-            </motion.section>
-
-            {/* CTA Section */}
-            <motion.section
-                className="bg-indigo-600 text-white py-16 px-6"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 1, delay: 0.6 }}
-            >
-                <div className="container mx-auto text-center">
-                    <h2 className="text-4xl font-bold mb-6">Ready to turn your voice into content?</h2>
-                    <p className="text-lg mb-10 max-w-2xl mx-auto">
-                        With VoiceBlogify, content creation has never been easier. Start for free and see how your audio can transform into captivating blog posts.
-                    </p>
-                    <motion.div whileHover={{ scale: 1.1 }}>
-                        <Link to="/main" className="bg-white text-indigo-600 font-medium py-3 px-8 rounded-full shadow-lg hover:bg-indigo-100 transition-transform transform hover:scale-105">
-                            Start Free Trial
-                        </Link>
-                    </motion.div>
                 </div>
             </motion.section>
         </div>
