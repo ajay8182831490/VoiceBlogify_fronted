@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { MicrophoneIcon, PauseIcon, PlayIcon, StopIcon, ArrowPathIcon, ArrowDownTrayIcon } from '@heroicons/react/24/outline';
+import { useNavigate } from 'react-router-dom';
 const Url = "http://localhost:4000";
 export default function MyAudioRecordingComponent() {
     const [isRecording, setIsRecording] = useState(false);
@@ -13,6 +14,7 @@ export default function MyAudioRecordingComponent() {
     const mediaRecorderRef = useRef(null);
     const audioChunks = useRef([]);
     const timerRef = useRef(null);
+    const navigate = useNavigate()
 
     useEffect(() => {
         if (isRecording) {
@@ -85,10 +87,9 @@ export default function MyAudioRecordingComponent() {
     const uploadAudio = async () => {
         if (!audioBlob) return;
         setIsUploading(true);
+
         const formData = new FormData();
         formData.append('audio', audioBlob, 'recording.wav');
-
-        alert("audio file upload")
 
         try {
             const response = await fetch(`${Url}/transcription/audioRecord`, {
@@ -96,8 +97,16 @@ export default function MyAudioRecordingComponent() {
                 credentials: 'include',
                 body: formData,
             });
-            console.log(response)
-            handleReset();
+
+            // Log the response to check its status
+            console.log('Response Status:', response.status);
+            if (response.ok) {
+                console.log('Response OK, navigating...');
+                handleReset();
+                navigate('/loading');
+            } else {
+                console.error('Failed to upload audio, response not OK');
+            }
         } catch (error) {
             console.error('Error uploading audio:', error);
         } finally {
@@ -215,10 +224,11 @@ export default function MyAudioRecordingComponent() {
                             >
                                 <ArrowPathIcon className="h-5 w-5" />
                             </button>
+
                             <button
                                 onClick={handleSave}
                                 className="flex items-center p-3 bg-gradient-to-r from-green-500 to-green-700 text-white rounded-full transition-transform transform hover:bg-green-600 shadow-lg hover:scale-105"
-                                disabled={!audioBlob}
+                                disabled={!audioBlob || isUploading || isRecording}
                                 title="Save"
                             >
                                 <ArrowDownTrayIcon className="h-5 w-5" />
@@ -230,14 +240,15 @@ export default function MyAudioRecordingComponent() {
                     {showControls && (
                         <button
                             onClick={uploadAudio}
-                            className={`mt-4 px-6 py-2 rounded-lg text-white transition-transform transform ${isRecording ? 'bg-gradient-to-r from-gray-500 to-gray-700' : (audioBlob ? (isUploading ? 'bg-gradient-to-r from-blue-400 to-blue-500' : 'bg-gradient-to-r from-blue-600 to-blue-700') : 'bg-gradient-to-r from-gray-300 to-gray-400')} shadow-lg hover:scale-105`}
-                            disabled={isRecording || !audioBlob || isUploading}
+                            className={`mt-4 px-6 py-2 rounded-lg text-white transition-transform transform ${isRecording ? 'bg-gradient-to-r from-gray-500 to-gray-700' : (audioBlob ? (isUploading ? 'bg-gradient-to-r from-blue-400 to-blue-600' : 'bg-gradient-to-r from-blue-500 to-blue-700') : 'bg-gradient-to-r from-blue-300 to-blue-500')} shadow-lg hover:scale-105`}
+                            disabled={isRecording || isUploading || !audioBlob}
+                            title="Upload"
                         >
-                            {isUploading ? 'Uploading...' : 'Submit'}
+                            {isUploading ? 'Uploading...' : 'Upload'}
                         </button>
                     )}
                 </div>
             </div>
         </div>
     );
-} 
+}

@@ -2,10 +2,11 @@ import { useState } from 'react';
 import ParentComponent from './ParentsFileUpload';
 import PasteUrlComponent from './PasteUrl';
 import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom'; // for navigation
+import { useNavigate } from 'react-router-dom';
 import MyAudioRecordingComponent from './AudioTest';
+import { FaMicrophone, FaUpload, FaLink } from 'react-icons/fa'; // For icons
 
-const Url = "http://localhost:4000"
+const Url = "http://localhost:4000";
 
 export default function AudioPage() {
     const [selectedOption, setSelectedOption] = useState('record');
@@ -48,14 +49,12 @@ export default function AudioPage() {
     };
 
     const handleUrlSubmit = async (url) => {
-
-        console.log(url)
         const response = await fetch(`${Url}/transcription/url`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ url }),
         });
-        console.log(response)
+
         return await response.json();
     };
 
@@ -72,30 +71,40 @@ export default function AudioPage() {
     };
 
     return (
-        <div className="flex flex-col items-center p-4 bg-gray-100 min-h-screen">
-            {/* Option Selection */}
-            <div className="w-full max-w-md my-6">
-                <div className="flex justify-around">
+        <div className="flex flex-col items-center p-6 bg-gradient-to-r from-gray-100 to-gray-200 min-h-screen">
+
+            <div className="w-full max-w-lg mb-8">
+                <div className="flex justify-around flex-wrap">
                     {['record', 'upload', 'url'].map(option => (
-                        <motion.button
+                        <motion.div
                             key={option}
                             onClick={() => handleOptionChange(option)}
-                            className={`px-6 py-2 rounded-lg text-white transition-transform transform shadow-md ${selectedOption === option
+                            className={`relative flex flex-col items-center p-4 rounded-lg cursor-pointer transition-transform transform shadow-lg ${selectedOption === option
                                 ? 'bg-gradient-to-r from-teal-500 to-blue-500 scale-105'
                                 : 'bg-gradient-to-r from-gray-300 to-gray-500 border border-gray-400'
                                 }`}
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
                         >
-                            {option.charAt(0).toUpperCase() + option.slice(1)}
-                        </motion.button>
+                            <div className="flex items-center justify-center w-14 h-14 md:w-16 md:h-16 bg-white rounded-full shadow-md">
+                                {option === 'record' && <FaMicrophone className="text-teal-500 text-xl md:text-3xl" />}
+                                {option === 'upload' && <FaUpload className="text-blue-500 text-xl md:text-3xl" />}
+                                {option === 'url' && <FaLink className="text-green-500 text-xl md:text-3xl" />}
+                            </div>
+                            <span className="mt-2 text-sm md:text-lg font-semibold text-white group-hover:text-gray-900">{option.charAt(0).toUpperCase() + option.slice(1)}</span>
+
+                            {/* Tooltip on Hover */}
+                            <div className={`absolute bottom-0 left-1/2 transform -translate-x-1/2 mb-8 p-2 bg-gray-800 text-white text-xs md:text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity`}>
+                                {option.charAt(0).toUpperCase() + option.slice(1)}
+                            </div>
+                        </motion.div>
                     ))}
                 </div>
             </div>
 
-            {/* Conditional Rendering Based on Selected Option */}
+
             <motion.div
-                className="mt-8 w-full max-w-md"
+                className="w-full max-w-lg"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
@@ -106,24 +115,7 @@ export default function AudioPage() {
                 {selectedOption === 'record' && <MyAudioRecordingComponent setAudioData={setAudioData} />}
             </motion.div>
 
-            {/* Animated Confirmation */}
-            <motion.div
-                className="mt-8"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: file || url || audioData ? 1 : 0 }}
-                transition={{ duration: 0.3 }}
-            >
-                {(file || url || audioData) && (
-                    <motion.button
-                        onClick={handleDataSubmission}
-                        className="px-6 py-2 bg-gradient-to-r from-blue-500 to-green-500 text-white rounded-lg shadow-md hover:bg-gradient-to-l hover:from-blue-600 hover:to-green-600 transition-transform transform hover:scale-105"
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                    >
-                        Submit
-                    </motion.button>
-                )}
-            </motion.div>
+
         </div>
     );
 }

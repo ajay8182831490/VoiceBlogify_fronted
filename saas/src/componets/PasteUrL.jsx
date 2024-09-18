@@ -58,7 +58,7 @@ export default function PasteUrlComponent() {
 
     return (
         <div className="w-full flex flex-col items-center p-4">
-            <h2 className="text-lg font-semibold mb-4">Paste Audio/Video URL</h2>
+            <h2 className="text-lg font-semibold mb-4">Paste YouTube Video Url</h2>
 
             <form
                 onSubmit={handleUrlSubmit} // Moved the form submission here
