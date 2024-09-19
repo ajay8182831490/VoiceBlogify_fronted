@@ -1,33 +1,67 @@
 import { useState } from 'react';
 import { z } from 'zod';
 
+const Url = "http://localhost:4000";
 
+// Zod schema to validate URL
 const urlSchema = z.string().url({ message: "Invalid URL" });
 
 export default function PasteUrlComponent() {
     const [url, setUrl] = useState('');
     const [error, setError] = useState('');
+    const [responseMessage, setResponseMessage] = useState(null);
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    const handleUrlSubmit = async (e) => {
+        e.preventDefault(); // Prevent the default form submission behavior
+
+
+
 
         try {
-            urlSchema.parse(url); // Validate URL using Zod
-            setError(''); // Clear error if validation is successful
-            console.log('Valid URL:', url);
-            // Handle the valid URL submission here
+            // Validate the URL using Zod schema
+            urlSchema.parse(url);
+            setError(''); // Clear any existing errors
+
+
+
+            // Submit the URL to the backend
+            const response = await fetch(`${Url}/transcription/url`, {
+                method: 'POST',
+                credentials: 'include',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ url }),
+            });
+
+            // Check if the response is ok (status 200-299)
+
+            console.log(response)
+            if (!response.ok) {
+                throw new Error(`Server responded with a status ${response.status}`);
+            }
+
+            const result = await response.json();
+            console.log("Response received:", result);
+
+            setResponseMessage(result.message || 'Transcription successful.');
+
         } catch (err) {
-            setError(err.errors[0].message); // Set the error message if validation fails
+            // Handle validation or fetch errors
+            console.error("Error occurred:", err);
+
+            if (err instanceof z.ZodError) {
+                setError(err.errors[0].message); // Handle Zod validation error
+            } else {
+                setError(err.message || 'An unexpected error occurred.');
+            }
         }
     };
 
     return (
         <div className="w-full flex flex-col items-center p-4">
-            <h2 className="text-lg font-semibold mb-4">Paste Audio/Video URL</h2>
+            <h2 className="text-lg font-semibold mb-4">Paste YouTube Video Url</h2>
 
-            {/* Input Field with Button Inside */}
             <form
-                onSubmit={handleSubmit}
+                onSubmit={handleUrlSubmit} // Moved the form submission here
                 className="w-full max-w-lg flex flex-col sm:flex-row items-center justify-between bg-gray-100 p-4 rounded-md shadow-md relative"
             >
                 <div className="w-full relative">
@@ -36,7 +70,7 @@ export default function PasteUrlComponent() {
                         placeholder="Enter URL"
                         value={url}
                         onChange={(e) => setUrl(e.target.value)}
-                        className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 pr-20" // Extra padding-right for button
+                        className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 pr-20"
                     />
                     <button
                         type="submit"
@@ -52,6 +86,10 @@ export default function PasteUrlComponent() {
                     </p>
                 )}
             </form>
+
+            {responseMessage && (
+                <p className="text-green-500 mt-4">{responseMessage}</p>
+            )}
         </div>
     );
 }

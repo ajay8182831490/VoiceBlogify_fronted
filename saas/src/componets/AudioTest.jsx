@@ -1,5 +1,9 @@
 import { useState, useRef, useEffect } from 'react';
 import { MicrophoneIcon, PauseIcon, PlayIcon, StopIcon, ArrowPathIcon, ArrowDownTrayIcon } from '@heroicons/react/24/outline';
+import { useNavigate } from 'react-router-dom';
+import './AudioRecordingComponent.css'; // Import the CSS file for animations
+
+const Url = "http://localhost:4000";
 
 export default function MyAudioRecordingComponent() {
     const [isRecording, setIsRecording] = useState(false);
@@ -9,10 +13,11 @@ export default function MyAudioRecordingComponent() {
     const [audioURL, setAudioURL] = useState(null);
     const [timer, setTimer] = useState(0);
     const [showTimer, setShowTimer] = useState(false);
-    const [showControls, setShowControls] = useState(false); // New state variable
+    const [showControls, setShowControls] = useState(false);
     const mediaRecorderRef = useRef(null);
     const audioChunks = useRef([]);
     const timerRef = useRef(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (isRecording) {
@@ -23,7 +28,7 @@ export default function MyAudioRecordingComponent() {
             stopRecording();
             stopTimer();
             if (!isPaused) {
-                setShowTimer(false); // Hide timer when recording stops
+                setShowTimer(false);
             }
         }
 
@@ -47,10 +52,10 @@ export default function MyAudioRecordingComponent() {
 
         mediaRecorderRef.current.onstop = () => {
             createAudioBlob();
-            setShowTimer(false); // Hide timer when recording stops
+            setShowTimer(false);
         };
 
-        mediaRecorderRef.current.start(1000); // Record in 1-second chunks
+        mediaRecorderRef.current.start(1000);
     };
 
     const stopRecording = () => {
@@ -71,7 +76,7 @@ export default function MyAudioRecordingComponent() {
         if (mediaRecorderRef.current && mediaRecorderRef.current.state === 'paused') {
             mediaRecorderRef.current.resume();
             setIsPaused(false);
-            startTimer(); // Resume timer when recording resumes
+            startTimer();
         }
     };
 
@@ -85,15 +90,23 @@ export default function MyAudioRecordingComponent() {
     const uploadAudio = async () => {
         if (!audioBlob) return;
         setIsUploading(true);
+
         const formData = new FormData();
         formData.append('audio', audioBlob, 'recording.wav');
 
         try {
-            await fetch('/api/upload-audio', {
+            const response = await fetch(`${Url}/transcription/audioRecord`, {
                 method: 'POST',
+                credentials: 'include',
                 body: formData,
             });
-            handleReset();
+
+            if (response.ok) {
+                handleReset();
+                navigate('/loading');
+            } else {
+                console.error('Failed to upload audio');
+            }
         } catch (error) {
             console.error('Error uploading audio:', error);
         } finally {
@@ -107,10 +120,9 @@ export default function MyAudioRecordingComponent() {
         } else {
             setIsRecording((prev) => !prev);
             if (!isRecording) {
-                // Reset timer and audio URL when starting a new recording
                 setTimer(0);
-                setAudioURL(null); // Hide audio player
-                setShowControls(true); // Show all buttons when recording starts
+                setAudioURL(null);
+                setShowControls(true);
             }
         }
     };
@@ -118,12 +130,12 @@ export default function MyAudioRecordingComponent() {
     const handleReset = () => {
         audioChunks.current = [];
         setAudioBlob(null);
-        setAudioURL(null); // Ensure audio player is not rendered
+        setAudioURL(null);
         setIsRecording(false);
         setIsPaused(false);
         setTimer(0);
         setShowTimer(false);
-        setShowControls(false); // Hide all buttons when reset is clicked
+        setShowControls(false);
         stopTimer();
     };
 
@@ -157,8 +169,8 @@ export default function MyAudioRecordingComponent() {
     };
 
     return (
-        <div className="flex flex-col items-center p-4 bg-gray-100 rounded-lg shadow-lg max-w-lg mx-auto">
-            <div className="w-full bg-gray-300 p-6 rounded-lg shadow-md flex flex-col items-center space-y-4">
+        <div className="flex flex-col items-center p-6 bg-gradient-to-r from-blue-100 via-blue-200 to-blue-300 rounded-lg shadow-lg max-w-md mx-auto">
+            <div className="w-full bg-white p-6 rounded-lg shadow-md flex flex-col items-center space-y-4">
                 {/* Audio playback controls */}
                 {audioURL && !isRecording && !isUploading && !isPaused && (
                     <div className="w-full mb-4 flex justify-center">
@@ -168,7 +180,7 @@ export default function MyAudioRecordingComponent() {
 
                 {/* Timer Display */}
                 {showTimer && (
-                    <div className="text-2xl font-semibold mb-4 text-center">
+                    <div className="text-3xl font-semibold mb-4 text-blue-600">
                         {formatTime(timer)}
                     </div>
                 )}
@@ -177,10 +189,10 @@ export default function MyAudioRecordingComponent() {
                 <div className="flex flex-col items-center space-y-4">
                     <button
                         onClick={handleRecord}
-                        className={`flex items-center justify-center w-16 h-16 rounded-full text-white transition-transform transform ${isRecording ? (isPaused ? 'bg-gradient-to-r from-blue-500 to-blue-700' : 'bg-gradient-to-r from-red-500 to-red-700') : 'bg-gradient-to-r from-green-500 to-green-700'} shadow-lg hover:scale-105`}
+                        className={`flex items-center justify-center w-20 h-20 rounded-full text-white transition-transform transform ${isRecording ? (isPaused ? 'bg-gradient-to-r from-yellow-400 to-yellow-600 animate-pulse' : 'bg-gradient-to-r from-red-400 to-red-600 animate-pulse') : 'bg-gradient-to-r from-green-400 to-green-600'} shadow-xl hover:scale-105`}
                         title={isRecording ? (isPaused ? 'Resume Recording' : 'Stop Recording') : 'Start Recording'}
                     >
-                        {isRecording ? (isPaused ? <PlayIcon className="h-8 w-8" /> : <StopIcon className="h-8 w-8" />) : <MicrophoneIcon className="h-8 w-8" />}
+                        {isRecording ? (isPaused ? <PlayIcon className="h-10 w-10" /> : <StopIcon className="h-10 w-10" />) : <MicrophoneIcon className="h-10 w-10" />}
                     </button>
 
                     {/* Conditional rendering of additional buttons */}
@@ -189,35 +201,36 @@ export default function MyAudioRecordingComponent() {
                             {isRecording && !isPaused && (
                                 <button
                                     onClick={pauseRecording}
-                                    className="flex items-center p-3 bg-gradient-to-r from-yellow-500 to-yellow-700 text-white rounded-full transition-transform transform hover:bg-yellow-600 shadow-lg hover:scale-105"
+                                    className="flex items-center p-4 bg-gradient-to-r from-yellow-400 to-yellow-600 text-white rounded-full transition-transform transform hover:bg-yellow-500 shadow-lg hover:scale-105"
                                     title="Pause"
                                 >
-                                    <PauseIcon className="h-5 w-5" />
+                                    <PauseIcon className="h-6 w-6" />
                                 </button>
                             )}
                             {isPaused && (
                                 <button
                                     onClick={resumeRecording}
-                                    className="flex items-center p-3 bg-gradient-to-r from-blue-500 to-blue-700 text-white rounded-full transition-transform transform hover:bg-blue-600 shadow-lg hover:scale-105"
+                                    className="flex items-center p-4 bg-gradient-to-r from-blue-400 to-blue-600 text-white rounded-full transition-transform transform hover:bg-blue-500 shadow-lg hover:scale-105"
                                     title="Resume"
                                 >
-                                    <PlayIcon className="h-5 w-5" />
+                                    <PlayIcon className="h-6 w-6" />
                                 </button>
                             )}
                             <button
                                 onClick={handleReset}
-                                className="flex items-center p-3 bg-gradient-to-r from-gray-500 to-gray-700 text-white rounded-full transition-transform transform hover:bg-gray-600 shadow-lg hover:scale-105"
+                                className="flex items-center p-4 bg-gradient-to-r from-gray-400 to-gray-600 text-white rounded-full transition-transform transform hover:bg-gray-500 shadow-lg hover:scale-105"
                                 title="Reset"
                             >
-                                <ArrowPathIcon className="h-5 w-5" />
+                                <ArrowPathIcon className="h-6 w-6" />
                             </button>
+
                             <button
                                 onClick={handleSave}
-                                className="flex items-center p-3 bg-gradient-to-r from-green-500 to-green-700 text-white rounded-full transition-transform transform hover:bg-green-600 shadow-lg hover:scale-105"
-                                disabled={!audioBlob}
+                                className="flex items-center p-4 bg-gradient-to-r from-green-400 to-green-600 text-white rounded-full transition-transform transform hover:bg-green-500 shadow-lg hover:scale-105"
+                                disabled={!audioBlob || isUploading || isRecording}
                                 title="Save"
                             >
-                                <ArrowDownTrayIcon className="h-5 w-5" />
+                                <ArrowDownTrayIcon className="h-6 w-6" />
                             </button>
                         </div>
                     )}
@@ -226,14 +239,14 @@ export default function MyAudioRecordingComponent() {
                     {showControls && (
                         <button
                             onClick={uploadAudio}
-                            className={`mt-4 px-6 py-2 rounded-lg text-white transition-transform transform ${isRecording ? 'bg-gradient-to-r from-gray-500 to-gray-700' : (audioBlob ? (isUploading ? 'bg-gradient-to-r from-blue-400 to-blue-500' : 'bg-gradient-to-r from-blue-600 to-blue-700') : 'bg-gradient-to-r from-gray-300 to-gray-400')} shadow-lg hover:scale-105`}
-                            disabled={isRecording || !audioBlob || isUploading}
+                            className={`mt-4 px-6 py-3 rounded-lg text-white transition-transform transform ${isRecording ? 'bg-gradient-to-r from-gray-400 to-gray-600' : (audioBlob ? (isUploading ? 'bg-gradient-to-r from-blue-300 to-blue-500' : 'bg-gradient-to-r from-blue-400 to-blue-600') : 'bg-gradient-to-r from-blue-200 to-blue-400')} shadow-lg hover:scale-105`}
+                            disabled={isRecording || isUploading || !audioBlob}
                         >
-                            {isUploading ? 'Uploading...' : 'Submit'}
+                            {isUploading ? 'Uploading...' : 'Submit Audio'}
                         </button>
                     )}
                 </div>
             </div>
         </div>
     );
-} 
+}

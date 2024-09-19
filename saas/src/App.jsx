@@ -10,6 +10,7 @@ import { useAuth } from './userContext/AuthContext';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import MyAudioRecordingComponent from './componets/AudioTest';
+import RichEditorText from './componets/RichEditorText';
 
 function App() {
   const { isAuthenticated } = useAuth(); // Accessing authentication status
@@ -28,6 +29,8 @@ function App() {
 
       <Routes>
         <Route path='/' element={<LandingPage />} />
+        <Route path='/edit' element={<RichEditorText />} />
+
 
 
         {!isAuthenticated ? (
