@@ -79,7 +79,7 @@ export default function AudioPage() {
                         <motion.div
                             key={option}
                             onClick={() => handleOptionChange(option)}
-                            className={`relative flex flex-col items-center p-4 rounded-lg cursor-pointer transition-transform transform shadow-lg ${selectedOption === option
+                            className={`group relative flex flex-col items-center p-4 rounded-lg cursor-pointer transition-transform transform shadow-lg ${selectedOption === option
                                 ? 'bg-gradient-to-r from-teal-500 to-blue-500 scale-105'
                                 : 'bg-gradient-to-r from-gray-300 to-gray-500 border border-gray-400'
                                 }`}
@@ -91,17 +91,16 @@ export default function AudioPage() {
                                 {option === 'upload' && <FaUpload className="text-blue-500 text-xl md:text-3xl" />}
                                 {option === 'url' && <FaLink className="text-green-500 text-xl md:text-3xl" />}
                             </div>
-                            <span className="mt-2 text-sm md:text-lg font-semibold text-white group-hover:text-gray-900">{option.charAt(0).toUpperCase() + option.slice(1)}</span>
 
                             {/* Tooltip on Hover */}
                             <div className={`absolute bottom-0 left-1/2 transform -translate-x-1/2 mb-8 p-2 bg-gray-800 text-white text-xs md:text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity`}>
                                 {option.charAt(0).toUpperCase() + option.slice(1)}
                             </div>
                         </motion.div>
+
                     ))}
                 </div>
             </div>
-
 
             <motion.div
                 className="w-full max-w-lg"
@@ -114,7 +113,6 @@ export default function AudioPage() {
                 {selectedOption === 'url' && <PasteUrlComponent onUrlChange={setUrl} />}
                 {selectedOption === 'record' && <MyAudioRecordingComponent setAudioData={setAudioData} />}
             </motion.div>
-
 
         </div>
     );
