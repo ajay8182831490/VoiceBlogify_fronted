@@ -11,9 +11,11 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import MyAudioRecordingComponent from './componets/AudioTest';
 import RichEditorText from './componets/RichEditorText';
+import Dashboard from './componets/DashBoard';
+import PrivateRoute from './componets/PrivateRoutes';
 
 function App() {
-  const { isAuthenticated } = useAuth(); // Accessing authentication status
+  const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -25,38 +27,31 @@ function App() {
   return (
     <>
       <Header />
-
-
       <Routes>
-        <Route path='/' element={<LandingPage />} />
-        <Route path='/edit' element={<RichEditorText />} />
-
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/edit" element={<RichEditorText />} />
+        <Route path="/dashboard/*" element={<Dashboard />} />
 
 
         {!isAuthenticated ? (
           <>
-            <Route path='/login' element={<Login />} />
-            <Route path='/signup' element={<SignUp />} />
-            <Route path='/resetPassword' element={<ResetPassword1 />} />
-            {/* Redirect to the login page if the user is not authenticated and tries to access the main page */}
-            <Route path='/main' element={<Navigate to='/login' />} />
-            {/* Redirect to the landing page for any other path */}
-            <Route path='*' element={<Navigate to='/' />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/resetPassword" element={<ResetPassword1 />} />
+            <Route path="/main" element={<Navigate to="/login" />} />
+            <Route path="*" element={<Navigate to="/" />} />
+            <Route path="dashboard/*" element={<Navigate to="/" />} />
+
           </>
         ) : (
-          // Routes available when authenticated
           <>
-            <Route path='/main' element={<AudioPage />} />
-
-            <Route path='/login' element={<Navigate to='/' />} />
-            <Route path='/signup' element={<Navigate to='/' />} />
-            <Route path='/resetPassword' element={<Navigate to='/' />} />
-            <Route path='*' element={<LandingPage />} />
+            <Route path="/main" element={<AudioPage />} />
+            {<Route path="/dashboard/*" element={<PrivateRoute element={<Dashboard />} />} />}
+            {<Route path="*" element={<Navigate to="/dashboard/user-posts" />} />}
           </>
         )}
       </Routes>
     </>
   );
 }
-
 export default App;

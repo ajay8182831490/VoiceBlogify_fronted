@@ -32,9 +32,7 @@ export default function PasteUrlComponent() {
                 body: JSON.stringify({ url }),
             });
 
-            // Check if the response is ok (status 200-299)
 
-            console.log(response)
             if (!response.ok) {
                 throw new Error(`Server responded with a status ${response.status}`);
             }

@@ -19,22 +19,7 @@ export default function AudioPage() {
         setSelectedOption(option);
     };
 
-    const handleDataSubmission = async () => {
-        navigate('/loading');
 
-        let response;
-        if (selectedOption === 'upload' && file) {
-            response = await handleFileUpload(file);
-        } else if (selectedOption === 'url' && url) {
-            response = await handleUrlSubmit(url);
-        } else if (selectedOption === 'record' && audioData) {
-            response = await handleAudioSubmit(audioData);
-        }
-
-        if (response) {
-            navigate('/result');
-        }
-    };
 
     const handleFileUpload = async (file) => {
         const formData = new FormData();
