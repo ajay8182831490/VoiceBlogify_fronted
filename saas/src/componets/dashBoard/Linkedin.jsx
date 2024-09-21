@@ -1,9 +1,16 @@
-import React from 'react'
+import { useState } from 'react';
+import { motion } from 'framer-motion';
+import { FaUpload, FaShareAlt } from 'react-icons/fa';
+import LinkedinRET from '../LinkedinRichEditorText';
 
-const Linkedin = () => {
+const LinkedInShare = () => {
+
     return (
-        <div>Linkedin</div>
+        <>
+            <LinkedinRET />
+        </>
     )
 }
 
-export default Linkedin
+
+export default LinkedInShare;

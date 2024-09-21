@@ -11,7 +11,7 @@ import UserPost from './dashBoard/UserPost';
 
 const DashboardRoutes = () => {
     return (
-        <div className="flex-grow p-4">
+        <div className="flex-grow p-4 bg-gradient-to-b from-purple-200 to-purple-600 ">
             <Routes>
                 {/* UserPosts loaded normally */}
                 <Route path="user-posts" element={<UserPost />} />
