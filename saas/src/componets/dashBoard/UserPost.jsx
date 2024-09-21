@@ -1,15 +1,31 @@
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaEdit, FaTrash, FaEye, FaShare } from 'react-icons/fa';
+import RichEditorText from '../RichEditorText'; // Import your RichEditorText component
+const url = "https://voiceblogify-backend.onrender.com"
 
-const UserPosts = ({ onEdit, onDelete, onView, onShare }) => {
+const UserPosts = ({ onDelete, onView, onShare }) => {
     // Dummy data
     const posts = [
-        { id: 1, title: "First Post", createdAt: "2024-09-01T10:00:00Z" },
-        { id: 2, title: "Second Post", createdAt: "2024-09-05T12:00:00Z" },
-        { id: 3, title: "Third Post", createdAt: "2024-09-10T14:00:00Z" },
-        { id: 4, title: "Fourth Post", createdAt: "2024-09-15T16:00:00Z" },
-        { id: 5, title: "Fifth Post", createdAt: "2024-09-20T18:00:00Z" },
+        { id: 1, title: "First Post", createdAt: "2024-09-01T10:00:00Z", content: "<p>This is the first post content.</p>" },
+        { id: 2, title: "Second Post", createdAt: "2024-09-05T12:00:00Z", content: "<p>This is the second post content.</p>" },
+        { id: 3, title: "Third Post", createdAt: "2024-09-10T14:00:00Z", content: "<p>This is the third post content.</p>" },
+        { id: 4, title: "Fourth Post", createdAt: "2024-09-15T16:00:00Z", content: "<p>This is the fourth post content.</p>" },
+        { id: 5, title: "Fifth Post", createdAt: "2024-09-20T18:00:00Z", content: "<p>This is the fifth post content.</p>" },
     ];
+
+    const [selectedPost, setSelectedPost] = useState(null);
+    const [isEditing, setIsEditing] = useState(false);
+
+    const handleEdit = (post) => {
+        setSelectedPost(post);
+        setIsEditing(true);
+    };
+
+    const handleCloseModal = () => {
+        setIsEditing(false);
+        setSelectedPost(null);
+    };
 
     return (
         <motion.div
@@ -45,7 +61,7 @@ const UserPosts = ({ onEdit, onDelete, onView, onShare }) => {
                                 <FaShare />
                             </button>
                             <button
-                                onClick={() => onEdit(post.id)}
+                                onClick={() => handleEdit(post)}
                                 className="text-yellow-500 hover:text-yellow-600 transition"
                                 title="Edit Post"
                             >
@@ -62,15 +78,24 @@ const UserPosts = ({ onEdit, onDelete, onView, onShare }) => {
                     </div>
                 ))}
             </div>
-            {/* Pagination */}
-            <div className="flex justify-between items-center mt-6">
-                <button className="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition duration-200">
-                    Previous
-                </button>
-                <button className="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition duration-200">
-                    Next
-                </button>
-            </div>
+
+            {/* Edit Modal */}
+            {isEditing && selectedPost && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+                    <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-6xl relative overflow-hidden">
+                        <button
+                            onClick={handleCloseModal}
+                            className="absolute top-4 right-4 text-gray-600 hover:text-gray-800"
+                        >
+                            ✖
+                        </button>
+                        <h2 className="text-2xl font-semibold mb-4">Edit Post</h2>
+                        <div className="max-h-80 overflow-y-auto">
+                            <RichEditorText initialData={selectedPost} onClose={handleCloseModal} />
+                        </div>
+                    </div>
+                </div>
+            )}
         </motion.div>
     );
 };

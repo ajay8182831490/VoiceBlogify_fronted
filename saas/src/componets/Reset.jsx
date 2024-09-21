@@ -2,6 +2,7 @@ import { useState } from "react";
 import { SubmitButton } from "./SignUpForm";
 import { useNavigate } from "react-router-dom";
 import { Notify, NotifyFalse } from './NotifyToast.jsx'
+const url = "https://voiceblogify-backend.onrender.com"
 export default function ResetPassword1() {
     const [email, setEmail] = useState("");
     const [otp, setOtp] = useState("");
@@ -14,7 +15,7 @@ export default function ResetPassword1() {
     const handleEmailSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('http://localhost:4000/otpGenrator', {
+            const response = await fetch(`${url}/otpGenrator`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -41,7 +42,7 @@ export default function ResetPassword1() {
 
     const handleResendOtp = async () => {
         try {
-            const response = await fetch('http://localhost:4000/otpGenrator', {
+            const response = await fetch(`${url}/otpGenrator`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -67,7 +68,7 @@ export default function ResetPassword1() {
     const handleOtpAndPasswordSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('http://localhost:4000/resetPassword', {
+            const response = await fetch(`${url}/resetPassword`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

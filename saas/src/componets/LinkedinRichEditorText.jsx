@@ -5,18 +5,11 @@ import { FaUpload, FaShareAlt, FaEye, FaEdit, FaChevronLeft, FaChevronRight } fr
 import { motion } from 'framer-motion';
 import { IoClose } from 'react-icons/io5';
 import { useDropzone } from 'react-dropzone';
+const url = "https://voiceblogify-backend.onrender.com"
 
 const initialPosts = [
     { id: 1, title: 'Post 1', content: 'Content of Post 1', tags: 'React, JavaScript' },
     { id: 2, title: 'Post 2', content: 'Content of Post 2', tags: 'Node.js, Express' },
-    { id: 3, title: 'Post 3', content: 'Content of Post 3', tags: 'CSS, HTML' },
-    { id: 4, title: 'Post 4', content: 'Content of Post 4', tags: 'React, CSS' },
-    { id: 5, title: 'Post 5', content: 'Content of Post 5', tags: 'JavaScript, HTML' },
-    { id: 6, title: 'Post 6', content: 'Content of Post 6', tags: 'Node.js, API' },
-    { id: 7, title: 'Post 7', content: 'Content of Post 7', tags: 'React, Tailwind' },
-    { id: 8, title: 'Post 8', content: 'Content of Post 8', tags: 'JavaScript, AI' },
-    { id: 9, title: 'Post 9', content: 'Content of Post 9', tags: 'React, AI' },
-    { id: 10, title: 'Post 10', content: 'Content of Post 10', tags: 'CSS, API' },
 ];
 
 export default function LinkedinRET() {
@@ -25,21 +18,24 @@ export default function LinkedinRET() {
     const [modalOpen, setModalOpen] = useState(false);
     const [previewOpen, setPreviewOpen] = useState(false);
     const [currentPage, setCurrentPage] = useState(0);
-    const itemsPerPage = 3; // Adjust number of items per page
+    const itemsPerPage = 3;
     const totalPages = Math.ceil(posts.length / itemsPerPage);
     const [files, setFiles] = useState([]);
     const [videoFile, setVideoFile] = useState(null);
+    const [isSharing, setIsSharing] = useState(false);
 
-    const handleOpenModal = (post) => {
+    const handleOpenModal = (post, isShareAction = false) => {
         setSelectedPost(post);
+        setIsSharing(isShareAction);
         setModalOpen(true);
     };
 
     const handleCloseModal = () => {
         setModalOpen(false);
         setSelectedPost(null);
-        setFiles([]); // Reset files on close
-        setVideoFile(null); // Reset video file on close
+        setFiles([]);
+        setVideoFile(null);
+        setIsSharing(false);
     };
 
     const handleOpenPreview = (post) => {
@@ -56,9 +52,12 @@ export default function LinkedinRET() {
         setSelectedPost((prev) => ({ ...prev, content: value }));
     };
 
+    const handleEdit = () => {
+        handleOpenModal(selectedPost, false);
+    };
+
     const handleShare = () => {
-        console.log('Sharing:', selectedPost);
-        handleCloseModal();
+        handleOpenModal(selectedPost, true);
     };
 
     const handleSubmit = (e) => {
@@ -67,20 +66,20 @@ export default function LinkedinRET() {
         setPosts(updatedPosts);
         handleCloseModal();
     };
-
     const handleDrop = (acceptedFiles) => {
         const images = acceptedFiles.filter(file => file.type.startsWith('image/'));
         const video = acceptedFiles.find(file => file.type.startsWith('video/'));
 
-        if (images.length > 0) {
-            setFiles(prevFiles => [...prevFiles, ...images]);
-        }
 
         if (video) {
+            setFiles([]);
+            setVideoFile(video);
+        } else if (images.length > 0) {
+
             if (videoFile) {
-                alert("You can only upload one video at a time.");
+                alert("You cannot upload images and a video at the same time. Please remove the video to upload images.");
             } else {
-                setVideoFile(video);
+                setFiles(prevFiles => [...prevFiles, ...images]);
             }
         }
     };
@@ -103,21 +102,32 @@ export default function LinkedinRET() {
 
     return (
         <div className="p-4 md:p-8 max-w-screen-lg mx-auto bg-gradient-to-r from-purple-300 to-blue-300 min-h-screen">
-            <h2 className="text-2xl font-bold text-gray-800 text-center">Manage LinkedIn Posts</h2>
+            <h2 className="text-2xl font-bold text-gray-800 text-center">Launch Post on LinkedIn </h2>
 
-            {/* Post List */}
             <div className="space-y-4">
                 {displayedPosts.map(post => (
                     <div key={post.id} className="flex justify-between items-center bg-white p-4 rounded-lg shadow-lg">
                         <h2 className="text-xl font-semibold text-gray-800">{post.title}</h2>
                         <div className="flex space-x-4">
-                            <button onClick={() => handleOpenPreview(post)} className="text-blue-600 hover:text-blue-800">
+                            <button
+                                onClick={() => handleOpenPreview(post)}
+                                className="text-green-500 hover:text-green-600 transition"
+                                title="View Post"
+                            >
                                 <FaEye /> Preview
                             </button>
-                            <button onClick={() => handleOpenModal(post)} className="text-yellow-600 hover:text-yellow-800">
+                            <button
+                                onClick={() => handleOpenModal(post, false)}
+                                className="text-yellow-500 hover:text-yellow-600 transition"
+                                title="Edit Post"
+                            >
                                 <FaEdit /> Edit
                             </button>
-                            <button onClick={handleShare} className="text-green-600 hover:text-green-800">
+                            <button
+                                onClick={() => handleOpenModal(post, true)}
+                                className="text-blue-500 hover:text-blue-600 transition"
+                                title="Share Post"
+                            >
                                 <FaShareAlt /> Share
                             </button>
                         </div>
@@ -127,16 +137,24 @@ export default function LinkedinRET() {
 
             {/* Pagination Controls */}
             <div className="flex justify-between items-center mt-4">
-                <button onClick={handlePrevPage} className={`flex items-center ${currentPage === 0 ? 'text-gray-400 cursor-not-allowed' : 'text-blue-600 hover:text-blue-800'}`} disabled={currentPage === 0}>
+                <button
+                    onClick={handlePrevPage}
+                    className={`flex items-center ${currentPage === 0 ? 'text-gray-400 cursor-not-allowed' : 'text-blue-600 hover:text-blue-800'}`}
+                    disabled={currentPage === 0}
+                >
                     <FaChevronLeft /> Previous
                 </button>
                 <span className="text-gray-600">Page {currentPage + 1} of {totalPages}</span>
-                <button onClick={handleNextPage} className={`flex items-center ${currentPage === totalPages - 1 ? 'text-gray-400 cursor-not-allowed' : 'text-blue-600 hover:text-blue-800'}`} disabled={currentPage === totalPages - 1}>
+                <button
+                    onClick={handleNextPage}
+                    className={`flex items-center ${currentPage === totalPages - 1 ? 'text-gray-400 cursor-not-allowed' : 'text-blue-600 hover:text-blue-800'}`}
+                    disabled={currentPage === totalPages - 1}
+                >
                     Next <FaChevronRight />
                 </button>
             </div>
 
-            {/* Edit Modal */}
+            {/* Edit/Share Modal */}
             {modalOpen && selectedPost && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
                     <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-screen-lg relative">
@@ -144,62 +162,76 @@ export default function LinkedinRET() {
                             <IoClose size={24} />
                         </button>
 
-                        <h2 className="text-2xl font-semibold mb-4">Edit Post</h2>
-                        <form onSubmit={handleSubmit} className="space-y-6">
-                            <div className="relative">
-                                <label htmlFor="title" className="block text-lg font-semibold text-gray-700 mb-2">Title</label>
-                                <input
-                                    type="text"
-                                    id="title"
-                                    value={selectedPost.title}
-                                    onChange={(e) => setSelectedPost({ ...selectedPost, title: e.target.value })}
-                                    className="w-full p-4 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition-colors duration-300"
-                                    placeholder="Enter the title"
-                                    required
-                                />
-                            </div>
-                            <div>
-                                <label htmlFor="content" className="block text-lg font-semibold text-gray-700 mb-2">Content</label>
-                                <ReactQuill
-                                    value={selectedPost.content}
-                                    onChange={handleContentChange}
-                                    className="mt-2 h-72 bg-white border border-gray-300 rounded-md"
-                                    theme="snow"
-                                    modules={{
-                                        toolbar: [
-                                            [{ header: [1, 2, 3, false] }],
-                                            [{ font: ['Arial', 'Courier', 'Georgia', 'Times New Roman', 'Verdana'] }],
-                                            [{ list: 'ordered' }, { list: 'bullet' }],
-                                            ['bold', 'italic', 'underline', 'strike'],
-                                            ['clean'],
-                                        ],
-                                    }}
-                                />
-                            </div>
+                        <h2 className="text-2xl font-semibold mb-4">{isSharing ? "Share Post" : "Edit Post"}</h2>
+                        <div className="max-h-[80vh] overflow-y-auto">
+                            <form onSubmit={handleSubmit} className="space-y-6">
+                                <div className="relative">
+                                    <label htmlFor="title" className="block text-lg font-semibold text-gray-700 mb-2">Title</label>
+                                    <input
+                                        type="text"
+                                        id="title"
+                                        value={selectedPost.title}
+                                        onChange={(e) => setSelectedPost({ ...selectedPost, title: e.target.value })}
+                                        className="w-full p-4 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition-colors duration-300"
+                                        placeholder="Enter the title"
+                                        required
+                                    />
+                                </div>
+                                <div>
+                                    <label htmlFor="content" className="block text-lg font-semibold text-gray-700 mb-2">Content</label>
+                                    <ReactQuill
+                                        value={selectedPost.content}
+                                        onChange={handleContentChange}
+                                        className="mt-2 h-72 bg-white border border-gray-300 rounded-md"
+                                        theme="snow"
+                                        modules={{
+                                            toolbar: [
+                                                [{ header: [1, 2, 3, false] }],
+                                                [{ font: ['Arial', 'Courier', 'Georgia', 'Times New Roman', 'Verdana'] }],
+                                                [{ list: 'ordered' }, { list: 'bullet' }],
+                                                ['bold', 'italic', 'underline', 'strike'],
+                                                ['clean'],
+                                            ],
+                                        }}
+                                    />
+                                </div>
 
-                            {/* Drag and Drop Upload */}
-                            <div {...getRootProps()} className="border-2 border-dashed border-gray-300 p-4 text-center cursor-pointer">
-                                <input {...getInputProps()} />
-                                <p>Drag & drop images or video here, or click to select files</p>
-                            </div>
-                            {files.length > 0 && (
-                                <div className="mt-2">
-                                    <h3 className="font-semibold">Images:</h3>
-                                    <ul className="list-disc pl-5">
-                                        {files.map((file, index) => (
-                                            <li key={index}>{file.name}</li>
-                                        ))}
-                                    </ul>
+                                {isSharing && (
+                                    <>
+                                        {/* Drag and Drop Upload */}
+                                        <div {...getRootProps()} className="border-2 border-dashed border-gray-300 p-4 text-center cursor-pointer">
+                                            <input {...getInputProps()} />
+                                            <p className="text-gray-500">Drag & drop images or video here, or click to select files</p>
+                                        </div>
+                                        {files.length > 0 && (
+                                            <div className="mt-2">
+                                                <h3 className="font-semibold">Images:</h3>
+                                                <ul>
+                                                    {files.map((file, index) => (
+                                                        <li key={index} className="text-gray-600">{file.name}</li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                        )}
+                                        {videoFile && (
+                                            <div className="mt-2">
+                                                <h3 className="font-semibold">Video:</h3>
+                                                <p className="text-gray-600">{videoFile.name}</p>
+                                            </div>
+                                        )}
+                                    </>
+                                )}
+
+                                <div className="flex justify-end">
+                                    <button
+                                        type="submit"
+                                        className="px-6 py-2 text-white bg-gradient-to-r from-purple-500 to-purple-600 rounded-md hover:from-purple-600 hover:to-purple-700 transition-all duration-300"
+                                    >
+                                        {isSharing ? "Share" : "Save"}
+                                    </button>
                                 </div>
-                            )}
-                            {videoFile && (
-                                <div className="mt-2">
-                                    <h3 className="font-semibold">Video:</h3>
-                                    <p>{videoFile.name}</p>
-                                </div>
-                            )}
-                            <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition-colors duration-300">Save Changes</button>
-                        </form>
+                            </form>
+                        </div>
                     </div>
                 </div>
             )}
@@ -214,25 +246,21 @@ export default function LinkedinRET() {
 
                         <h2 className="text-2xl font-semibold mb-4">Preview Post</h2>
                         <h3 className="text-xl font-bold mb-2">{selectedPost.title}</h3>
-                        <div className="text-gray-800" dangerouslySetInnerHTML={{ __html: selectedPost.content }} />
-                        {/* Preview images and video if needed */}
+                        <div className="mb-4" dangerouslySetInnerHTML={{ __html: selectedPost.content }} />
                         {files.length > 0 && (
-                            <div className="mt-4">
-                                <h4 className="font-semibold">Images:</h4>
-                                <div className="grid grid-cols-2 gap-4">
+                            <div className="mb-4">
+                                <h3 className="font-semibold">Images:</h3>
+                                <ul>
                                     {files.map((file, index) => (
-                                        <img key={index} src={URL.createObjectURL(file)} alt={file.name} className="w-full h-auto object-cover" />
+                                        <li key={index} className="text-gray-600">{file.name}</li>
                                     ))}
-                                </div>
+                                </ul>
                             </div>
                         )}
                         {videoFile && (
-                            <div className="mt-4">
-                                <h4 className="font-semibold">Video:</h4>
-                                <video controls className="w-full h-auto">
-                                    <source src={URL.createObjectURL(videoFile)} type={videoFile.type} />
-                                    Your browser does not support the video tag.
-                                </video>
+                            <div className="mb-4">
+                                <h3 className="font-semibold">Video:</h3>
+                                <p className="text-gray-600">{videoFile.name}</p>
                             </div>
                         )}
                     </div>

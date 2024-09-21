@@ -1,15 +1,27 @@
 import React, { useState } from 'react';
 import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css'; // Import Quill's CSS
+import 'react-quill/dist/quill.snow.css';
 import { motion } from 'framer-motion';
-import { FaHtml5, FaMarkdown, FaCopy, FaSave } from 'react-icons/fa'; // Import icons from react-icons
-import TurndownService from 'turndown'; // Markdown conversion library
+import { FaHtml5, FaMarkdown, FaCopy, FaSave } from 'react-icons/fa';
+import TurndownService from 'turndown';
+import { useEffect } from 'react';
 
-export default function RichEditorText() {
+const RichEditorText = ({ initialData, onClose }) => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [tags, setTags] = useState('');
     const [subtitle, setSubtitle] = useState('');
+
+    useEffect(() => {
+        if (initialData) {
+            setTitle(initialData.title);
+            setContent(initialData.content);
+            setTags(tags);
+            setSubtitle(subtitle);
+        }
+    }, [initialData]);
+
+
     const [activeButton, setActiveButton] = useState('');
 
     const handleContentChange = (value) => {
@@ -191,3 +203,4 @@ export default function RichEditorText() {
         </div>
     );
 }
+export default RichEditorText

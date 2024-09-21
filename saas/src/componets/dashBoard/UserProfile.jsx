@@ -2,6 +2,7 @@ import ProfileHeader from "./userComponets/ProfileHeader";
 import BillingInfo from "./userComponets/BillingInfo";
 import AccountManagement from "./userComponets/AccountManagemnt";
 import SubscriptionInfo from "./userComponets/SubscriptionInfo";
+const url = "https://voiceblogify-backend.onrender.com"
 
 const UserProfile = () => {
     const userData = {

@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FaMicrophone, FaYoutube, FaFileAudio, FaMedium, FaBlogger, FaLinkedin, FaEdit, FaCode } from 'react-icons/fa';
+const url = "https://voiceblogify-backend.onrender.com"
 
 export default function LandingPage() {
     return (

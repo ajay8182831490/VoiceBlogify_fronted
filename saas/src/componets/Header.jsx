@@ -8,6 +8,7 @@ import profilepng from '../assets/profile.png'
 
 import { Notify } from './NotifyToast.jsx'
 import { useEffect } from 'react'
+const url = "https://voiceblogify-backend.onrender.com"
 
 const navigation = [
     { name: 'Features', href: '#features', current: false },
