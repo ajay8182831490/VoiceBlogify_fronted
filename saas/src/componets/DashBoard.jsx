@@ -9,6 +9,7 @@ import { HiOutlineChevronLeft, HiOutlineChevronRight } from 'react-icons/hi';
 import { useAuth } from '@/userContext/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import DashboardRoutes from './DashBoardRoutes';
+const url = "https://voiceblogify-backend.onrender.com"
 
 const Dashboard = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);

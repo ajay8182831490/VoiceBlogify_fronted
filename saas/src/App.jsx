@@ -45,7 +45,7 @@ function App() {
           </>
         ) : (
           <>
-            <Route path="/main" element={<AudioPage />} />
+            {<Route path="/main" element={<AudioPage />} />}
             {<Route path="/dashboard/*" element={<PrivateRoute element={<Dashboard />} />} />}
             {<Route path="*" element={<Navigate to="/dashboard/user-posts" />} />}
           </>

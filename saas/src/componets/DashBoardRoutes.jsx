@@ -8,6 +8,7 @@ const Medium = lazy(() => import('./dashBoard/Medium'));
 const Blogger = lazy(() => import('./dashBoard/Blogger'));
 
 import UserPost from './dashBoard/UserPost';
+const url = "https://voiceblogify-backend.onrender.com"
 
 const DashboardRoutes = () => {
     return (

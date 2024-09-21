@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import { motion } from 'framer-motion';
 import { FaCalendarAlt } from 'react-icons/fa';
+const url = "https://voiceblogify-backend.onrender.com"
 
 const SubscriptionInfo = ({ planName, totalPosts, remainingPosts, nextDueDate }) => {
     return (

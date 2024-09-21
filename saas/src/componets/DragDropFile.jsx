@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { motion } from 'framer-motion';
+const url = "https://voiceblogify-backend.onrender.com"
 
 const AudioDropzone = ({ onFileUploaded }) => {
     const [uploadedFile, setUploadedFile] = useState(null);

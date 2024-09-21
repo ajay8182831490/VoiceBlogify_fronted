@@ -4,6 +4,7 @@ import 'react-quill/dist/quill.snow.css'; // Import Quill's CSS
 import { FaEye, FaEdit, FaShareAlt, FaMedium } from 'react-icons/fa';
 import { IoClose } from 'react-icons/io5';
 import ViewPostModal from './MediumPreviewStyle'; // Ensure this path is correct
+const url = "https://voiceblogify-backend.onrender.com"
 
 export default function Medium() {
     const [posts] = useState([
@@ -80,7 +81,7 @@ export default function Medium() {
     return (
         <div className="p-4 md:p-8 max-w-screen-lg mx-auto bg-gradient-to-r from-blue-200 via-purple-200 to-pink-200 min-h-screen">
             <h1 className="text-3xl md:text-4xl font-extrabold text-gray-800 mb-6 text-center">
-                Medium Posts
+                Launch Post on  Medium
             </h1>
 
             {/* Post List */}

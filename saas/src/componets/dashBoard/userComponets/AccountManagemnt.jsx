@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { FaLock, FaSignOutAlt } from 'react-icons/fa';
+const url = "https://voiceblogify-backend.onrender.com"
 
 const AccountManagement = ({ onChangePassword, onLogout }) => {
     return (

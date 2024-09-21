@@ -1,4 +1,5 @@
 import { useState } from "react";
+const url = "https://voiceblogify-backend.onrender.com"
 
 export default function ResetPassword() {
     const [email, setEmail] = useState(""); // Default value to avoid uncontrolled input warning
@@ -8,7 +9,7 @@ export default function ResetPassword() {
         e.preventDefault(); // Prevent the default form submission behavior
 
         try {
-            const response = await fetch('http://localhost:4000/otpGenrator', {
+            const response = await fetch(`${url}/otpGenrator`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

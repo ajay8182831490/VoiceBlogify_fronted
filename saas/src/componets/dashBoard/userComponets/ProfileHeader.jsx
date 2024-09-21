@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { FaUserCircle, FaEnvelope, FaLinkedin, FaMedium, FaBlog } from 'react-icons/fa';
+const url = "https://voiceblogify-backend.onrender.com"
 
 const ProfileHeader = ({ name, email, platforms }) => {
     return (
