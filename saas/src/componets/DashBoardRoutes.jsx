@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 
 const UserProfile = lazy(() => import('./dashBoard/UserProfile'));
-const LinkedIn = lazy(() => import('./dashBoard/LinkedIn'));
+const LinkedIn = lazy(() => import('./dashBoard/Linkedin'));
 const Medium = lazy(() => import('./dashBoard/Medium'));
 const Blogger = lazy(() => import('./dashBoard/Blogger'));
 
