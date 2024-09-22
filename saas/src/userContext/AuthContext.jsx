@@ -16,27 +16,53 @@ export function AuthProvider({ children }) {
 
         async function checkAuth() {
             try {
-                const response = await fetch('http://localhost:4000/status', {
-                    credentials: 'include'
+                const apiUrl = 'http://localhost:4000';
+                const response = await fetch(`${apiUrl}/status`, {
+                    method: 'GET',
+                    credentials: 'include', // Ensure cookies are sent
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
                 });
+
+                console.log('Response:', response);
+
+                // Check if the response is OK
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    if (response.status === 401) {
+                        console.warn('User is not authenticated. Please log in.');
+                        // Optionally redirect to login
+                        // window.location.href = '/login';
+                    } else {
+                        console.error('Error fetching auth status:', response.status, errorText);
+                    }
+                    return;
+                }
+
+                // Parse JSON data from response
                 const data = await response.json();
+                console.log('Auth data:', data);
 
-                console.log(data)
-
-
+                // Check authentication status
                 if (data.authenticated) {
                     setIsAuthenticated(true);
                     setUser({
                         name: data.name,
                         profilepicurl: data.profilepic,
-                        userId: data.id
+                        userId: data.id,
                     });
-                    setPaidMember(false);
+                    setPaidMember(data.paidMember || false);
+                } else {
+                    console.warn('User is not authenticated:', data);
                 }
             } catch (error) {
                 console.error('Error checking auth:', error);
+                alert('An error occurred while checking authentication. Please try again.');
             }
         }
+
+
 
         checkAuth();
     }, []);
@@ -44,13 +70,13 @@ export function AuthProvider({ children }) {
 
     const handleLogout = async () => {
         try {
-            const response = await fetch('http://localhost:4000/logout', {
+            const response = await fetch('https://voiceblogify-backend.onrender.com/logout', {
                 method: 'GET',
                 credentials: 'include'
             });
 
             if (response.ok) {
-                // Reset authentication and user state on successful logout
+
                 setIsAuthenticated(false);
                 setUser(null);
 
