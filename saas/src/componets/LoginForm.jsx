@@ -42,8 +42,8 @@ export default function LoginForm() {
 export function GoogleButton() {
 
     const handleGoogleLogin = async () => {
-        const isLocal = window.location.hostname === 'localhost';
-        const backendUrl = isLocal ? 'http://localhost:4000/auth/google' : 'https://voiceblogify-backend.onrender.com/auth/google';
+
+        const backendUrl = 'https://voiceblogify-backend.onrender.com/auth/google';
 
         try {
 
@@ -63,7 +63,6 @@ export function GoogleButton() {
             console.error('Error during Google login fetch:', error);
         }
     };
-
     return (
         <button
             className="-2 mt-8 flex items-center justify-center rounded-md border px-4 py-1 outline-none ring-gray-400 ring-offset-2 transition hover:border-transparent hover:bg-black hover:text-white focus:ring-2"

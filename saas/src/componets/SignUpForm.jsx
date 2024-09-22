@@ -43,8 +43,8 @@ export default function SignUpForm() {
 export function GoogleButton() {
 
     const handleGoogleLogin = async () => {
-        const isLocal = window.location.hostname === 'localhost';
-        const backendUrl = isLocal ? 'http://localhost:4000/auth/google' : 'https://voiceblogify-backend.onrender.com/auth/google';
+
+        const backendUrl = 'https://voiceblogify-backend.onrender.com/auth/google';
 
         try {
 
