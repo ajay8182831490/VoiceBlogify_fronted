@@ -16,7 +16,8 @@ export function AuthProvider({ children }) {
 
         async function checkAuth() {
             try {
-                const response = await fetch('http://localhost:4000/status', {
+                const response = await fetch('https://voiceblogify-backend.onrender.com/status', {
+                    method: 'GET',
                     credentials: 'include'
                 });
                 const data = await response.json();
@@ -44,13 +45,13 @@ export function AuthProvider({ children }) {
 
     const handleLogout = async () => {
         try {
-            const response = await fetch('http://localhost:4000/logout', {
+            const response = await fetch('https://voiceblogify-backend.onrender.com/logout', {
                 method: 'GET',
                 credentials: 'include'
             });
 
             if (response.ok) {
-                // Reset authentication and user state on successful logout
+
                 setIsAuthenticated(false);
                 setUser(null);
 
@@ -68,7 +69,7 @@ export function AuthProvider({ children }) {
     );
 }
 
-// Custom hook to use AuthContext easily in any component
+
 export const useAuth = () => useContext(AuthContext);
 
 export default AuthContext;

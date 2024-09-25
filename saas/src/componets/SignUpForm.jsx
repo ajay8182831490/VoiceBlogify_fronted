@@ -41,10 +41,14 @@ export default function SignUpForm() {
 }
 
 export function GoogleButton() {
+    const handleGoogleLogin = () => {
+        const backendUrl = 'https://voiceblogify-backend.onrender.com/auth/google';
+        window.location.href = backendUrl;
+    };
     return (
         <button
             className="-2 mt-8 flex items-center justify-center rounded-md border px-4 py-1 outline-none ring-gray-400 ring-offset-2 transition hover:border-transparent hover:bg-black hover:text-white focus:ring-2"
-            onClick={() => (window.location.href = `${url}/auth/google`)}
+            onClick={handleGoogleLogin}
         >
             <svg xmlns="http://www.w3.org/2000/svg" width="32px" viewBox="0 0 512 512">
                 <path fill="#fbbd00" d="M120 256c0-25.367 6.989-49.13 19.131-69.477v-86.308H52.823C18.568 144.703 0 198.922 0 256s18.568 111.297 52.823 155.785h86.308v-86.308C126.989 305.13 120 281.367 120 256z" />

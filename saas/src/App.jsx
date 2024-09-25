@@ -13,6 +13,9 @@ import MyAudioRecordingComponent from './componets/AudioTest';
 import RichEditorText from './componets/RichEditorText';
 import Dashboard from './componets/DashBoard';
 import PrivateRoute from './componets/PrivateRoutes';
+import PricingCard from './componets/Pricing';
+import Footer from './componets/Footer';
+
 
 function App() {
   const { isAuthenticated } = useAuth();
@@ -27,10 +30,12 @@ function App() {
   return (
     <>
       <Header />
+
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/edit" element={<RichEditorText />} />
         <Route path="/dashboard/*" element={<Dashboard />} />
+        <Route path='/pricing' element={<PricingCard />} />
 
 
         {!isAuthenticated ? (
@@ -51,6 +56,7 @@ function App() {
           </>
         )}
       </Routes>
+      <Footer />
     </>
   );
 }
