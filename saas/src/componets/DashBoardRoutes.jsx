@@ -4,7 +4,7 @@ import { lazy, Suspense } from 'react';
 
 const UserProfile = lazy(() => import('./dashBoard/UserProfile'));
 const LinkedIn = lazy(() => import('./dashBoard/Linkedin'));
-const Medium = lazy(() => import('./dashBoard/Medium.jsx'));
+const Medium = lazy(() => import('./dashBoard/Medium'));
 const Blogger = lazy(() => import('./dashBoard/Blogger'));
 
 import UserPost from './dashBoard/UserPost';

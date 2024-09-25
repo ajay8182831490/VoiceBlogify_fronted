@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import ParentComponent from './ParentsFileUpload';
-import PasteUrlComponent from './PasteUrl';
+import PasteUrlComponent from './PasteUrlComponent'
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import MyAudioRecordingComponent from './AudioTest';
