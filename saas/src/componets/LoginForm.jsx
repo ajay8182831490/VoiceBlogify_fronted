@@ -40,28 +40,9 @@ export default function LoginForm() {
 }
 
 export function GoogleButton() {
-
-    const handleGoogleLogin = async () => {
-
+    const handleGoogleLogin = () => {
         const backendUrl = 'https://voiceblogify-backend.onrender.com/auth/google';
-
-        try {
-
-            const response = await fetch(backendUrl, {
-                method: 'GET',
-                credentials: 'include',
-            });
-
-            if (response.redirected) {
-
-                window.location.href = response.url;
-            } else {
-
-                console.error('Error initiating Google login:', await response.text());
-            }
-        } catch (error) {
-            console.error('Error during Google login fetch:', error);
-        }
+        window.location.href = backendUrl;
     };
     return (
         <button
@@ -108,15 +89,22 @@ export function LoginForm1() {
                 body: JSON.stringify(data),
                 credentials: 'include',
             });
+
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                NotifyFalse(errorData.message || "Login failed");
+                navigate('/login');
+                return;
+            }
+
             const responseData = await response.json();
 
-            if (response.ok) {
 
+            if (responseData.authenticated) {
                 setIsAuthenticated(true);
                 setUser({
-                    name: responseData.name,
-                    profilepicurl: responseData.profilepic,
-                    userId: responseData.id,
+                    name: responseData.name || "User", // Fallback in case name is undefined
                 });
                 Notify('You have successfully logged in');
                 navigate('/');
@@ -125,9 +113,11 @@ export function LoginForm1() {
                 navigate('/login');
             }
         } catch (error) {
+            console.error(error);
             NotifyFalse("Something went wrong.");
         }
     };
+
 
     return (
         <form className="flex flex-col items-stretch pt-3 md:pt-8" onSubmit={handleSubmit(onSubmit)}>
