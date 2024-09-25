@@ -8,31 +8,31 @@ const VisualPath = () => {
             title: "Record Your Audio",
             description: "Capture your ideas on-the-go, anytime and anywhere. Whether you're in your car or on a walk, simply click to record your voice and let VoiceBlogify transform your spoken thoughts into written content.",
             icon: <FaMicrophone className="text-4xl text-white" />,
-            color: "bg-orange-500", // Warm color
+            color: "bg-orange-500",
         },
         {
             title: "Upload Your Files",
             description: "Easily upload audio files or paste a YouTube link. VoiceBlogify supports various formats, making the process seamless for you, regardless of where you are.",
             icon: <FaUpload className="text-4xl text-white" />,
-            color: "bg-yellow-500", // Warm color
+            color: "bg-yellow-500",
         },
         {
             title: "AI Transcription",
             description: "Our AI transcribes your audio into text while generating titles, subtitles, tags, and a structured summary. Enjoy a human-like touch to your content that turns your organized thoughts into coherent posts.",
             icon: <FaClipboardList className="text-4xl text-white" />,
-            color: "bg-red-500", // Warm color
+            color: "bg-red-500",
         },
         {
             title: "Edit Your Content",
             description: "Refine the generated content according to your needs. You can easily modify the text to align with your voice and style, ensuring your personality shines through.",
             icon: <FaEdit className="text-4xl text-white" />,
-            color: "bg-teal-500", // Warm color
+            color: "bg-teal-500",
         },
         {
             title: "Publish & Share",
             description: "Export your articles as rich text, plain HTML, or Markdown format. Post directly to platforms like LinkedIn, Medium, and Blogger with a single click, sharing your thoughts with the world effortlessly.",
             icon: <FaShareAlt className="text-4xl text-white" />,
-            color: "bg-pink-500", // Warm color
+            color: "bg-pink-500",
         },
     ];
 
@@ -61,4 +61,4 @@ const VisualPath = () => {
     );
 };
 
-export default VisualPath;
+export default React.memo(VisualPath);

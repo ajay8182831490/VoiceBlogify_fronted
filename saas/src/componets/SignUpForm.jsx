@@ -104,12 +104,15 @@ function LoginForm1() {
                 responseData = await response.text();
             }
 
+
+
+
             if (responseData.authenticated) {
                 Notify('Account created successfully');
                 setIsAuthenticated(true);
                 setUser({
-                    name: responseData.user.name,
-                    userId: responseData.user.id,
+                    name: responseData.name,
+
                 });
                 navigate('/');
             } else {

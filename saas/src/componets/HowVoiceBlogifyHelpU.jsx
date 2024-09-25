@@ -54,4 +54,4 @@ const HowVoiceBlogifyHelps = () => {
     );
 };
 
-export default HowVoiceBlogifyHelps;
+export default React.memo(HowVoiceBlogifyHelps);

@@ -1,47 +1,44 @@
 import { useState, createContext, useEffect, useContext } from "react";
-import { useNavigate } from "react-router-dom";
 
 // Create the AuthContext
 const AuthContext = createContext();
 
-
 export function AuthProvider({ children }) {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [user, setUser] = useState(null);
-    const [isPaid, setPaidMember] = useState(false)
-
-
+    const [isPaid, setPaidMember] = useState(false); // Use this if you manage paid status
 
     useEffect(() => {
-
-        async function checkAuth() {
+        const checkAuth = async () => {
             try {
                 const response = await fetch('https://voiceblogify-backend.onrender.com/status', {
                     method: 'GET',
                     credentials: 'include'
                 });
                 const data = await response.json();
+                console.log(data);
 
-                console.log(data)
 
-
-                if (data.authenticated) {
-                    setIsAuthenticated(true);
-                    setUser({
-                        name: data.name,
-                        profilepicurl: data.profilepic,
-                        userId: data.id
-                    });
-                    setPaidMember(false);
+                if (data.authenticated !== isAuthenticated) {
+                    setIsAuthenticated(data.authenticated);
+                    if (data.authenticated) {
+                        setUser({
+                            name: data.name,
+                            profilepicurl: data.profilepic,
+                            userId: data.id,
+                        });
+                        setPaidMember(data.isPaid);
+                    } else {
+                        setUser(null);
+                    }
                 }
             } catch (error) {
                 console.error('Error checking auth:', error);
             }
-        }
+        };
 
         checkAuth();
-    }, []);
-
+    }, [isAuthenticated]); // Run this effect when isAuthenticated changes
 
     const handleLogout = async () => {
         try {
@@ -51,25 +48,20 @@ export function AuthProvider({ children }) {
             });
 
             if (response.ok) {
-
                 setIsAuthenticated(false);
                 setUser(null);
-
             }
         } catch (error) {
-            console.error('Error during logout:', error);
+
         }
     };
 
-
     return (
-        <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated, user, setUser, handleLogout, isPaid }}>
+        <AuthContext.Provider value={{ isAuthenticated, user, handleLogout, setIsAuthenticated, setUser, isPaid }}>
             {children}
         </AuthContext.Provider>
     );
 }
 
-
 export const useAuth = () => useContext(AuthContext);
-
 export default AuthContext;

@@ -6,7 +6,7 @@ const PricingFAQ = () => {
     const faqs = [
         {
             question: "Is there a trial period for the different plans?",
-            answer: "You can try Blog Recorder for free to create 1 article. If you're satisfied with the platform, you can choose a plan that best suits your needs."
+            answer: "You can try VoiceBlogify for free to create 1 article. If you're satisfied with the platform, you can choose a plan that best suits your needs."
         },
         {
             question: "Can I switch between plans?",

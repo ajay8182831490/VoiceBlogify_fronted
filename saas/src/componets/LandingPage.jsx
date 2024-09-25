@@ -2,14 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FaMicrophone, FaYoutube, FaFileAudio, FaMedium, FaBlogger, FaLinkedin, FaEdit, FaCode } from 'react-icons/fa';
-const url = "https://voiceblogify-backend.onrender.com"
+//const url = "https://voiceblogify-backend.onrender.com"
 import MainComponent from './mainComponetsWork';
-import PricingCard from './Pricing';
+
 export default function LandingPage() {
     return (
         <>
             <div className="min-h-screen bg-gradient-to-r from-indigo-50 to-blue-50 flex flex-col items-center">
-                {/* Hero Section */}
+
                 <motion.section
                     className="relative w-full bg-gradient-to-r from-blue-500 to-teal-500 text-white py-24 overflow-hidden"
                     initial={{ opacity: 0 }}
@@ -52,7 +52,7 @@ export default function LandingPage() {
                     </div>
                 </motion.section>
 
-                {/* Key Features Section */}
+
                 <motion.section
                     className="container mx-auto px-6 py-16"
                     initial={{ opacity: 0 }}
@@ -100,7 +100,7 @@ export default function LandingPage() {
                     </div>
                 </motion.section>
 
-                {/* Why Choose VoiceBlogify Section */}
+
                 <motion.section
                     className="bg-gradient-to-r from-green-50 to-teal-50 py-16 px-6"
                     initial={{ opacity: 0 }}
@@ -135,7 +135,7 @@ export default function LandingPage() {
                     </div>
                 </motion.section>
 
-                {/* Editor and Export Options Section */}
+
                 <motion.section
                     className="container mx-auto px-6 py-16"
                     initial={{ opacity: 0 }}
@@ -173,7 +173,7 @@ export default function LandingPage() {
                     </div>
                 </motion.section>
 
-                {/* Platform Integrations Section */}
+
                 <motion.section
                     className="bg-gradient-to-r from-gray-100 to-gray-200 py-16 px-6"
                     initial={{ opacity: 0 }}
@@ -220,7 +220,7 @@ export default function LandingPage() {
                     </div>
                 </motion.section>
 
-                {/* Call to Action */}
+
                 <motion.section
                     className="bg-gradient-to-r from-indigo-500 to-purple-600 py-16 px-6"
                     initial={{ opacity: 0 }}

@@ -1,10 +1,11 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import PricingFAQ from './PricingFaq';
+import React from 'react';
 
 const PricingCard = () => {
     const [isYearly, setIsYearly] = useState(false); // State to track toggle selection
-    const plans = [
+    const [plans, setPlans] = useState([
         {
             name: 'Basic',
             price: isYearly ? '$89.88' : '$9.99', // Annual price
@@ -48,16 +49,25 @@ const PricingCard = () => {
             ],
             button: isYearly ? 'Subscribe for $959.88' : 'Subscribe for $99.99',
         },
-    ];
+    ]);
 
     const handleCorrect = (planIdx, featureIdx) => {
-        const updatedPlans = [...plans];
-        updatedPlans[planIdx].features[featureIdx].corrected = !updatedPlans[planIdx].features[featureIdx].corrected;
-        // Update state or handle any side effects if necessary
+        setPlans(prevPlans => {
+            const updatedPlans = [...prevPlans];
+            updatedPlans[planIdx].features[featureIdx].corrected = !updatedPlans[planIdx].features[featureIdx].corrected;
+            return updatedPlans;
+        });
     };
 
     const togglePaymentPlan = () => {
-        setIsYearly(!isYearly); // Toggle between monthly and yearly
+        setIsYearly(!isYearly);
+        setPlans(prevPlans => prevPlans.map(plan => ({
+            ...plan,
+            price: isYearly ? (plan.price.replace('$89.88', '$9.99').replace('$239.88', '$29.99').replace('$959.88', '$99.99')) :
+                (plan.price.replace('$9.99', '$89.88').replace('$29.99', '$239.88').replace('$99.99', '$959.88')),
+            button: isYearly ? plan.button.replace(/\$\d+\.\d+/, (parseFloat(plan.button.match(/\d+\.\d+/)[0]) * 12).toFixed(2)) :
+                plan.button.replace(/\$\d+\.\d+/, (parseFloat(plan.button.match(/\d+\.\d+/)[0]) / 12).toFixed(2)),
+        })));
     };
 
     return (
@@ -136,4 +146,4 @@ const PricingCard = () => {
     );
 };
 
-export default PricingCard;
+export default React.memo(PricingCard);
