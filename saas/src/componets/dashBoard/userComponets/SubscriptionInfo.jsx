@@ -1,10 +1,15 @@
 import PropTypes from 'prop-types';
 import { motion } from 'framer-motion';
 import { FaCalendarAlt } from 'react-icons/fa';
-const url = "https://voiceblogify-backend.onrender.com"
+
 
 const SubscriptionInfo = ({ planName, totalPosts, remainingPosts, nextDueDate }) => {
+
+
+    const formattedNextDueDate = nextDueDate ? new Date(nextDueDate).toLocaleDateString() : ''
+
     return (
+
         <motion.div
             className="p-6 bg-white shadow-lg rounded-lg mb-6 border border-gray-200"
             initial={{ opacity: 0, y: 20 }}
@@ -29,7 +34,7 @@ const SubscriptionInfo = ({ planName, totalPosts, remainingPosts, nextDueDate })
                     <FaCalendarAlt className="text-gray-500 mr-2" />
                     <div>
                         <p className="text-sm text-gray-500">Next Due Date:</p>
-                        <p className="text-lg font-semibold text-gray-700">{nextDueDate}</p>
+                        <p className="text-lg font-semibold text-gray-700">{formattedNextDueDate}</p>
                     </div>
                 </div>
             </div>

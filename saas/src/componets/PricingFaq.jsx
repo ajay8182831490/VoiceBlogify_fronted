@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, React, mem } from 'react';
 
 const PricingFAQ = () => {
     const [openIndex, setOpenIndex] = useState(null);
@@ -50,4 +50,4 @@ const PricingFAQ = () => {
     );
 };
 
-export default PricingFAQ;
+export default PricingFAQ

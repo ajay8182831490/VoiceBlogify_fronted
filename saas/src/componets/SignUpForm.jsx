@@ -6,6 +6,7 @@ import { useAuth } from '@/userContext/AuthContext';
 import { Notify, NotifyFalse } from './NotifyToast.jsx';
 import React from 'react';
 
+
 const url = "https://voiceblogify-backend.onrender.com"
 
 const loginSchema = z.object({
@@ -42,7 +43,7 @@ export default function SignUpForm() {
 
 export function GoogleButton() {
     const handleGoogleLogin = () => {
-        const backendUrl = 'https://voiceblogify-backend.onrender.com/auth/google';
+        const backendUrl = `${url}/auth/google`;
         window.location.href = backendUrl;
     };
     return (

@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { MicrophoneIcon, PauseIcon, PlayIcon, StopIcon, ArrowPathIcon, ArrowDownTrayIcon } from '@heroicons/react/24/outline';
 import { useNavigate } from 'react-router-dom';
-import './AudioRecordingComponent.css'; // Import the CSS file for animations
+import './AudioRecordingComponent.css';
 
 const Url = "https://voiceblogify-backend.onrender.com"
 

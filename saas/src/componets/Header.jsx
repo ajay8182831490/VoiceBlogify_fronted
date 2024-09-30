@@ -10,6 +10,7 @@ import { Notify } from './NotifyToast.jsx'
 import { memo, useEffect } from 'react'
 import { Helmet } from 'react-helmet'
 
+
 const url = "https://voiceblogify-backend.onrender.com"
 
 const navigation = [
@@ -46,13 +47,13 @@ const Header = memo(() => {
                 <meta name="keywords" content="voice blog, audio to text, blog writing, content creation, voice recording, AI blog generator, VoiceBlogify, convert audio to blog, audio blogging platform, audio transcription, voice to blog" />
                 <meta property="og:title" content="VoiceBlogify - Transform Your Audio into Blog Posts" />
                 <meta property="og:description" content="Quickly convert your voice recordings into polished blog posts effortlessly." />
-                <meta property="og:image" content="https://voiceblogify.netlify.app/landingpage.png" />
+                <meta property="og:image" content="https://voiceblogify.netlify.app/landingpage.webp" />
                 <meta property="og:url" content="https://voiceblogify.netlify.app" />
                 <meta property="og:type" content="website" />
                 <meta name="twitter:card" content="summary_large_image" />
                 <meta name="twitter:title" content="VoiceBlogify - Transform Your Audio into Blog Posts" />
                 <meta name="twitter:description" content="Quickly convert your voice recordings into polished blog posts effortlessly." />
-                <meta name="twitter:image" content="https://voiceblogify.netlify.app/landingpage.png" />
+                <meta name="twitter:image" content="https://voiceblogify.netlify.app/landingpage.webp" />
             </Helmet>
             <Disclosure as="nav" className="bg-gradient-to-r from-purple-500 via-indigo-500 to-blue-500 sticky top-0 z-50 shadow-lg">
                 <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">

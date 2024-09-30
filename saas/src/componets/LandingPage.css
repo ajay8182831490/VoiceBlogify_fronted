@@ -1,0 +1,33 @@
+@keyframes typing {
+    0% {
+        width: 0;
+    }
+    100% {
+        width: 100%;
+    }
+}
+
+.writing-animation {
+    display: inline-block;
+    overflow: hidden; /* Ensures the text is clipped */
+    white-space: nowrap; /* Prevents text wrapping */
+    border-right: 2px solid; /* Creates the typing cursor effect */
+    animation: typing 4s steps(30, end), blink-caret 0.75s step-end infinite;
+    font-family: 'Courier New', Courier, monospace; /* Monospace font for typing effect */
+}
+
+@keyframes blink-caret {
+    50% {
+        border-color: transparent; /* Makes the cursor blink */
+    }
+}
+
+/* Optional: Add a slight 3D effect on hover for headings */
+h2 {
+    perspective: 1000px;
+    transition: transform 0.3s ease;
+}
+
+h2:hover {
+    transform: translateZ(10px); /* Slightly raises the text on hover */
+}

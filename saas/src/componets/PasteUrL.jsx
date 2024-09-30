@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { z } from 'zod';
 
-const Url = "https://voiceblogify-backend.onrender.com"
 
-// Zod schema to validate URL
+//const url = "https://voiceblogify-backend.onrender.com"
+
+
 const urlSchema = z.string().url({ message: "Invalid URL" });
 
 export default function PasteUrlComponent() {
@@ -12,20 +13,20 @@ export default function PasteUrlComponent() {
     const [responseMessage, setResponseMessage] = useState(null);
 
     const handleUrlSubmit = async (e) => {
-        e.preventDefault(); // Prevent the default form submission behavior
+        e.preventDefault();
 
 
 
 
         try {
-            // Validate the URL using Zod schema
+
             urlSchema.parse(url);
-            setError(''); // Clear any existing errors
+            setError('');
 
 
 
-            // Submit the URL to the backend
-            const response = await fetch(`${Url}/transcription/url`, {
+
+            const response = await fetch(`${url}/transcription/url`, {
                 method: 'POST',
                 credentials: 'include',
                 headers: { 'Content-Type': 'application/json' },
@@ -38,16 +39,15 @@ export default function PasteUrlComponent() {
             }
 
             const result = await response.json();
-            console.log("Response received:", result);
+
 
             setResponseMessage(result.message || 'Transcription successful.');
 
         } catch (err) {
-            // Handle validation or fetch errors
-            console.error("Error occurred:", err);
+
 
             if (err instanceof z.ZodError) {
-                setError(err.errors[0].message); // Handle Zod validation error
+                setError(err.errors[0].message);
             } else {
                 setError(err.message || 'An unexpected error occurred.');
             }
@@ -59,7 +59,7 @@ export default function PasteUrlComponent() {
             <h2 className="text-lg font-semibold mb-4">Paste YouTube Video Url</h2>
 
             <form
-                onSubmit={handleUrlSubmit} // Moved the form submission here
+                onSubmit={handleUrlSubmit}
                 className="w-full max-w-lg flex flex-col sm:flex-row items-center justify-between bg-gray-100 p-4 rounded-md shadow-md relative"
             >
                 <div className="w-full relative">

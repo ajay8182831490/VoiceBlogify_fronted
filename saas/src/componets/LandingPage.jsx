@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FaMicrophone, FaYoutube, FaFileAudio, FaMedium, FaBlogger, FaLinkedin, FaEdit, FaCode } from 'react-icons/fa';
-//const url = "https://voiceblogify-backend.onrender.com"
+
 import MainComponent from './mainComponetsWork';
 
 export default function LandingPage() {
@@ -47,7 +47,7 @@ export default function LandingPage() {
                     </div>
                     <div className="absolute inset-0 flex items-center justify-center">
                         <svg className="w-full h-full absolute bottom-0 left-0" viewBox="0 0 1440 320" xmlns="http://www.w3.org/2000/svg" fill="#ffffff">
-                            <path fill-opacity="0.3" d="M0,256L1440,320L1440,0L0,0Z"></path>
+                            <path fillOpacity="0.3" d="M0,256L1440,320L1440,0L0,0Z"></path>
                         </svg>
                     </div>
                 </motion.section>
@@ -115,19 +115,19 @@ export default function LandingPage() {
                         <ul className="text-left mx-auto max-w-xl">
                             <li className="mb-4 flex items-start">
                                 <svg className="w-6 h-6 text-green-500 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
                                 </svg>
                                 <span className="text-gray-600">Convert your audio into polished, professional blog posts effortlessly.</span>
                             </li>
                             <li className="mb-4 flex items-start">
                                 <svg className="w-6 h-6 text-green-500 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
                                 </svg>
                                 <span className="text-gray-600">Achieve a human-like quality in content, maintaining natural flow and coherence.</span>
                             </li>
                             <li className="mb-4 flex items-start">
                                 <svg className="w-6 h-6 text-green-500 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
                                 </svg>
                                 <span className="text-gray-600">Streamline your content creation process with multiple input options.</span>
                             </li>

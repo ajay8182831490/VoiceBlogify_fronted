@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import ParentComponent from './ParentsFileUpload';
-import PasteUrlComponent from './PasteUrlComponent'
+import PasteUrlComponent from './PasteUrl';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import MyAudioRecordingComponent from './AudioTest';
 import { FaMicrophone, FaUpload, FaLink } from 'react-icons/fa'; // For icons
 
-const Url = "https://voiceblogify-backend.onrender.com"
+const url = "https://voiceblogify-backend.onrender.com"
 
 export default function AudioPage() {
     const [selectedOption, setSelectedOption] = useState('record');
@@ -34,7 +34,7 @@ export default function AudioPage() {
     };
 
     const handleUrlSubmit = async (url) => {
-        const response = await fetch(`${Url}/transcription/url`, {
+        const response = await fetch(`${url}/transcription/url`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ url }),

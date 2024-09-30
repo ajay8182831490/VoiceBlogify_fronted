@@ -26,7 +26,7 @@ export default function ResetPassword1() {
             const data = await response.json();
             if (response.ok) {
                 setMessage("OTP has been sent to your email.");
-                setStep(2); // Move to the next step (OTP entry)
+                setStep(2);
                 setSendOtp(true);
                 Notify("OTP has been sent to your email")
 

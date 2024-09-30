@@ -7,9 +7,10 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
+
 const url = "https://voiceblogify-backend.onrender.com"
 
-// Zod schema for validation
+
 const loginSchema = z.object({
     email: z.string().email('Please enter a valid email address.'),
     password: z.string().min(6, 'Password must be at least 6 characters long.'),
@@ -41,7 +42,7 @@ export default function LoginForm() {
 
 export function GoogleButton() {
     const handleGoogleLogin = () => {
-        const backendUrl = 'https://voiceblogify-backend.onrender.com/auth/google';
+        const backendUrl = `${url}/auth/google`;
         window.location.href = backendUrl;
     };
     return (
@@ -104,7 +105,7 @@ export function LoginForm1() {
             if (responseData.authenticated) {
                 setIsAuthenticated(true);
                 setUser({
-                    name: responseData.name || "User", // Fallback in case name is undefined
+                    name: responseData.name || "User",
                 });
                 Notify('You have successfully logged in');
                 navigate('/');

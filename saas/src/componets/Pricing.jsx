@@ -3,12 +3,13 @@ import { useState } from 'react';
 import PricingFAQ from './PricingFaq';
 import React from 'react';
 
+
 const PricingCard = () => {
-    const [isYearly, setIsYearly] = useState(false); // State to track toggle selection
+    const [isYearly, setIsYearly] = useState(false);
     const [plans, setPlans] = useState([
         {
             name: 'Basic',
-            price: isYearly ? '$89.88' : '$9.99', // Annual price
+            price: isYearly ? '$89.88' : '$9.99',
             features: [
                 { label: '10 recordings per month', corrected: false },
                 { label: '20 minute long recordings', corrected: false },
@@ -23,7 +24,7 @@ const PricingCard = () => {
         },
         {
             name: 'Premium',
-            price: isYearly ? '$239.88' : '$29.99', // Annual price
+            price: isYearly ? '$239.88' : '$29.99',
             features: [
                 { label: '20 recordings per month', corrected: false },
                 { label: '60 minute long recordings', corrected: false },
@@ -37,7 +38,7 @@ const PricingCard = () => {
         },
         {
             name: 'Business',
-            price: isYearly ? '$959.88' : '$99.99', // Annual price
+            price: isYearly ? '$959.88' : '$99.99',
             features: [
                 { label: '50 recordings per month', corrected: false },
                 { label: '90 minute long recordings', corrected: false },
@@ -61,24 +62,34 @@ const PricingCard = () => {
 
     const togglePaymentPlan = () => {
         setIsYearly(!isYearly);
-        setPlans(prevPlans => prevPlans.map(plan => ({
-            ...plan,
-            price: isYearly ? (plan.price.replace('$89.88', '$9.99').replace('$239.88', '$29.99').replace('$959.88', '$99.99')) :
-                (plan.price.replace('$9.99', '$89.88').replace('$29.99', '$239.88').replace('$99.99', '$959.88')),
-            button: isYearly ? plan.button.replace(/\$\d+\.\d+/, (parseFloat(plan.button.match(/\d+\.\d+/)[0]) * 12).toFixed(2)) :
-                plan.button.replace(/\$\d+\.\d+/, (parseFloat(plan.button.match(/\d+\.\d+/)[0]) / 12).toFixed(2)),
-        })));
+        setPlans(prevPlans => prevPlans.map(plan => {
+            const monthlyPrices = {
+                Basic: '$9.99',
+                Premium: '$29.99',
+                Business: '$99.99',
+            };
+            const yearlyPrices = {
+                Basic: '$89.88',
+                Premium: '$239.88',
+                Business: '$959.88',
+            };
+
+            const newPrice = isYearly ? monthlyPrices[plan.name] : yearlyPrices[plan.name];
+            const buttonText = isYearly ? `Subscribe for ${monthlyPrices[plan.name]}` : `Subscribe for ${yearlyPrices[plan.name]}`;
+
+            return {
+                ...plan,
+                price: newPrice,
+                button: buttonText,
+            };
+        }));
     };
 
     return (
         <>
-
             <div id="pricing" className="pricing-section flex flex-col items-center pt-10 pb-10">
                 <h2 className="text-3xl font-bold text-center mb-8">Pricing Plans</h2>
-
                 <div className="container mx-auto p-8">
-
-
                     <div className="flex justify-center items-center mb-8">
                         <span className="mr-2 text-black">{isYearly ? 'Monthly' : 'Yearly'}</span>
                         <label className="relative inline-flex items-center cursor-pointer">
@@ -89,7 +100,6 @@ const PricingCard = () => {
                         </label>
                         <span className="ml-2 text-green">{isYearly ? 'Yearly' : 'Monthly'}</span>
                     </div>
-
 
                     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {plans.map((plan, planIdx) => (
@@ -142,7 +152,6 @@ const PricingCard = () => {
                 <PricingFAQ />
             </div>
         </>
-
     );
 };
 

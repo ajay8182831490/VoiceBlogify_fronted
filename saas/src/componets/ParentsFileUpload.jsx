@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import AudioDropzone from './AudioRecorder';
-import AudioPlayer from './AudioPlayer';
+
 
 const ParentComponent = () => {
     const [uploadedFile, setUploadedFile] = useState(null);
