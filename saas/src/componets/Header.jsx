@@ -11,7 +11,7 @@ import { memo, useEffect } from 'react'
 import { Helmet } from 'react-helmet'
 
 
-const url = "https://voiceblogify-backend.onrender.com"
+const url = "http://localhost:4000"
 
 const navigation = [
     { name: 'How Its work', href: '#howitworks', current: false },

@@ -3,7 +3,7 @@ import React from 'react';
 const LinkedInConnectButton = () => {
     const handleConnect = () => {
 
-        window.location.href = 'https://voiceblogify-backend.onrender.com/linkedin/oauth';
+        window.location.href = 'http://localhost:4000/linkedin/oauth';
     };
 
     return (

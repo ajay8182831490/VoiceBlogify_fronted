@@ -26,8 +26,8 @@ function App() {
 
         <Route path="/dashboard/*" element={<PrivateRoute element={<Dashboard />} />} />
 
-        <Route path="/main" element={isAuthenticated ? <AudioPage /> : <Navigate to="/login" />} />
-
+        {/* //<Route path="/main" element={isAuthenticated ? <AudioPage /> : <Navigate to="/login" />} /> */}
+        //<Route path="/main" element={<AudioPage />} />
 
         <Route
           path="/login"

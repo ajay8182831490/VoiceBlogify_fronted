@@ -5,51 +5,51 @@ import { motion } from 'framer-motion';
 const VisualPath = () => {
     const steps = [
         {
-            title: "Record Your Audio",
-            description: "Capture your ideas on-the-go, anytime and anywhere. Whether you're in your car or on a walk, simply click to record your voice and let VoiceBlogify transform your spoken thoughts into written content.",
-            icon: <FaMicrophone className="text-4xl text-white" />,
-            color: "bg-orange-500",
+            title: "Capture Your Ideas",
+            description: "Seamlessly record your voice with just a click, turning spontaneous thoughts into actionable blog posts. Perfect for creators on-the-go, whether you’re walking, driving, or brainstorming.",
+            icon: <FaMicrophone className="text-4xl text-gray-700" />,
+            bgColor: "bg-gray-200", // Light gray for the card background
         },
         {
-            title: "Upload Your Files",
-            description: "Easily upload audio files or paste a YouTube link. VoiceBlogify supports various formats, making the process seamless for you, regardless of where you are.",
-            icon: <FaUpload className="text-4xl text-white" />,
-            color: "bg-yellow-500",
+            title: "Effortless File Upload",
+            description: "Easily upload audio files or paste YouTube links in various formats. VoiceBlogify ensures a smooth transition from raw ideas to structured content without any hassle.",
+            icon: <FaUpload className="text-4xl text-gray-700" />,
+            bgColor: "bg-gray-300", // Slightly darker gray for contrast
         },
         {
-            title: "AI Transcription",
-            description: "Our AI transcribes your audio into text while generating titles, subtitles, tags, and a structured summary. Enjoy a human-like touch to your content that turns your organized thoughts into coherent posts.",
-            icon: <FaClipboardList className="text-4xl text-white" />,
-            color: "bg-red-500",
+            title: "Smart AI Transcription",
+            description: "Let our AI convert your audio into text, generating engaging titles, relevant tags, and structured summaries. Focus on your ideas while we handle the organization.",
+            icon: <FaClipboardList className="text-4xl text-gray-700" />,
+            bgColor: "bg-gray-200", // Light gray for the card background
         },
         {
-            title: "Edit Your Content",
-            description: "Refine the generated content according to your needs. You can easily modify the text to align with your voice and style, ensuring your personality shines through.",
-            icon: <FaEdit className="text-4xl text-white" />,
-            color: "bg-teal-500",
+            title: "Personalize Your Content",
+            description: "Edit and refine the generated text to match your unique voice and style. Ensure your personality shines through every blog post, enhancing your connection with your audience.",
+            icon: <FaEdit className="text-4xl text-gray-700" />,
+            bgColor: "bg-gray-300", // Slightly darker gray for contrast
         },
         {
-            title: "Publish & Share",
-            description: "Export your articles as rich text, plain HTML, or Markdown format. Post directly to platforms like LinkedIn, Medium, and Blogger with a single click, sharing your thoughts with the world effortlessly.",
-            icon: <FaShareAlt className="text-4xl text-white" />,
-            color: "bg-pink-500",
+            title: "Instant Publishing & Sharing",
+            description: "Export your articles in rich text, plain HTML, or Markdown. Share directly to LinkedIn, Medium, or Blogger with one click, amplifying your reach effortlessly.",
+            icon: <FaShareAlt className="text-4xl text-gray-700" />,
+            bgColor: "bg-gray-200", // Light gray for the card background
         },
     ];
 
     return (
-        <div className="py-10 bg-gradient-to-r from-indigo-50 to-blue-50">
-            <h2 className="text-3xl font-bold text-center mb-8 text-gray-800">How VoiceBlogify Works</h2>
+        <div className="py-10 bg-gradient-to-r from-gray-50 to-gray-100">
+            <h2 className="text-3xl font-bold text-center mb-8 text-gray-800">Transform Your Voice into Engaging Content</h2>
             <p className="text-lg text-center text-gray-700 mb-4">
-                VoiceBlogify simplifies your content creation process by turning your voice into organized, polished blog posts. Record your ideas anytime, anywhere, and transform unorganized thoughts into coherent articles with ease.
+                VoiceBlogify empowers creators by simplifying the content creation process. Record your ideas anytime and transform them into polished blog posts that captivate your audience.
             </p>
             <div className="flex flex-col items-center md:flex-row md:justify-center">
                 {steps.map((step, index) => (
                     <motion.div
                         key={index}
-                        className={`flex flex-col items-center w-72 h-72 m-4 shadow-lg rounded-lg transition-transform duration-300 hover:scale-105 hover:shadow-xl ${step.color} text-white p-4`}
+                        className={`flex flex-col items-center w-72 h-72 m-4 rounded-lg shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-xl ${step.bgColor} text-gray-800 p-6`}
                         whileHover={{ scale: 1.05 }}
                     >
-                        <div className="flex items-center justify-center h-24">
+                        <div className="flex items-center justify-center h-24 mb-4">
                             {step.icon}
                         </div>
                         <h3 className="text-xl font-semibold mb-2">{step.title}</h3>
@@ -62,3 +62,4 @@ const VisualPath = () => {
 };
 
 export default React.memo(VisualPath);
+

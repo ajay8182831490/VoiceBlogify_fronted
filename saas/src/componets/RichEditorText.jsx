@@ -48,6 +48,7 @@ const RichEditorText = ({ initialData, handleCloseModal }) => {
 
 
             await updatePost({ postId: initialData.id, title: title, subtitle: subtitle, tag: tagArray, content: newContent });
+            //await createPost({ title: title, subtitle: subtitle, tag: tagArray, content: newContent });
 
 
 

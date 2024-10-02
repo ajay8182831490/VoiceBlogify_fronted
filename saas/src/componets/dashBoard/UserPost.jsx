@@ -7,7 +7,8 @@ import RichEditorText from '../RichEditorText';
 export const UserPosts = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const postsPerPage = 3;
-    const { postDelete, posts, loading } = usePost();
+    const { postDelete, loading, posts } = usePost();
+
 
 
 
