@@ -1,0 +1,94 @@
+@keyframes typing {
+    0% {
+        width: 0;
+    }
+    100% {
+        width: 100%;
+    }
+}
+
+
+.writing-animation {
+    display: inline-block;
+    overflow: hidden; /* Ensures the text is clipped */
+    white-space: nowrap; /* Prevents text wrapping */
+    border-right: 2px solid; /* Creates the typing cursor effect */
+    animation: typing 4s steps(30, end), blink-caret 0.75s step-end infinite;
+    font-family: 'Courier New', Courier, monospace; /* Monospace font for typing effect */
+}
+
+@keyframes blink-caret {
+    50% {
+        border-color: transparent; /* Makes the cursor blink */
+    }
+}
+
+/* Optional: Add a slight 3D effect on hover for headings */
+h2 {
+    perspective: 1000px;
+    transition: transform 0.3s ease;
+}
+
+h2:hover {
+    transform: translateZ(10px); /* Slightly raises the text on hover */
+}
+.landing-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f0f4f8; /* Light background color */
+    color: #333; /* Dark text color */
+    font-family: 'Arial', sans-serif;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.title {
+    font-size: 3rem;
+    color: #2c3e50; /* Dark blue color */
+}
+
+.subtitle {
+    font-size: 1.5rem;
+    color: #7f8c8d; /* Grey color for subtitle */
+}
+
+.cta-button {
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    color: #fff;
+    background-color: #e74c3c; /* Red button color */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.cta-button:hover {
+    background-color: #c0392b; /* Darker red on hover */
+}
+
+.features {
+    text-align: center;
+    margin: 2rem 0;
+}
+
+.feature-list {
+    list-style: none;
+    padding: 0;
+}
+
+.feature-list li {
+    margin: 1rem 0;
+}
+
+.footer {
+    position: absolute;
+    bottom: 10px;
+    text-align: center;
+}

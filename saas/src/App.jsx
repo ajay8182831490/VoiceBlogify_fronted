@@ -1,6 +1,7 @@
 import './App.css';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import { useAuth } from './userContext/AuthContext';
+
 import Layout from './componets/Layout';
 import Login from './componets/Login';
 import SignUp from './componets/SignUp';
@@ -17,33 +18,34 @@ function App() {
 
   return (
     <Routes>
-
       <Route element={<Layout />}>
-
         <Route path="/" element={<LandingPage />} />
         <Route path="/edit" element={<RichEditorText />} />
         <Route path="/pricing" element={<PricingCard />} />
 
-        {isAuthenticated ? (
-          <>
 
-            <Route path="/dashboard/*" element={<PrivateRoute element={<Dashboard />} />} />
-            <Route path="/main" element={<AudioPage />} />
-            <Route path="*" element={<Navigate to="/dashboard" />} />
-          </>
-        ) : (
-          <>
-            {/* Non-authenticated Routes */}
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/resetPassword" element={<ResetPassword1 />} />
-            <Route path="/main" element={<Navigate to="/login" />} />
-            <Route path="/dashboard/*" element={<Navigate to="/login" />} />
-            <Route path="*" element={<Navigate to="/" />} />
-          </>
-        )}
+        <Route path="/dashboard/*" element={<PrivateRoute element={<Dashboard />} />} />
+
+        {/* //<Route path="/main" element={isAuthenticated ? <AudioPage /> : <Navigate to="/login" />} /> */}
+        //<Route path="/main" element={<AudioPage />} />
+
+        <Route
+          path="/login"
+          element={isAuthenticated ? <Navigate to="/" /> : <Login />}
+        />
+        <Route
+          path="/signup"
+          element={isAuthenticated ? <Navigate to="/" /> : <SignUp />}
+        />
+        <Route
+          path="/resetPassword"
+          element={isAuthenticated ? <Navigate to="/" /> : <ResetPassword1 />}
+        />
+
+        <Route path="*" element={<Navigate to={isAuthenticated ? "/" : "/login"} />} />
       </Route>
     </Routes>
   );
 }
+
 export default App;

@@ -1,9 +1,9 @@
 import { useState, useRef, useEffect } from 'react';
 import { MicrophoneIcon, PauseIcon, PlayIcon, StopIcon, ArrowPathIcon, ArrowDownTrayIcon } from '@heroicons/react/24/outline';
 import { useNavigate } from 'react-router-dom';
-import './AudioRecordingComponent.css'; // Import the CSS file for animations
+import './AudioRecordingComponent.css';
 
-const Url = "https://voiceblogify-backend.onrender.com"
+const Url = "http://localhost:4000"
 
 export default function MyAudioRecordingComponent() {
     const [isRecording, setIsRecording] = useState(false);
@@ -41,21 +41,33 @@ export default function MyAudioRecordingComponent() {
     }, [isRecording]);
 
     const startRecording = async () => {
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        mediaRecorderRef.current = new MediaRecorder(stream);
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            mediaRecorderRef.current = new MediaRecorder(stream);
 
-        mediaRecorderRef.current.ondataavailable = (event) => {
-            if (event.data.size > 0) {
-                audioChunks.current.push(event.data);
-            }
-        };
 
-        mediaRecorderRef.current.onstop = () => {
-            createAudioBlob();
-            setShowTimer(false);
-        };
+            mediaRecorderRef.current.ondataavailable = (event) => {
+                if (event.data.size > 0) {
+                    audioChunks.current.push(event.data);
+                }
+            };
 
-        mediaRecorderRef.current.start(1000);
+            mediaRecorderRef.current.onstop = () => {
+                createAudioBlob();
+                setShowTimer(false);
+            };
+
+            mediaRecorderRef.current.start(1000);
+
+            startTimer();
+
+            setShowTimer(true); // Show timer UI here
+        } catch (error) {
+            console.error('Error starting recording:', error);
+            alert('Could not start recording. Please ensure microphone access is allowed.');
+            setShowTimer(false)
+            handleReset()
+        }
     };
 
     const stopRecording = () => {

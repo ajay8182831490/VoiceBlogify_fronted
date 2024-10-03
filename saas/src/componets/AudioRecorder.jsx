@@ -2,7 +2,7 @@ import React, { useCallback, useRef, useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { motion } from 'framer-motion';
 import { Navigate, useNavigate } from 'react-router-dom';
-const Url = "https://voiceblogify-backend.onrender.com"
+const Url = "http://localhost:4000"
 
 const AudioDropzone = ({ onFileUploaded }) => {
     const [audioUrl, setAudioUrl] = useState('');

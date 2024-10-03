@@ -14,7 +14,7 @@
         --radius: 0.5rem;
     }
 }
-/* Tailwind CSS classes can be used directly, but here's some custom CSS for additional styling */
+
 
 body {
     font-family: 'Arial', sans-serif;
@@ -38,3 +38,4 @@ h1 {
 .animate-pulse {
     animation: pulse-shadow 1s infinite;
 }
+/* Styles for blockquote */

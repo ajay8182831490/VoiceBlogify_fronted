@@ -1,12 +1,12 @@
 import { useState } from "react";
-const url = "https://voiceblogify-backend.onrender.com"
+const url = "http://localhost:4000"
 
 export default function ResetPassword() {
-    const [email, setEmail] = useState(""); // Default value to avoid uncontrolled input warning
-    const [message, setMessage] = useState(""); // State to handle success or error messages
+    const [email, setEmail] = useState("");
+    const [message, setMessage] = useState("");
 
     const handleSubmit = async (e) => {
-        e.preventDefault(); // Prevent the default form submission behavior
+        e.preventDefault();
 
         try {
             const response = await fetch(`${url}/otpGenrator`, {
@@ -17,9 +17,9 @@ export default function ResetPassword() {
                 body: JSON.stringify({ email }),
             });
 
-            const data = await response.json(); // Parse the response JSON
+            const data = await response.json();
 
-            console.log(data)
+
 
             if (response.ok) {
                 setMessage("Password reset link sent! Please check your email.");

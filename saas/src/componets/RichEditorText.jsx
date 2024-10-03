@@ -1,206 +1,164 @@
-import React, { useState } from 'react';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
-import { motion } from 'framer-motion';
-import { FaHtml5, FaMarkdown, FaCopy, FaSave } from 'react-icons/fa';
+import React, { useState, useEffect, useRef } from 'react';
+import { FaMarkdown, FaSave, FaFileExport } from 'react-icons/fa';
 import TurndownService from 'turndown';
-import { useEffect } from 'react';
+import RTE from './util/Rte';
+import { usePost } from '@/userContext/PostContext';
+import { useNavigate } from 'react-router-dom';
 
-const RichEditorText = ({ initialData, onClose }) => {
+const RichEditorText = ({ initialData, handleCloseModal }) => {
+    const { updatePost, responseMessage, success, createPost } = usePost();
+
     const [title, setTitle] = useState('');
-    const [content, setContent] = useState('');
     const [tags, setTags] = useState('');
     const [subtitle, setSubtitle] = useState('');
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const editorRef = useRef(null);
+    const navigate = useNavigate();
+
+
+
+    useEffect(() => {
+        if (success) {
+            handleCloseModal();
+            navigate('/dashboard/user-profile');
+        }
+    }, [success, navigate, handleCloseModal]);
+
 
     useEffect(() => {
         if (initialData) {
-            setTitle(initialData.title);
-            setContent(initialData.content);
-            setTags(tags);
-            setSubtitle(subtitle);
+            setTitle(initialData.title || '');
+            setTags(initialData.tags ? initialData.tags.join(', ') : ''); // Join array into a string
+            setSubtitle(initialData.subtitle || '');
         }
     }, [initialData]);
 
-
-    const [activeButton, setActiveButton] = useState('');
-
-    const handleContentChange = (value) => {
-        setContent(value);
-    };
-
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        const blogData = { title, subtitle, content, tags };
-        console.log(blogData);
-        // Add logic to send blogData to your backend or API
-    };
+        setIsSubmitting(true);
 
-    const convertToMarkdown = (html) => {
-        const turndownService = new TurndownService();
-        return turndownService.turndown(html);
-    };
 
-    const copyToClipboard = (content, type) => {
-        navigator.clipboard.writeText(content)
-            .then(() => {
-                alert(`${type} content copied to clipboard!`);
-            })
-            .catch(err => {
-                console.error('Failed to copy: ', err);
-            });
-    };
+        try {
+            const newContent = editorRef.current.getContent();
 
-    const copyAsHTML = () => {
-        setActiveButton('html');
-        const htmlContent = `
-            <div>
-                <h1>${title}</h1>
-                ${subtitle ? `<h2>${subtitle}</h2>` : ''}
-                <div>${content}</div>
-                ${tags ? `<p><strong>Tags:</strong> ${tags}</p>` : ''}
-            </div>
-        `;
-        copyToClipboard(htmlContent, 'HTML');
+
+            const tagArray = tags.split(',').map(tag => tag.trim());
+
+
+
+
+            await updatePost({ postId: initialData.id, title: title, subtitle: subtitle, tag: tagArray, content: newContent });
+            //await createPost({ title: title, subtitle: subtitle, tag: tagArray, content: newContent });
+
+
+
+
+
+
+
+        } catch (error) {
+            console.error('Error saving post:', error);
+            alert(responseMessage);
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     const copyAsMarkdown = () => {
-        setActiveButton('markdown');
-        const markdownContent = convertToMarkdown(`
-            <div>
-                <h1>${title}</h1>
-                ${subtitle ? `<h2>${subtitle}</h2>` : ''}
-                <div>${content}</div>
-                ${tags ? `<p><strong>Tags:</strong> ${tags}</p>` : ''}
-            </div>
-        `);
-        copyToClipboard(markdownContent, 'Markdown');
+        try {
+            const markdownContent = new TurndownService().turndown(editorRef.current.getContent());
+            navigator.clipboard.writeText(markdownContent)
+                .then(() => alert('Markdown content copied to clipboard!'))
+                .catch((err) => console.error('Failed to copy:', err));
+        } catch (error) {
+            console.error('Failed to convert content:', error);
+        }
+    };
+
+    const exportHTML = () => {
+        const blob = new Blob([editorRef.current.getContent()], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'blog-post.html';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
     };
 
     return (
-        <div className="p-4 md:p-8 max-w-screen-lg mx-auto bg-gradient-to-r from-blue-200 via-purple-200 to-pink-200 min-h-screen">
-            <h1 className="text-3xl md:text-4xl font-extrabold text-gray-800 mb-6 text-center">
-                Your Blog Content is Ready! <br />
-                Edit and Save Your Post
-            </h1>
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+            <div className="bg-white p-8 rounded-lg shadow-lg relative w-full max-w-5xl h-auto max-h-[80vh] overflow-y-auto">
+                <button onClick={handleCloseModal} className="absolute top-4 right-4 text-gray-600 hover:text-gray-800">✖</button>
+                <h1 className="text-3xl font-extrabold text-gray-800 mb-6 text-center">Edit Post</h1>
 
-            <p className="text-lg text-gray-700 mb-6 text-center">
-                This page allows you to edit and save the content generated from your audio upload. Customize your blog, add tags, and get ready to share it anywhere you like.
-            </p>
+                <form onSubmit={handleSubmit} className="space-y-6 flex flex-col">
+                    <div className="relative">
+                        <label htmlFor="title" className="block text-lg font-semibold text-gray-700 mb-1">Title</label>
+                        <input
+                            type="text"
+                            id="title"
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
+                            className="w-full p-4 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition-colors duration-300"
+                            placeholder="Enter the title"
+                            required
+                        />
+                    </div>
 
-            <form onSubmit={handleSubmit} className="space-y-6 bg-white p-8 rounded-lg shadow-lg border border-gray-300">
-                {/* Title */}
-                <div className="relative">
-                    <label htmlFor="title" className="block text-lg font-semibold text-gray-700 mb-2">Title</label>
-                    <input
-                        type="text"
-                        id="title"
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                        className="w-full p-4 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition-colors duration-300"
-                        placeholder="Enter the title"
-                        required
-                    />
-                </div>
+                    <div className="relative">
+                        <label htmlFor="tags" className="block text-lg font-semibold text-gray-700 mb-1">Tags</label>
+                        <input
+                            type="text"
+                            id="tags"
+                            value={tags}
+                            onChange={(e) => setTags(e.target.value)}
+                            className="w-full p-4 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition-colors duration-300"
+                            placeholder="Enter tags, e.g. technology, AI, blogging"
+                        />
+                    </div>
 
-                {/* Subtitle */}
-                <div className="relative">
-                    <label htmlFor="subtitle" className="block text-lg font-semibold text-gray-700 mb-2">Subtitle (Optional)</label>
-                    <input
-                        type="text"
-                        id="subtitle"
-                        value={subtitle}
-                        onChange={(e) => setSubtitle(e.target.value)}
-                        className="w-full p-4 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition-colors duration-300"
-                        placeholder="Enter a subtitle (optional)"
-                    />
-                </div>
+                    <div className="flex-grow relative mb-4 overflow-auto">
+                        <RTE
+                            ref={editorRef}
+                            placeholder="Write your content here..."
+                            initialContent={initialData.content || '<p>Type here</p>'}
+                        />
+                    </div>
 
-                {/* Tags */}
-                <div className="relative">
-                    <label htmlFor="tags" className="block text-lg font-semibold text-gray-700 mb-2">Tags (Comma separated)</label>
-                    <input
-                        type="text"
-                        id="tags"
-                        value={tags}
-                        onChange={(e) => setTags(e.target.value)}
-                        className="w-full p-4 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition-colors duration-300"
-                        placeholder="Enter tags, e.g. technology, AI, blogging"
-                    />
-                </div>
+                    <div className="flex flex-row gap-4 items-center justify-center mb-6">
+                        <button
+                            type="submit"
+                            disabled={isSubmitting}
+                            className={`flex items-center justify-center w-12 h-12 ${isSubmitting ? 'bg-gray-300' : 'bg-gradient-to-r from-green-400 to-blue-500'} text-white font-semibold rounded-lg shadow-md transition-colors duration-300`}
+                        >
+                            <FaSave className="text-2xl" />
+                        </button>
 
-                {/* Content */}
-                <div>
-                    <label htmlFor="content" className="block text-lg font-semibold text-gray-700 mb-2">Content</label>
-                    <ReactQuill
-                        value={content}
-                        onChange={handleContentChange}
-                        className="mt-2 h-72 bg-white border border-gray-300 rounded-md"
-                        theme="snow"
-                        modules={{
-                            toolbar: [
-                                [{ header: [1, 2, 3, false] }],
-                                [{ font: ['Arial', 'Courier', 'Georgia', 'Times New Roman', 'Verdana'] }],
-                                [{ size: ['small', 'medium', 'large', 'huge'] }],
-                                [{ list: 'ordered' }, { list: 'bullet' }],
-                                ['bold', 'italic', 'underline', 'strike'],
-                                [{ color: [] }, { background: [] }],
-                                [{ script: 'sub' }, { script: 'super' }],
-                                [{ align: [] }],
-                                ['link', 'image'],
-                                ['clean'] // remove formatting button
-                            ],
-                        }}
-                        formats={[
-                            'header',
-                            'font',
-                            'size',
-                            'list',
-                            'bullet',
-                            'bold',
-                            'italic',
-                            'underline',
-                            'strike',
-                            'color',
-                            'background',
-                            'script',
-                            'align',
-                            'link',
-                            'image'
-                        ]}
-                        placeholder="Write your blog content here..."
-                    />
-                </div>
+                        <button
+                            type="button"
+                            onClick={copyAsMarkdown}
+                            className="flex items-center justify-center w-12 h-12 bg-gradient-to-r from-blue-400 to-indigo-500 text-white font-semibold rounded-lg shadow-md transition-colors duration-300"
+                        >
+                            <FaMarkdown className="text-2xl" />
+                        </button>
 
-                {/* Buttons */}
-                <div className="flex gap-4 items-center justify-center mt-6">
-                    <motion.button
-                        type="submit"
-                        className="p-4 bg-gradient-to-r from-green-400 to-blue-500 text-white font-semibold rounded-lg shadow-md hover:from-green-500 hover:to-blue-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-75 transition-colors duration-300 flex items-center justify-center"
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                    >
-                        <FaSave className={`text-2xl ${activeButton === 'save' ? 'text-yellow-400' : 'text-white'}`} />
-                        <span className="ml-2 hidden md:inline">Save</span>
-                    </motion.button>
-                    <button
-                        type="button"
-                        onClick={copyAsHTML}
-                        className={`p-4 bg-gradient-to-r from-red-400 to-orange-500 text-white font-semibold rounded-lg shadow-md hover:from-red-500 hover:to-orange-600 transition-colors duration-300 flex items-center justify-center ${activeButton === 'html' ? 'bg-gradient-to-r from-red-500 to-orange-600' : ''}`}
-                    >
-                        <FaHtml5 className={`text-2xl ${activeButton === 'html' ? 'text-yellow-300' : 'text-white'}`} />
-                        <span className="ml-2 hidden md:inline">Copy as HTML</span>
-                    </button>
-                    <button
-                        type="button"
-                        onClick={copyAsMarkdown}
-                        className={`p-4 bg-gradient-to-r from-blue-400 to-indigo-500 text-white font-semibold rounded-lg shadow-md hover:from-blue-500 hover:to-indigo-600 transition-colors duration-300 flex items-center justify-center ${activeButton === 'markdown' ? 'bg-gradient-to-r from-blue-500 to-indigo-600' : ''}`}
-                    >
-                        <FaMarkdown className={`text-2xl ${activeButton === 'markdown' ? 'text-yellow-300' : 'text-white'}`} />
-                        <span className="ml-2 hidden md:inline">Copy as Markdown</span>
-                    </button>
-                </div>
-            </form>
+                        <button
+                            type="button"
+                            onClick={exportHTML}
+                            className="flex items-center justify-center w-12 h-12 bg-gradient-to-r from-yellow-400 to-orange-500 text-white font-semibold rounded-lg shadow-md transition-colors duration-300"
+                        >
+                            <FaFileExport className="text-2xl" />
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     );
-}
-export default RichEditorText
+
+
+
+};
+
+export default RichEditorText;

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { SubmitButton } from "./SignUpForm";
 import { useNavigate } from "react-router-dom";
 import { Notify, NotifyFalse } from './NotifyToast.jsx'
-const url = "https://voiceblogify-backend.onrender.com"
+const url = "http://localhost:4000"
 export default function ResetPassword1() {
     const [email, setEmail] = useState("");
     const [otp, setOtp] = useState("");
@@ -26,7 +26,7 @@ export default function ResetPassword1() {
             const data = await response.json();
             if (response.ok) {
                 setMessage("OTP has been sent to your email.");
-                setStep(2); // Move to the next step (OTP entry)
+                setStep(2);
                 setSendOtp(true);
                 Notify("OTP has been sent to your email")
 

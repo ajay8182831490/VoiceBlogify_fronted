@@ -1,116 +1,109 @@
-import React, { useState } from 'react';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css'; // Import Quill's CSS
-import { FaEye, FaEdit, FaShareAlt, FaMedium } from 'react-icons/fa';
-import { IoClose } from 'react-icons/io5';
-import ViewPostModal from './MediumPreviewStyle'; // Ensure this path is correct
-const url = "https://voiceblogify-backend.onrender.com"
+import React, { useState, useRef } from 'react';
+import { FaEdit } from 'react-icons/fa';
+import { IoClose, IoSearch } from 'react-icons/io5';
 
-export default function Medium() {
-    const [posts] = useState([
-        { id: 1, title: 'Post 1', content: 'Content of Post 1', tags: 'React, JavaScript' },
-        { id: 2, title: 'Post 2', content: 'Content of Post 2', tags: 'Node.js, Express' },
-        { id: 3, title: 'Post 3', content: 'Content of Post 3', tags: 'CSS, HTML' },
-        { id: 4, title: 'Post 4', content: 'Content of Post 4', tags: 'React, CSS' },
-        { id: 5, title: 'Post 5', content: 'Content of Post 5', tags: 'JavaScript, HTML' },
-        { id: 6, title: 'Post 6', content: 'Content of Post 6', tags: 'Node.js, API' },
-        { id: 7, title: 'Post 7', content: 'Content of Post 7', tags: 'React, Tailwind' },
-        { id: 8, title: 'Post 8', content: 'Content of Post 8', tags: 'JavaScript, AI' },
-        { id: 9, title: 'Post 9', content: 'Content of Post 9', tags: 'React, AI' },
-        { id: 10, title: 'Post 10', content: 'Content of Post 10', tags: 'CSS, API' },
-    ]);
+import { BloggerContextProvider } from '@/userContext/BloggerContext';
+import { usePost } from '@/userContext/PostContext';
+import { useblogger } from '@/userContext/BloggerContext';
+import RTE from '../util/Rte';
+
+export function Blogger() {
+    const { posts, updatePost } = usePost();
+    const { blogUserId, uploadPost } = useblogger().bloggerPost;
+
+
     const [selectedPost, setSelectedPost] = useState(null);
     const [modalOpen, setModalOpen] = useState(false);
-    const [modalAction, setModalAction] = useState(''); // 'Edit', 'Share', 'Preview'
+    const [selectedOption, setSelectedOption] = useState('');
+    const [searchTerm, setSearchTerm] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
-    const postsPerPage = 5;
+    const postsPerPage = 4;
 
-    // Calculate paginated data
     const totalPages = Math.ceil(posts.length / postsPerPage);
     const indexOfLastPost = currentPage * postsPerPage;
     const indexOfFirstPost = indexOfLastPost - postsPerPage;
     const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+    const editorRef = useRef(null);
 
-    const handleOpenModal = (post, action) => {
+    const filteredPosts = searchTerm
+        ? posts.filter(post => post.title.toLowerCase().includes(searchTerm.toLowerCase()))
+        : currentPosts;
+
+    const handleOpenModal = (post) => {
         setSelectedPost(post);
-        setModalAction(action);
         setModalOpen(true);
+        setSelectedOption('');
     };
 
     const handleCloseModal = () => {
         setModalOpen(false);
         setSelectedPost(null);
+        setSelectedOption('');
     };
 
-    const handleSubmit = (e) => {
+    const handleContentChange = (content) => {
+        if (selectedPost) {
+            setSelectedPost((prev) => ({ ...prev, content }));
+        }
+    };
+
+    const handleShareSubmit = async (e) => {
         e.preventDefault();
-        console.log(selectedPost); // Logic to handle saving the edited content
-        setModalOpen(false);
+        if (!selectedOption) {
+            alert('Please select a blog to share.');
+            return;
+        }
+        const content = editorRef.current.getContent();
+
+
+        await uploadPost({ title: selectedPost.title, content: content, blogId: selectedOption });
+        handleCloseModal();
     };
 
-    const handleContentChange = (value) => {
-        setSelectedPost(prev => ({ ...prev, content: value }));
-    };
+    const handleSavePost = async (e) => {
+        e.preventDefault();
 
-    const handlePageChange = (page) => {
-        setCurrentPage(page);
-    };
+        const content = editorRef.current.getContent();
 
-    const handleShare = async (post) => {
-        // Call your API for posting
-        try {
-            const response = await fetch('/api/share', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(post), // Send the post data
-            });
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            const data = await response.json();
-            console.log('Post shared successfully:', data);
-            alert('Post shared successfully!'); // Notify the user
-        } catch (error) {
-            console.error('Error sharing post:', error);
-            alert('Error sharing post. Please try again.');
+        if (selectedPost) {
+            await updatePost({ postId: selectedPost.id, title: selectedPost.title, content: content });
+            handleCloseModal();
         }
     };
 
     return (
         <div className="p-4 md:p-8 max-w-screen-lg mx-auto bg-gradient-to-r from-blue-200 via-purple-200 to-pink-200 min-h-screen">
-            <h1 className="text-3xl md:text-4xl font-extrabold text-gray-800 mb-6 text-center">
-                Launch Post on  Blogger
+            <h1 className="text-4xl font-extrabold text-gray-800 mb-6 text-center">
+                Launch Post on Blogger
             </h1>
 
-            {/* Post List */}
+            <div className="flex mb-6">
+                <input
+                    type="text"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    placeholder="Search by title..."
+                    className="w-full p-4 border border-gray-300 rounded-l-md focus:ring-2 focus:ring-blue-500 transition duration-300 ease-in-out"
+                />
+                <button className="p-4 bg-blue-600 text-white rounded-r-md hover:bg-blue-700 transition duration-300">
+                    <IoSearch size={20} />
+                </button>
+            </div>
+
             <div className="space-y-4">
-                {currentPosts.map(post => (
-                    <div key={post.id} className="flex justify-between items-center bg-white p-4 rounded-lg shadow-lg">
+                {filteredPosts.length ? filteredPosts.map(post => (
+                    <div key={post.id} className="flex justify-between items-center bg-white p-4 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
                         <h2 className="text-xl font-semibold text-gray-800">{post.title}</h2>
-                        <div className="flex space-x-4">
-                            <button
-                                onClick={() => handleOpenModal(post, 'Preview')}
-                                className="text-blue-600 hover:text-blue-800"
-                            >
-                                <FaEye /> Preview
-                            </button>
-                            <button
-                                onClick={() => handleOpenModal(post, 'Edit')}
-                                className="text-yellow-600 hover:text-yellow-800"
-                            >
-                                <FaEdit /> Edit
-                            </button>
-                            <button
-                                onClick={() => handleShare(post)} // Directly call handleShare
-                                className="text-green-600 hover:text-green-800"
-                            >
-                                <FaShareAlt /> Share
-                            </button>
-                        </div>
+                        <button
+                            onClick={() => handleOpenModal(post)}
+                            className="text-yellow-600 hover:text-yellow-800 flex items-center transition duration-300"
+                        >
+                            <FaEdit size={18} className="mr-1" /> Edit & Share
+                        </button>
                     </div>
-                ))}
+                )) : (
+                    <p className="text-gray-500">No posts found.</p>
+                )}
             </div>
 
             {/* Pagination */}
@@ -118,73 +111,69 @@ export default function Medium() {
                 {Array.from({ length: totalPages }).map((_, index) => (
                     <button
                         key={index}
-                        onClick={() => handlePageChange(index + 1)}
-                        className={`px-4 py-2 rounded-lg text-white ${currentPage === index + 1 ? 'bg-blue-600' : 'bg-gray-400 hover:bg-gray-500'}`}
+                        onClick={() => setCurrentPage(index + 1)}
+                        className={`px-4 py-2 rounded-lg text-white ${currentPage === index + 1 ? 'bg-blue-600' : 'bg-gray-400 hover:bg-gray-500'} transition duration-300`}
                     >
                         {index + 1}
                     </button>
                 ))}
             </div>
 
-            {/* Modal Logic for Preview and Edit */}
-            {modalOpen && modalAction === 'Preview' && selectedPost && (
-                <ViewPostModal
-                    post={selectedPost}
-                    onClose={handleCloseModal}
-                />
-            )}
-
-            {modalOpen && modalAction === 'Edit' && selectedPost && (
+            {/* Modal Logic for Share */}
+            {modalOpen && selectedPost && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-                    <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-screen-lg relative">
-                        {/* Close Button */}
+                    <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-screen-lg relative transform transition-all duration-300 mt-10">
                         <button
                             onClick={handleCloseModal}
-                            className="absolute top-4 right-4 text-gray-600 hover:text-gray-800"
+                            className="absolute top-4 right-4 text-gray-600 hover:text-gray-800 transition duration-300"
                         >
                             <IoClose size={24} />
                         </button>
 
-                        <h2 className="text-2xl font-semibold mb-4">Edit Post</h2>
-                        <form onSubmit={handleSubmit} className="space-y-6">
-                            <div className="relative">
-                                <label htmlFor="title" className="block text-lg font-semibold text-gray-700 mb-2">Title</label>
-                                <input
-                                    type="text"
-                                    id="title"
-                                    value={selectedPost.title}
-                                    onChange={(e) => setSelectedPost({ ...selectedPost, title: e.target.value })}
-                                    className="w-full p-4 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition-colors duration-300"
-                                    placeholder="Enter the title"
-                                    required
-                                />
-                            </div>
-                            <div className="relative">
-                                <label htmlFor="tags" className="block text-lg font-semibold text-gray-700 mb-2">Tags (Comma separated)</label>
-                                <input
-                                    type="text"
-                                    id="tags"
-                                    value={selectedPost.tags}
-                                    onChange={(e) => setSelectedPost({ ...selectedPost, tags: e.target.value })}
-                                    className="w-full p-4 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition-colors duration-300"
-                                    placeholder="Enter tags, e.g. technology, AI, blogging"
-                                />
-                            </div>
-                            <div>
-                                <label htmlFor="content" className="block text-lg font-semibold text-gray-700 mb-2">Content</label>
-                                <ReactQuill
-                                    value={selectedPost.content}
-                                    onChange={handleContentChange}
-                                    className="mt-2 h-72 bg-white border border-gray-300 rounded-md"
-                                    theme="snow"
-                                />
-                            </div>
-                            <div className="flex justify-end">
+                        <h2 className="text-2xl font-semibold mb-4 text-center text-gray-800">Edit and Share Post</h2>
+
+                        <label className="block text-lg font-semibold text-gray-700 mb-2">Post Title</label>
+                        <input
+                            type="text"
+                            value={selectedPost.title}
+                            onChange={(e) => setSelectedPost(prev => ({ ...prev, title: e.target.value }))}
+                            className="w-full p-4 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 mb-4 transition duration-300"
+                            placeholder="Enter Post Title"
+                        />
+
+                        <label className="block text-lg font-semibold text-gray-700 mb-2 text-center">Post Content</label>
+
+                        <RTE ref={editorRef} initialContent={selectedPost.content} onChange={handleContentChange} />
+
+                        <form onSubmit={handleShareSubmit} className="space-y-4 mt-1">
+                            <label htmlFor="share-options" className="block text-lg font-semibold text-gray-700 mb-1 text-center">
+                                Select Blog for Sharing
+                            </label>
+                            <select
+                                id="share-options"
+                                value={selectedOption}
+                                onChange={(e) => setSelectedOption(e.target.value)}  // Store selected blog ID directly
+                                className="w-full p-4 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 transition duration-300"
+                                required
+                            >
+                                <option value="" disabled>Select a Blog to Share or Create a New Blog on Blogger</option>
+                                {Array.isArray(blogUserId) && blogUserId.map((blog) => (
+                                    <option key={blog.blogId} value={blog.blogId}>{blog.name}</option>
+                                ))}
+                            </select>
+                            <div className="flex justify-between">
+                                <button
+                                    type="button"
+                                    onClick={handleSavePost}
+                                    className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition duration-300"
+                                >
+                                    Save
+                                </button>
                                 <button
                                     type="submit"
-                                    className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+                                    className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-300"
                                 >
-                                    Save Changes
+                                    Publish On Blogger
                                 </button>
                             </div>
                         </form>
@@ -194,3 +183,13 @@ export default function Medium() {
         </div>
     );
 }
+
+const BloggerPostProvider = () => {
+    return (
+        <BloggerContextProvider>
+            <Blogger />
+        </BloggerContextProvider>
+    );
+}
+
+export default BloggerPostProvider;

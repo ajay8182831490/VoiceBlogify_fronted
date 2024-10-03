@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, Navigate } from 'react-router-dom';
 import { AiOutlineUser, AiOutlineMedium, AiOutlineBulb, AiOutlineLogout, AiOutlineClose } from 'react-icons/ai';
 import { FaBlogger } from 'react-icons/fa';
 import { SiLinkedin } from 'react-icons/si';
@@ -9,15 +9,15 @@ import { HiOutlineChevronLeft, HiOutlineChevronRight } from 'react-icons/hi';
 import { useAuth } from '@/userContext/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import DashboardRoutes from './DashBoardRoutes';
-const url = "https://voiceblogify-backend.onrender.com"
 
 const Dashboard = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isSidebarVisible, setIsSidebarVisible] = useState(true);
     const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
     const navigate = useNavigate();
-
     const { isAuthenticated, handleLogout } = useAuth();
+
+
 
     useEffect(() => {
         if (!isAuthenticated) {
@@ -25,7 +25,6 @@ const Dashboard = () => {
         }
     }, [isAuthenticated, navigate]);
 
-    // Dynamically update mobile/desktop state based on window size
     useEffect(() => {
         const handleResize = () => {
             setIsMobile(window.innerWidth < 768);
@@ -53,7 +52,7 @@ const Dashboard = () => {
                 </button>
             )}
 
-            {/* Sidebar for Desktop */}
+
             {isSidebarVisible && !isMobile && (
                 <div className="bg-gradient-to-b from-purple-600 to-purple-300 w-1/4 p-4 shadow-lg sticky top-0 h-screen">
                     <h2 className="text-2xl font-bold text-center mb-4 text-white">Dashboard</h2>
@@ -71,7 +70,7 @@ const Dashboard = () => {
                 </div>
             )}
 
-            {/* Sidebar for Mobile */}
+
             {isMobile && (
                 <>
                     <motion.div
@@ -113,13 +112,17 @@ const Dashboard = () => {
     );
 };
 
-const SidebarItem = ({ to, icon, label }) => (
-    <Link to={to}>
-        <div className="flex items-center p-4 mb-2 bg-white bg-opacity-20 rounded-none shadow-md cursor-pointer transition-transform transform hover:scale-105 hover:bg-opacity-30">
-            {icon}
-            <span className="ml-2 text-white font-semibold">{label}</span>
-        </div>
-    </Link>
-);
+const SidebarItem = ({ to, icon, label }) => {
+    const { isAuthenticated } = useAuth();
+
+    return (
+        <Link to={isAuthenticated ? to : '/login'}>
+            <div className="flex items-center p-4 mb-2 bg-white bg-opacity-20 rounded-none shadow-md cursor-pointer transition-transform transform hover:scale-105 hover:bg-opacity-30">
+                {icon}
+                <span className="ml-2 text-white font-semibold">{label}</span>
+            </div>
+        </Link>
+    );
+};
 
 export default Dashboard;

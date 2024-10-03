@@ -1,0 +1,52 @@
+.jodit-editor .jodit-wysiwyg blockquote {
+  border-left: 4px solid #b4b4b4;
+  margin: 20px 0;
+  padding: 10px 20px;
+  color: #555;
+  font-style: italic;
+  background-color: #f9f9f9;
+  border-radius: 4px;
+}
+
+/* Styles for table */
+.jodit-editor .jodit-wysiwyg table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.jodit-editor .jodit-wysiwyg table, 
+.jodit-editor .jodit-wysiwyg th, 
+.jodit-editor .jodit-wysiwyg td {
+  border: 1px solid #ddd;
+  padding: 10px;
+}
+
+.jodit-editor .jodit-wysiwyg th {
+  background-color: #f2f2f2;
+  color: #333;
+  font-weight: bold;
+}
+
+/* Style for code blocks */
+.jodit-editor .jodit-wysiwyg code,
+.jodit-editor .jodit-wysiwyg pre {
+  background-color: #2e3440;
+  color: #d8dee9;
+  padding: 10px;
+  border-radius: 5px;
+  overflow-x: auto;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+/* Optional: Add table header styles */
+.jodit-editor .jodit-wysiwyg table th {
+  background-color: #0073e6;
+  color: white;
+}
+
+/* Add padding and a border for table cells */
+.jodit-editor .jodit-wysiwyg td {
+  padding: 10px;
+}

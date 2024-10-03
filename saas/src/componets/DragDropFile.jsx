@@ -1,7 +1,8 @@
 import React, { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { motion } from 'framer-motion';
-const url = "https://voiceblogify-backend.onrender.com"
+
+const url = "http://localhost:4000"
 
 const AudioDropzone = ({ onFileUploaded }) => {
     const [uploadedFile, setUploadedFile] = useState(null);
@@ -23,12 +24,12 @@ const AudioDropzone = ({ onFileUploaded }) => {
             const url = URL.createObjectURL(file);
             setAudioUrl(url);
 
-            // Notify parent component about the uploaded file
+
             if (onFileUploaded) {
                 onFileUploaded(file);
             }
 
-            // Get audio duration
+
             const audio = new Audio(url);
             audio.onloadedmetadata = () => {
                 setDuration(audio.duration);

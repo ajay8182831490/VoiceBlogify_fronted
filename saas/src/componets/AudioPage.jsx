@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import ParentComponent from './ParentsFileUpload';
-import PasteUrlComponent from './PasteUrlComponent'
+import PasteUrlComponent from './PasteUrl';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import MyAudioRecordingComponent from './AudioTest';
 import { FaMicrophone, FaUpload, FaLink } from 'react-icons/fa'; // For icons
 
-const Url = "https://voiceblogify-backend.onrender.com"
+const url = "http://localhost:4000"
 
 export default function AudioPage() {
     const [selectedOption, setSelectedOption] = useState('record');
@@ -34,7 +34,7 @@ export default function AudioPage() {
     };
 
     const handleUrlSubmit = async (url) => {
-        const response = await fetch(`${Url}/transcription/url`, {
+        const response = await fetch(`${url}/transcription/url`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ url }),
@@ -47,7 +47,7 @@ export default function AudioPage() {
         const formData = new FormData();
         formData.append('audio', audioData);
 
-        const response = await fetch(`${Url}/transcription/url`, {
+        const response = await fetch(`${url}/transcription/url`, {
             method: 'POST',
             body: formData,
         });
@@ -56,9 +56,16 @@ export default function AudioPage() {
     };
 
     return (
-        <div className="flex flex-col items-center p-6 bg-gradient-to-r from-gray-100 to-gray-200 min-h-screen">
+        //<div className="flex flex-col items-center p-6 bg-gradient-to-r from-gray-100 to-gray-[#0b317c] min-h-screen">
+        <div className="flex flex-col items-center p-8 bg-gradient-to-r from-[#f5f5f5] to-[#0b317c] min-h-screen">
 
             <div className="w-full max-w-lg mb-8">
+                <div className="w-full mx-auto mb-8 pb-6 shadow-lg rounded-lg text-center">
+                    <h1 className="text-center text-xl md:text-2xl lg:text-3xl font-semibold text-gray-900 dark:text-gray-100">
+                        Capture Your Voice, Transform It Into Words!
+                    </h1>
+
+                </div>
                 <div className="flex justify-around flex-wrap">
                     {['record', 'upload', 'url'].map(option => (
                         <motion.div
