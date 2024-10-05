@@ -8,7 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
 
-const url = "http://localhost:4000"
+const url = "https://voiceblogify-backend.onrender.com"
 
 
 const loginSchema = z.object({

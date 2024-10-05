@@ -9,7 +9,7 @@ import MainComponent from './mainComponetsWork';
 export default function LandingPage() {
     return (
         <>
-            <div className="min-h-screen /*bg-gradient-to-r from-indigo-50 to-blue-50 flex flex-col items-center">
+            <div className="min-h-screen bg-gradient-to-r from-indigo-50 to-blue-50 flex flex-col items-center">
 
 
                 <motion.section

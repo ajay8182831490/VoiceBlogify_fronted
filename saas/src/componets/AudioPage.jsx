@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import MyAudioRecordingComponent from './AudioTest';
 import { FaMicrophone, FaUpload, FaLink } from 'react-icons/fa'; // For icons
 
-const url = "http://localhost:4000"
+const url = "https://voiceblogify-backend.onrender.com"
 
 export default function AudioPage() {
     const [selectedOption, setSelectedOption] = useState('record');
@@ -56,8 +56,7 @@ export default function AudioPage() {
     };
 
     return (
-        //<div className="flex flex-col items-center p-6 bg-gradient-to-r from-gray-100 to-gray-[#0b317c] min-h-screen">
-        <div className="flex flex-col items-center p-8 bg-gradient-to-r from-[#f5f5f5] to-[#0b317c] min-h-screen">
+        <div className="flex flex-col items-center p-6 bg-gradient-to-r from-gray-100 to-gray-[#0b317c] min-h-screen">
 
             <div className="w-full max-w-lg mb-8">
                 <div className="w-full mx-auto mb-8 pb-6 shadow-lg rounded-lg text-center">

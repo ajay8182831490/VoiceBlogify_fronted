@@ -1,7 +1,7 @@
 import { useContext, createContext, useEffect, useMemo, useState } from "react";
 
 const LinkedinContext = createContext();
-const url = "http://localhost:4000"
+const url = "https://voiceblogify-backend.onrender.com"
 
 
 export const LinkedinContextProvider = ({ children }) => {

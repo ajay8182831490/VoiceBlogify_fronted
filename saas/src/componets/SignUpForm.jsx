@@ -7,7 +7,7 @@ import { Notify, NotifyFalse } from './NotifyToast.jsx';
 import React from 'react';
 
 
-const url = "http://localhost:4000"
+const url = "https://voiceblogify-backend.onrender.com"
 
 const loginSchema = z.object({
     email: z.string().email('Please enter a valid email address.'),

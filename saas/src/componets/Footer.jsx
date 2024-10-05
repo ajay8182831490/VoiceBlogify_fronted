@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
     return (
@@ -6,9 +7,9 @@ const Footer = () => {
             <div className="max-w-7xl mx-auto px-4">
                 <div className="flex flex-col items-center md:flex-row md:justify-between">
                     <div className="flex flex-col items-center md:flex-row md:space-x-6">
-                        <a href="/privacy-policy" className="hover:underline">Privacy Policy</a>
-                        <a href="/terms-and-conditions" className="hover:underline">Terms and Conditions</a>
-                        <a href="mailto:support@voiceblogify.com" className="hover:underline">Support</a>
+                        <Link to="/privacy" className="hover:underline">Privacy Policy</Link>
+                        <Link to="/terms-condition" className="hover:underline">Terms and Conditions</Link>
+                        <a href="mailto:voiceblogify@gmail.com" className="hover:underline">Support</a>
                         <a href="https://x.com/abhi_g003" target="_blank" rel="noopener noreferrer" className="hover:underline">
                             Twitter
                         </a>

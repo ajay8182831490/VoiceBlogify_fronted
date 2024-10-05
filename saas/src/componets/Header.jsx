@@ -1,6 +1,6 @@
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
-import { useLocation } from 'react-router-dom'
+import { useLocation, Link } from 'react-router-dom'
 
 import { useAuth } from '@/userContext/AuthContext'
 
@@ -9,9 +9,10 @@ import profilepng from '../assets/profile.png'
 import { Notify } from './NotifyToast.jsx'
 import { memo, useEffect } from 'react'
 import { Helmet } from 'react-helmet'
+import { Link2 } from 'lucide-react'
 
 
-const url = "http://localhost:4000"
+const url = "https://voiceblogify-backend.onrender.com"
 
 const navigation = [
     { name: 'How Its work', href: '#howitworks', current: false },
@@ -47,13 +48,13 @@ const Header = memo(() => {
                 <meta name="keywords" content="voice blog, audio to text, blog writing, content creation, voice recording, AI blog generator, VoiceBlogify, convert audio to blog, audio blogging platform, audio transcription, voice to blog" />
                 <meta property="og:title" content="VoiceBlogify - Transform Your Audio into Blog Posts" />
                 <meta property="og:description" content="Quickly convert your voice recordings into polished blog posts effortlessly." />
-                <meta property="og:image" content="https://voiceblogify.netlify.app/landingpage.webp" />
-                <meta property="og:url" content="https://voiceblogify.netlify.app" />
+                <meta property="og:image" content="https://voiceblogify.in/landingpage.webp" />
+                <meta property="og:url" content="https://voiceblogify.in" />
                 <meta property="og:type" content="website" />
                 <meta name="twitter:card" content="summary_large_image" />
                 <meta name="twitter:title" content="VoiceBlogify - Transform Your Audio into Blog Posts" />
                 <meta name="twitter:description" content="Quickly convert your voice recordings into polished blog posts effortlessly." />
-                <meta name="twitter:image" content="https://voiceblogify.netlify.app/landingpage.webp" />
+                <meta name="twitter:image" content="https://voiceblogify.in/landingpage.webp" />
             </Helmet>
             <Disclosure as="nav" className="bg-gradient-to-r from-purple-500 via-indigo-500 to-blue-500 sticky top-0 z-50 shadow-lg">
                 <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -69,22 +70,22 @@ const Header = memo(() => {
                         <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                             <div className="flex flex-shrink-0 items-center">
                                 <h1 className="text-white text-2xl font-bold ml-2">
-                                    <a href="/">VoiceBlogify</a>
+                                    <Link to="/">VoiceBlogify</Link>
                                 </h1>
                             </div>
                             <div className="hidden sm:ml-6 sm:block">
                                 <div className="flex space-x-4">
                                     {navigation.map((item) => (
-                                        <a
+                                        <Link
                                             key={item.name}
-                                            href={item.href}
+                                            to={item.href}
                                             className={classNames(
                                                 item.current ? 'bg-white text-gray-800' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                                                 'rounded-md px-3 py-2 text-sm font-medium'
                                             )}
                                         >
                                             {item.name}
-                                        </a>
+                                        </Link>
                                     ))}
                                 </div>
                             </div>
@@ -114,14 +115,14 @@ const Header = memo(() => {
                                             className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
                                         >
                                             <MenuItem>
-                                                <a href="/dashboard" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                                <Link to="/dashboard/user-profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                                                     DashBoard
-                                                </a>
+                                                </Link>
                                             </MenuItem>
                                             <MenuItem>
-                                                <a href="/setting" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                                <Link to="/setting" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                                                     Settings
-                                                </a>
+                                                </Link>
                                             </MenuItem>
                                             <MenuItem>
                                                 <a
@@ -141,12 +142,12 @@ const Header = memo(() => {
                                     <div className="hidden sm:ml-6 sm:block">
                                         <div className="flex space-x-4">
                                             {!isPaid && (
-                                                <a
-                                                    href="/main"
+                                                <Link
+                                                    to="/main"
                                                     className="bg-green-600 text-white rounded-xl px-4 py-2 text-sm font-medium hover:bg-green-700 transition duration-150"
                                                 >
                                                     Start Free
-                                                </a>
+                                                </Link>
                                             )}
                                             <a
                                                 href="#"
@@ -165,19 +166,19 @@ const Header = memo(() => {
                             ) : (
                                 <div className="hidden sm:ml-6 sm:block">
                                     <div className="flex space-x-4">
-                                        <a
-                                            href="/login"
+                                        <Link
+                                            to="/login"
                                             className="bg-gray-900 text-white rounded-md px-4 py-2 text-sm font-medium hover:bg-gray-700 transition duration-150"
                                         >
                                             Login
-                                        </a>
+                                        </Link>
                                         {!isPaid && (
-                                            <a
-                                                href="/main"
+                                            <Link
+                                                to="/main"
                                                 className="bg-green-600 text-white rounded-xl px-4 py-2 text-sm font-medium hover:bg-green-700 transition duration-150"
                                             >
                                                 Start Free
-                                            </a>
+                                            </Link>
                                         )}
                                     </div>
                                 </div>
@@ -191,8 +192,8 @@ const Header = memo(() => {
                         {navigation.map((item) => (
                             <DisclosureButton
                                 key={item.name}
-                                as="a"
-                                href={item.href}
+                                as="Link"
+                                to={item.href}
                                 aria-current={item.current ? 'page' : undefined}
                                 className={classNames(
                                     item.current ? 'bg-white text-gray-800' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
@@ -204,10 +205,10 @@ const Header = memo(() => {
                         ))}
                         {isAuthenticated ? (
                             <>
-                                <DisclosureButton as="a" href="/dashboard" className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">
+                                <DisclosureButton as="Link" to="/dashboard/user-profile" className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">
                                     Dashboard
                                 </DisclosureButton>
-                                <DisclosureButton as="a" href="/setting" className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">
+                                <DisclosureButton as="Link" to="/setting" className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">
                                     Settings
                                 </DisclosureButton>
                                 <DisclosureButton as="a" href="/#" className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white" onClick={async (e) => {
@@ -220,11 +221,11 @@ const Header = memo(() => {
                             </>
                         ) : (
                             <>
-                                <DisclosureButton as="a" href="/login" className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">
+                                <DisclosureButton as="Link" to="/login" className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">
                                     Login
                                 </DisclosureButton>
                                 {!isPaid && (
-                                    <DisclosureButton as="a" href="/main" className="block rounded-md px-3 py-2 text-base font-medium text-white bg-green-600 hover:bg-green-700">
+                                    <DisclosureButton as="Link" to="/main" className="block rounded-md px-3 py-2 text-base font-medium text-white bg-green-600 hover:bg-green-700">
                                         Start Free
                                     </DisclosureButton>
                                 )}

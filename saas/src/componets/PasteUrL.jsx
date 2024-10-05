@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { z } from 'zod';
 
 
-const Url = "http://localhost:4000"
+const Url = "https://voiceblogify-backend.onrender.com"
 
 
 const urlSchema = z.string().url({ message: "Invalid URL" });
@@ -24,7 +24,7 @@ export default function PasteUrlComponent() {
             setError('');
 
 
-            console.log("mai yahq hu")
+
 
             const response = await fetch(`${Url}/transcription/url`, {
                 method: 'POST',
