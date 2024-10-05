@@ -12,6 +12,8 @@ import RichEditorText from './componets/RichEditorText';
 import Dashboard from './componets/Dashboard';
 import PrivateRoute from './componets/PrivateRoutes';
 import PricingCard from './componets/Pricing';
+import TermsAndConditions from './componets/TermsAndCondition';
+import Pri from './componets/Pri';
 
 function App() {
   const { isAuthenticated } = useAuth();
@@ -22,12 +24,15 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/edit" element={<RichEditorText />} />
         <Route path="/pricing" element={<PricingCard />} />
+        <Route path="/terms-condition" element={<TermsAndConditions />} />
+        <Route path="/privacy" element={<Pri />} />
+
 
 
         <Route path="/dashboard/*" element={<PrivateRoute element={<Dashboard />} />} />
 
-        {/* //<Route path="/main" element={isAuthenticated ? <AudioPage /> : <Navigate to="/login" />} /> */}
-        //<Route path="/main" element={<AudioPage />} />
+        <Route path="/main" element={isAuthenticated ? <AudioPage /> : <Navigate to="/login" />} />
+
 
         <Route
           path="/login"

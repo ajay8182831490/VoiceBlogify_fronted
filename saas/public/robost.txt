@@ -1,0 +1,9 @@
+User-agent: *
+
+Disallow: /dashboard/
+Disallow: /user-settings/
+Disallow: /main
+Allow: /
+
+
+Sitemap: https://voiceblogify.in/sitemap.xml
