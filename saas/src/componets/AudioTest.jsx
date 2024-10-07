@@ -3,7 +3,7 @@ import { MicrophoneIcon, PauseIcon, PlayIcon, StopIcon, ArrowPathIcon, ArrowDown
 import { useNavigate } from 'react-router-dom';
 import './AudioRecordingComponent.css';
 
-const Url = "https://voiceblogify-backend.onrender.com"
+const Url = "http://localhost:4000"
 
 export default function MyAudioRecordingComponent() {
     const [isRecording, setIsRecording] = useState(false);

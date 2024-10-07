@@ -6,7 +6,7 @@ import React from 'react';
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { useAuth } from '@/userContext/AuthContext';
 import { useNavigate } from 'react-router-dom';
-const url = "https://voiceblogify-backend.onrender.com"
+const url = "http://localhost:4000"
 
 import { Notify, NotifyFalse } from './NotifyToast';
 

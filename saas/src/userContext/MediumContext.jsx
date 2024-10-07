@@ -3,7 +3,7 @@ import DOMPurify from 'dompurify';
 
 const MediumContext = createContext();
 
-const url = "https://voiceblogify-backend.onrender.com"
+const url = "http://localhost:4000"
 
 export const MediumContextProvider = ({ children }) => {
     const [title, setTitle] = useState('');

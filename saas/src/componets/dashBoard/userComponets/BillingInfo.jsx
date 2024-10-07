@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { FaDownload } from 'react-icons/fa';
-const url = "https://voiceblogify-backend.onrender.com"
+const url = "http://localhost:4000"
 
 const BillingInfo = ({ onDownloadBill }) => {
     return (

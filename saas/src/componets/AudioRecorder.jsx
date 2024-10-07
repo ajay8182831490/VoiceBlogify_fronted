@@ -1,11 +1,13 @@
-import React, { useCallback, useRef, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { motion } from 'framer-motion';
-import { Navigate, useNavigate } from 'react-router-dom';
-const Url = "https://voiceblogify-backend.onrender.com"
+import { useNavigate } from 'react-router-dom';
+
+const Url = "http://localhost:4000";
 
 const AudioDropzone = ({ onFileUploaded }) => {
     const [audioUrl, setAudioUrl] = useState('');
+    const [videoUrl, setVideoUrl] = useState('');
     const [duration, setDuration] = useState(null);
     const [selectedFile, setSelectedFile] = useState(null);
     const [errorMessage, setErrorMessage] = useState('');
@@ -14,13 +16,14 @@ const AudioDropzone = ({ onFileUploaded }) => {
     const onDrop = useCallback((acceptedFiles) => {
         setErrorMessage('');
         setAudioUrl('');
+        setVideoUrl('');
         setDuration(null);
         setSelectedFile(null);
 
         const file = acceptedFiles[0];
+        const url = URL.createObjectURL(file);
 
         if (file && file.type.startsWith('audio/')) {
-            const url = URL.createObjectURL(file);
             setAudioUrl(url);
             setSelectedFile(file);
 
@@ -32,10 +35,25 @@ const AudioDropzone = ({ onFileUploaded }) => {
             audio.onloadedmetadata = () => {
                 setDuration(audio.duration);
             };
+        } else if (file.type.startsWith('video/')) {
+            setVideoUrl(url);
+            setSelectedFile(file);
 
+            if (onFileUploaded) {
+                onFileUploaded(file);
+            }
+
+            const video = document.createElement('video');
+            video.src = url;
+            video.onloadedmetadata = () => {
+                const videoDuration = video.duration;
+                setDuration(videoDuration);
+            };
         } else {
-            setErrorMessage('Please upload a valid audio file (e.g., .mp3, .wav).');
+            setErrorMessage('Please upload a valid audio or video file.');
         }
+
+
     }, [onFileUploaded]);
 
     const handleSubmit = async () => {
@@ -45,7 +63,7 @@ const AudioDropzone = ({ onFileUploaded }) => {
         }
 
         const formData = new FormData();
-        formData.append('audio', selectedFile);
+        formData.append('file', selectedFile); // Change key to 'file' for general use
 
         try {
             const response = await fetch(`${Url}/transcription/audioRecord`, {
@@ -58,12 +76,19 @@ const AudioDropzone = ({ onFileUploaded }) => {
                 navigate('/loading');
             } else {
                 const errorMessage = await response.text();
-                throw new Error(`Failed to upload the audio file: ${errorMessage}`);
+                throw new Error(`Failed to upload the file: ${errorMessage}`);
             }
         } catch (error) {
-            console.error(error);
-            setErrorMessage('There was an issue uploading the audio file.');
+
+            setErrorMessage('There was an issue uploading the file.');
         }
+    };
+
+    const handleDelete = () => {
+        setAudioUrl('');
+        setVideoUrl('');
+        setSelectedFile(null);
+        setDuration(null);
     };
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -74,6 +99,11 @@ const AudioDropzone = ({ onFileUploaded }) => {
             'audio/ogg': ['.ogg'],
             'audio/mp4': ['.m4a'],
             'audio/x-aiff': ['.aiff', '.aif'],
+            'video/mp4': ['.mp4'],
+            'video/x-msvideo': ['.avi'],
+            'video/x-m4v': ['.m4v'],
+            'video/ogg': ['.ogv'],
+            'video/webm': ['.webm'],
         },
         multiple: false,
     });
@@ -91,8 +121,8 @@ const AudioDropzone = ({ onFileUploaded }) => {
                 <input {...getInputProps()} />
                 <p className="text-teal-800 text-lg font-semibold">
                     {isDragActive
-                        ? 'Drop your audio file here...'
-                        : 'Drag & drop your audio files here, or click to select files'}
+                        ? 'Drop your audio or video file here...'
+                        : 'Drag & drop your audio or video files here, or click to select files'}
                 </p>
             </div>
 
@@ -113,12 +143,29 @@ const AudioDropzone = ({ onFileUploaded }) => {
                 </div>
             )}
 
-            {audioUrl && (
+            {videoUrl && (
+                <div className="mt-4">
+                    <video controls width="500" src={videoUrl}>
+                        Your browser does not support the video element.
+                    </video>
+                </div>
+            )}
+
+            {(audioUrl || videoUrl) && (
                 <button
                     onClick={handleSubmit}
                     className="mt-4 px-6 py-3 bg-teal-600 text-white rounded-lg shadow-lg hover:bg-teal-500 transition-colors duration-300"
                 >
-                    Submit Audio for Processing
+                    Submit File for Processing
+                </button>
+            )}
+
+            {(audioUrl || videoUrl) && (
+                <button
+                    onClick={handleDelete}
+                    className="mt-2 px-6 py-2 bg-red-600 text-white rounded-lg shadow-lg hover:bg-red-500 transition-colors duration-300"
+                >
+                    Delete File
                 </button>
             )}
         </motion.div>
