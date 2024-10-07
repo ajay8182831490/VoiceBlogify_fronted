@@ -20,14 +20,14 @@ export default function LandingPage() {
                 >
                     <div className="absolute inset-0 bg-black opacity-20 z-0"></div>
                     <div className="relative z-10 container mx-auto px-6 text-center">
-                        <motion.h2
-                            className="text-5xl font-bold mb-6"
+                        <motion.h1
+                            className="text-4xl font-bold mb-6"
                             initial={{ opacity: 0, y: -50 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 1, delay: 0.2 }}
                         >
                             Turn Your Voice  <span className="text-yellow-300"> into Engaging Blogs in Minutes</span>
-                        </motion.h2>
+                        </motion.h1>
 
                         <motion.p
                             className="text-lg mb-8 max-w-4xl mx-auto"

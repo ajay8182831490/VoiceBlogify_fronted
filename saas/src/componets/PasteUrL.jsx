@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { z } from 'zod';
 
 
-const Url = "https://voiceblogify-backend.onrender.com"
+const Url = "http://localhost:4000"
 
 
 const urlSchema = z.string().url({ message: "Invalid URL" });
@@ -26,19 +26,19 @@ export default function PasteUrlComponent() {
 
 
 
-            const response = await fetch(`${Url}/transcription/url`, {
-                method: 'POST',
-                credentials: 'include',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ url }),
-            });
-
-
-            if (!response.ok) {
-                throw new Error(`Server responded with a status ${response.status}`);
-            }
-
-            const result = await response.json();
+            /* const response = await fetch(`${Url}/transcription/url`, {
+                 method: 'POST',
+                 credentials: 'include',
+                 headers: { 'Content-Type': 'application/json' },
+                 body: JSON.stringify({ url }),
+             });
+ 
+ 
+             if (!response.ok) {
+                 throw new Error(`Server responded with a status ${response.status}`);
+             }
+ 
+             const result = await response.json();*/
 
 
             setResponseMessage(result.message || 'Transcription successful.');

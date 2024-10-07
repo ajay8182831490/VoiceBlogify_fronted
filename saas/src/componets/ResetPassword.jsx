@@ -1,5 +1,5 @@
 import { useState } from "react";
-const url = "https://voiceblogify-backend.onrender.com"
+const url = "http://localhost:4000"
 
 export default function ResetPassword() {
     const [email, setEmail] = useState("");
