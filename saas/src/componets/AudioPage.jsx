@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import MyAudioRecordingComponent from './AudioTest';
 import { FaMicrophone, FaUpload, FaLink } from 'react-icons/fa'; // For icons
 
-const url = "http://localhost:4000"
+const url = "https://voiceblogify-backend.onrender.com"
 
 export default function AudioPage() {
     const [selectedOption, setSelectedOption] = useState('record');

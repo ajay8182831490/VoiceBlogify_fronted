@@ -12,7 +12,7 @@ import { Helmet } from 'react-helmet'
 import { Link2 } from 'lucide-react'
 
 
-const url = "http://localhost:4000"
+const url = "https://voiceblogify-backend.onrender.com"
 
 const navigation = [
     // { name: 'How Its work', href: '#howitworks', current: false },

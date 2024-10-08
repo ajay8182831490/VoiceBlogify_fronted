@@ -15,7 +15,7 @@ const DashboardRoutes = () => {
     return (
         <UserPostProvider>
             <UserContextProvider>
-                <div className="flex-grow p-4 bg-gradient-to-b from-purple-200 to-purple-600">
+                <div className="flex-grow p-4 " style={{ backgroundColor: "#020012" }}>
                     <Suspense fallback={<div>Loading...</div>}>
                         <Routes>
                             <Route

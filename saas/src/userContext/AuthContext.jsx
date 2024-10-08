@@ -1,7 +1,7 @@
 import { useState, createContext, useEffect, useContext, useMemo } from "react";
 
 const AuthContext = createContext();
-const url = "http://localhost:4000";
+const url = "https://voiceblogify-backend.onrender.com";
 
 export function AuthProvider({ children }) {
     const [isAuthenticated, setIsAuthenticated] = useState(false);

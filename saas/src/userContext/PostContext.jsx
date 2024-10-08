@@ -3,7 +3,7 @@ import DOMPurify from 'dompurify';
 
 const PostContext = createContext();
 
-const url = "http://localhost:4000"
+const url = "https://voiceblogify-backend.onrender.com"
 
 export const PostProvider = ({ children }) => {
     const [title, setTitle] = useState("");
@@ -18,6 +18,7 @@ export const PostProvider = ({ children }) => {
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
     const [hasMediumAccess, setMediumAccess] = useState(false);
+    const [hasLinkedinAccess, setLinkedinAccess] = useState(false)
 
     useEffect(() => {
         fetchPosts(currentPage, limit);
@@ -217,6 +218,14 @@ export const PostProvider = ({ children }) => {
         }
     }
 
+    const LinkedinAccess = async () => {
+        try {
+            const response = await fetch(' ')
+        } catch (error) {
+
+        }
+    }
+
 
 
     const postData = useMemo(() => ({
@@ -233,8 +242,8 @@ export const PostProvider = ({ children }) => {
         createPost,
         fetchPostByID,
         success,
-        mediumUrl, hasMediumAccess, setMediumAccess
-    }), [responseMessage, loading, updatePost, success, mediumUrl, hasMediumAccess, setMediumAccess]);
+        mediumUrl, hasMediumAccess, setMediumAccess, hasLinkedinAccess, setLinkedinAccess
+    }), [updatePost, success, mediumUrl, hasMediumAccess, setMediumAccess, hasLinkedinAccess, setLinkedinAccess]);
 
     return (
         <PostContext.Provider value={postData}>
