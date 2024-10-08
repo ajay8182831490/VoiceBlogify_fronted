@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import MyAudioRecordingComponent from './AudioTest';
 import { FaMicrophone, FaUpload, FaLink } from 'react-icons/fa'; // For icons
 
-const url = "http://localhost:4000"
+const url = "https://voiceblogify-backend.onrender.com"
 
 export default function AudioPage() {
     const [selectedOption, setSelectedOption] = useState('record');
@@ -66,7 +66,7 @@ export default function AudioPage() {
 
                 </div>
                 <div className="flex justify-around flex-wrap">
-                    {['record', 'upload', 'url'].map(option => (
+                    {['record', 'upload', /*'url'*/].map(option => (
                         <motion.div
                             key={option}
                             onClick={() => handleOptionChange(option)}
@@ -80,7 +80,7 @@ export default function AudioPage() {
                             <div className="flex items-center justify-center w-14 h-14 md:w-16 md:h-16 bg-white rounded-full shadow-md">
                                 {option === 'record' && <FaMicrophone className="text-teal-500 text-xl md:text-3xl" />}
                                 {option === 'upload' && <FaUpload className="text-blue-500 text-xl md:text-3xl" />}
-                                {option === 'url' && <FaLink className="text-green-500 text-xl md:text-3xl" />}
+                                {/* //{option === 'url' && <FaLink className="text-green-500 text-xl md:text-3xl" />} */}
                             </div>
 
                             {/* Tooltip on Hover */}

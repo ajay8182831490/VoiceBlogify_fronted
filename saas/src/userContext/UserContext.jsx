@@ -1,14 +1,14 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { usePost } from "./PostContext";
 
-const url = "http://localhost:4000";
+const url = "https://voiceblogify-backend.onrender.com";
 const UserContext = createContext();
 
 export const UserContextProvider = ({ children }) => {
     const [message, setResponseMessage] = useState('');
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
-    const { hasMediumAccess, setMediumAccess } = usePost();
+    const { hasMediumAccess, setMediumAccess, hasLinkedinAccess, setLinkedinAccess } = usePost();
 
     const fetchUserProfile = async () => {
         try {
@@ -22,8 +22,14 @@ export const UserContextProvider = ({ children }) => {
             }
 
             const data = await response.json();
+
+
             setUser(data);
             setMediumAccess(!!data.MediumUrl);
+
+            setLinkedinAccess(!!data.linkedInTokenExists)
+
+
         } catch (error) {
             setResponseMessage('Error occurred during fetching user information');
 
@@ -36,7 +42,7 @@ export const UserContextProvider = ({ children }) => {
         fetchUserProfile();
     }, []);
 
-    const userInfo = useMemo(() => user, [user, hasMediumAccess]);
+    const userInfo = useMemo(() => user, [user, hasMediumAccess, hasLinkedinAccess]);
 
     return (
         <UserContext.Provider value={{ userInfo, message, hasMediumAccess, loading }}>

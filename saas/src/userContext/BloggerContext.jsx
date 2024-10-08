@@ -2,7 +2,7 @@ import { useContext, createContext, useMemo, useState, useEffect } from "react";
 import DOMPurify from 'dompurify';
 
 const BloggerContext = createContext();
-const url = "http://localhost:4000"
+const url = "https://voiceblogify-backend.onrender.com"
 
 export const BloggerContextProvider = ({ children }) => {
     const [title, setTitle] = useState('');
@@ -108,7 +108,7 @@ export const BloggerContextProvider = ({ children }) => {
         uploadPost,
         getPostById,
         getBlogId
-    }), [title, content, message, blogUserId, uploadPost, getBlogId]);
+    }), [blogUserId, uploadPost, getBlogId]);
 
     return (
         <BloggerContext.Provider value={{ bloggerPost }}>

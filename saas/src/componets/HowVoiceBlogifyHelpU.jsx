@@ -31,9 +31,9 @@ const HowVoiceBlogifyHelps = () => {
     ];
 
     return (
-        <div className="py-10 bg-gradient-to-r from-gray-200 to-gray-400">
-            <h2 className="text-3xl font-bold text-center mb-8 text-gray-800">How VoiceBlogify Can Help You</h2>
-            <p className="text-lg text-center text-gray-700 mb-6">
+        <div className="py-10 " style={{ backgroundColor: "#020012" }}>
+            <h2 className="text-3xl font-bold text-center mb-8 text-white">How VoiceBlogify Can Help You</h2>
+            <p className="text-lg text-center text-white mb-6">
                 Whether you're a blogger, professional, or business owner, VoiceBlogify empowers you to create compelling content with ease.
                 Say goodbye to writer's block and hello to efficient content creation.
             </p>
@@ -42,6 +42,7 @@ const HowVoiceBlogifyHelps = () => {
                     <motion.div
                         key={index}
                         className={`flex flex-col items-center w-full max-w-xs p-6 m-4 shadow-lg rounded-lg transition-transform duration-300 hover:scale-105 ${benefit.color} text-white`}
+                        style={{ backgroundColor: "#1a0026" }}
                         whileHover={{ scale: 1.05 }}
                     >
                         <div className="mb-3">{benefit.icon}</div>

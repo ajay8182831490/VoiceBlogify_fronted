@@ -2,7 +2,7 @@ import { useState } from "react";
 import { SubmitButton } from "./SignUpForm";
 import { useNavigate } from "react-router-dom";
 import { Notify, NotifyFalse } from './NotifyToast.jsx'
-const url = "http://localhost:4000"
+const url = "https://voiceblogify-backend.onrender.com"
 export default function ResetPassword1() {
     const [email, setEmail] = useState("");
     const [otp, setOtp] = useState("");
@@ -92,83 +92,94 @@ export default function ResetPassword1() {
     };
 
     return (
-        <div className="max-w-lg mx-auto my-10 bg-white p-8 rounded-xl shadow shadow-slate-300">
-            <h1 className="text-4xl font-medium">Reset password</h1>
-            <p className="text-slate-500">Fill up the form to reset your password</p>
+        <div className="min-h-screen flex items-center justify-center px-4" style={{ backgroundColor: "#020012" }}>
+            <div className="w-full max-w-lg p-8 rounded-xl shadow shadow-slate-300 flex flex-col justify-center" style={{ backgroundColor: "#020012" }}>
+                <h1 className="text-4xl font-medium text-white text-center mb-4">Reset Password</h1>
+                <p className="text-slate-400 text-center mb-6">Fill up the form to reset your password</p>
 
-            {message && <p className="text-center text-red-500">{message}</p>}
+                {/* Display error message */}
+                {message && <p className="text-center text-red-500 mb-4">{message}</p>}
 
-            {step === 1 && (
-                <form onSubmit={handleEmailSubmit} className="my-10">
-                    <div className="flex flex-col space-y-5">
-                        <label htmlFor="email">
-                            <p className="font-medium text-slate-700 pb-2">Email address</p>
-                            <input
-                                id="email"
-                                name="email"
-                                type="email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
-                                placeholder="Enter email address"
-                                required
-                            />
-                        </label>
+                {/* Step 1: Email Submission */}
+                {step === 1 && (
+                    <form onSubmit={handleEmailSubmit}>
+                        <div className="space-y-5">
+                            <label htmlFor="email" className="block">
+                                <span className="font-medium text-slate-400">Email Address</span>
+                                <input
+                                    id="email"
+                                    name="email"
+                                    type="email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    className="w-full mt-1 py-3 px-4 bg-transparent border border-slate-700 rounded-lg text-slate-300 focus:outline-none focus:border-indigo-500 focus:bg-slate-800"
+                                    placeholder="Enter email address"
+                                    required
+                                />
+                            </label>
 
-                        <button className="w-full py-3 font-medium text-white bg-indigo-600 hover:bg-indigo-500 rounded-lg border-indigo-500 hover:shadow inline-flex space-x-2 items-center justify-center">
-                            <span>Send OTP</span>
-                        </button>
-                    </div>
-                </form>
-            )}
-
-            {step === 2 && (
-                <form onSubmit={handleOtpAndPasswordSubmit} className="my-10">
-                    <div className="flex flex-col space-y-5">
-                        <label htmlFor="otp">
-                            <p className="font-medium text-slate-700 pb-2">Enter OTP</p>
-                            <input
-                                id="otp"
-                                name="otp"
-                                type="text"
-                                value={otp}
-                                onChange={(e) => setOtp(e.target.value)}
-                                className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
-                                placeholder="Enter the OTP sent to your email"
-                                required
-                            />
-                        </label>
-
-                        <label htmlFor="password">
-                            <p className="font-medium text-slate-700 pb-2">New Password</p>
-                            <input
-                                id="password"
-                                name="password"
-                                type="password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
-                                placeholder="Enter new password"
-                                required
-                            />
-                        </label>
-
-                        <div className="flex justify-between items-center my-6">
-                            <SubmitButton name="Submit" />
-
-                            {/* Resend OTP Button */}
                             <button
-                                type="button"
-                                onClick={handleResendOtp}
-                                disabled={!sendOtp}
-                                className="mt-6 rounded-lg bg-blue-600 px-4 py-2 text-center text-base font-semibold text-white shadow-md outline-none ring-blue-500 ring-offset-2 transition hover:bg-blue-700 focus:ring-2 md:w-32"
+                                type="submit"
+                                className="w-full py-3 mt-4 font-medium text-white bg-indigo-600 hover:bg-indigo-500 rounded-lg hover:shadow-md transition duration-300"
                             >
-                                Resend OTP
+                                Send OTP
                             </button>
                         </div>
-                    </div>
-                </form>
-            )}
+                    </form>
+                )}
+
+                {/* Step 2: OTP and Password Submission */}
+                {step === 2 && (
+                    <form onSubmit={handleOtpAndPasswordSubmit}>
+                        <div className="space-y-5">
+                            <label htmlFor="otp" className="block">
+                                <span className="font-medium text-slate-400">Enter OTP</span>
+                                <input
+                                    id="otp"
+                                    name="otp"
+                                    type="text"
+                                    value={otp}
+                                    onChange={(e) => setOtp(e.target.value)}
+                                    className="w-full mt-1 py-3 px-4 bg-transparent border border-slate-700 rounded-lg text-slate-300 focus:outline-none focus:border-indigo-500 focus:bg-slate-800"
+                                    placeholder="Enter the OTP sent to your email"
+                                    required
+                                />
+                            </label>
+
+                            <label htmlFor="password" className="block">
+                                <span className="font-medium text-slate-400">New Password</span>
+                                <input
+                                    id="password"
+                                    name="password"
+                                    type="password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    className="w-full mt-1 py-3 px-4 bg-transparent border border-slate-700 rounded-lg text-slate-300 focus:outline-none focus:border-indigo-500 focus:bg-slate-800"
+                                    placeholder="Enter new password"
+                                    required
+                                />
+                            </label>
+
+                            <div className="flex flex-col md:flex-row md:justify-between items-center mt-6 space-y-4 md:space-y-0">
+                                <SubmitButton name="Submit" />
+
+                                {/* Resend OTP Button */}
+                                <button
+                                    type="button"
+                                    onClick={handleResendOtp}
+                                    disabled={!sendOtp}
+                                    className="rounded-lg bg-blue-600 px-4 py-2 text-center text-base font-semibold text-white shadow-md outline-none ring-blue-500 ring-offset-2 transition hover:bg-blue-700 focus:ring-2 md:w-32"
+                                >
+                                    Resend OTP
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                )}
+            </div>
         </div>
+
+
+
     );
 }

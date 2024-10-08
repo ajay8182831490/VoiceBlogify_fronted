@@ -51,7 +51,7 @@ export const UserPosts = () => {
 
     return (
         <motion.div
-            className="container mx-auto px-4 py-8 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-lg shadow-xl"
+            className="container mx-auto px-4 py-8 bg-black rounded-lg shadow-xl"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}

@@ -54,7 +54,7 @@ const Dashboard = () => {
 
 
             {isSidebarVisible && !isMobile && (
-                <div className="bg-gradient-to-b from-purple-600 to-purple-300 w-1/4 p-4 shadow-lg sticky top-0 h-screen">
+                <div className=" w-1/4 p-4 shadow-lg sticky top-0 h-screen" style={{ backgroundColor: "#020012" }}>
                     <h2 className="text-2xl font-bold text-center mb-4 text-white">Dashboard</h2>
                     <div className="flex flex-col space-y-4">
                         <SidebarItem to="/dashboard/user-profile" icon={<AiOutlineUser />} label="User Profile" />
@@ -80,8 +80,8 @@ const Dashboard = () => {
                         exit={{ opacity: 0 }}
                         transition={{ type: 'spring', stiffness: 300 }}
                     >
-                        <div className="bg-gradient-to-b from-purple-600 to-purple-300 p-5 w-3/4 md:w-1/3 relative mt-16">
-                            <button onClick={toggleModal} className="absolute top-4 right-4 text-gray-300 hover:text-gray-100">
+                        <div className=" p-5 w-3/4 md:w-1/3 relative mt-16" style={{ backgroundColor: "#020012" }}>
+                            <button onClick={toggleModal} className="absolute top-4 right-4 text-white hover:text-gray-100">
                                 <AiOutlineClose size={24} />
                             </button>
                             <h3 className="text-lg font-bold mb-4 text-white">Dashboard</h3>
@@ -118,7 +118,7 @@ const SidebarItem = ({ to, icon, label }) => {
     return (
         <Link to={isAuthenticated ? to : '/login'}>
             <div className="flex items-center p-4 mb-2 bg-white bg-opacity-20 rounded-none shadow-md cursor-pointer transition-transform transform hover:scale-105 hover:bg-opacity-30">
-                {icon}
+                <span className='text-white'> {icon}</span>
                 <span className="ml-2 text-white font-semibold">{label}</span>
             </div>
         </Link>

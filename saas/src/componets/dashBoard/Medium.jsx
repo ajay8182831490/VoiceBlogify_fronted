@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect, useRef } from 'react';
 import { FaEdit, FaSearch } from 'react-icons/fa';
 import { IoClose } from 'react-icons/io5';
-import ReactQuill from 'react-quill';
+
 import 'react-quill/dist/quill.snow.css'; // Import Quill styles
 import { usePost } from '@/userContext/PostContext';
 import { MediumContextProvider } from '@/userContext/MediumContext';
@@ -95,8 +95,8 @@ export function Medium() {
     };
 
     return (
-        <div className="p-4 md:p-8 max-w-screen-lg mx-auto bg-gradient-to-r from-blue-200 via-purple-200 to-pink-200 min-h-screen">
-            <h1 className="text-3xl md:text-4xl font-extrabold text-gray-800 mb-6 text-center">
+        <div className="p-4 md:p-8 max-w-screen-lg mx-auto  min-h-60vh" style={{ backgroundColor: "black" }}>
+            <h1 className="text-3xl md:text-4xl font-extrabold text-white mb-6 text-center">
                 Launch Post on Medium
             </h1>
 

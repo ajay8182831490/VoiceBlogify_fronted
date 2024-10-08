@@ -72,8 +72,8 @@ export function Blogger() {
     };
 
     return (
-        <div className="p-4 md:p-8 max-w-screen-lg mx-auto bg-gradient-to-r from-blue-200 via-purple-200 to-pink-200 min-h-screen">
-            <h1 className="text-4xl font-extrabold text-gray-800 mb-6 text-center">
+        <div className="p-4 md:p-8 max-w-screen-lg mx-auto min-h-60vh" style={{ backgroundColor: "black" }}>
+            <h1 className="text-4xl font-extrabold text-white mb-6 text-center">
                 Launch Post on Blogger
             </h1>
 
@@ -121,7 +121,10 @@ export function Blogger() {
 
             {/* Modal Logic for Share */}
             {modalOpen && selectedPost && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+                <div
+                    className="fixed inset-0 flex justify-center items-center z-50"
+                    style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
+                >
                     <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-screen-lg relative transform transition-all duration-300 mt-10">
                         <button
                             onClick={handleCloseModal}
@@ -136,7 +139,7 @@ export function Blogger() {
                         <input
                             type="text"
                             value={selectedPost.title}
-                            onChange={(e) => setSelectedPost(prev => ({ ...prev, title: e.target.value }))}
+                            onChange={(e) => setSelectedPost((prev) => ({ ...prev, title: e.target.value }))}
                             className="w-full p-4 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 mb-4 transition duration-300"
                             placeholder="Enter Post Title"
                         />
@@ -146,20 +149,28 @@ export function Blogger() {
                         <RTE ref={editorRef} initialContent={selectedPost.content} onChange={handleContentChange} />
 
                         <form onSubmit={handleShareSubmit} className="space-y-4 mt-1">
-                            <label htmlFor="share-options" className="block text-lg font-semibold text-gray-700 mb-1 text-center">
+                            <label
+                                htmlFor="share-options"
+                                className="block text-lg font-semibold text-gray-700 mb-1 text-center"
+                            >
                                 Select Blog for Sharing
                             </label>
                             <select
                                 id="share-options"
                                 value={selectedOption}
-                                onChange={(e) => setSelectedOption(e.target.value)}  // Store selected blog ID directly
+                                onChange={(e) => setSelectedOption(e.target.value)} // Store selected blog ID directly
                                 className="w-full p-4 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 transition duration-300"
                                 required
                             >
-                                <option value="" disabled>Select a Blog to Share or Create a New Blog on Blogger</option>
-                                {Array.isArray(blogUserId) && blogUserId.map((blog) => (
-                                    <option key={blog.blogId} value={blog.blogId}>{blog.name}</option>
-                                ))}
+                                <option value="" disabled>
+                                    Select a Blog to Share or Create a New Blog on Blogger
+                                </option>
+                                {Array.isArray(blogUserId) &&
+                                    blogUserId.map((blog) => (
+                                        <option key={blog.blogId} value={blog.blogId}>
+                                            {blog.name}
+                                        </option>
+                                    ))}
                             </select>
                             <div className="flex justify-between">
                                 <button
@@ -180,6 +191,8 @@ export function Blogger() {
                     </div>
                 </div>
             )}
+
+
         </div>
     );
 }
