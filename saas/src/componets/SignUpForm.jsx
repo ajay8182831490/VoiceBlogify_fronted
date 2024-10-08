@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/userContext/AuthContext';
 import { Notify, NotifyFalse } from './NotifyToast.jsx';
 import React from 'react';
-
+import { Link } from 'react-router-dom';
 
 const url = "http://localhost:4000"
 
@@ -17,21 +17,17 @@ const loginSchema = z.object({
 
 export default function SignUpForm() {
     return (
-        <div className="flex w-full flex-col md:w-1/2">
-            <div className="flex justify-center pt-12 md:justify-start md:pl-12">
-                <a href="/" className="text-2xl font-bold text-blue-600">
-                    VoiceBlogify
-                </a>
-            </div>
-            <div className="my-auto mx-auto flex flex-col justify-center px-6 pt-8 md:justify-start lg:w-[28rem]">
+        <div className="flex w-full flex-col md:w-1/2 pb-6">
+
+            <div className="my-auto mx-auto flex flex-col justify-center px-6 pt-6 md:justify-start lg:w-[28rem]">
                 <p className="text-center text-3xl font-bold md:text-left md:leading-tight">
                     Create your account
                 </p>
-                <p className="mt-6 text-center font-medium md:text-left">
+                <p className="mt-4 text-center font-medium md:text-left">
                     Already using VoiceBlogify?{' '}
-                    <a href="/login" className="whitespace-nowrap font-semibold text-blue-700">
+                    <Link to="/login" className="whitespace-nowrap font-semibold text-blue-700">
                         Login here
-                    </a>
+                    </Link>
                 </p>
                 <GoogleButton />
                 <Divider />
@@ -48,7 +44,7 @@ export function GoogleButton() {
     };
     return (
         <button
-            className="-2 mt-8 flex items-center justify-center rounded-md border px-4 py-1 outline-none ring-gray-400 ring-offset-2 transition hover:border-transparent hover:bg-black hover:text-white focus:ring-2"
+            className="-2 mt-6 flex items-center justify-center rounded-md border px-4 py-1 outline-none ring-gray-400 ring-offset-2 transition hover:border-transparent hover:bg-black hover:text-white focus:ring-2"
             onClick={handleGoogleLogin}
         >
             <svg xmlns="http://www.w3.org/2000/svg" width="32px" viewBox="0 0 512 512">
@@ -66,7 +62,7 @@ export function GoogleButton() {
 
 export function Divider() {
     return (
-        <div className="relative mt-8 flex h-px place-items-center bg-gray-200">
+        <div className="relative mt-4 flex h-px place-items-center bg-gray-200">
             <div className="absolute left-1/2 h-6 -translate-x-1/2 bg-white px-4 text-center text-sm text-gray-500">
                 Or use email instead
             </div>
@@ -126,7 +122,7 @@ function LoginForm1() {
     };
 
     return (
-        <form className="flex flex-col items-stretch pt-3 md:pt-8" onSubmit={handleSubmit(onSubmit)}>
+        <form className="flex flex-col items-stretch pt-2 md:pt-8" onSubmit={handleSubmit(onSubmit)}>
             <InputField
                 type="email"
                 id="signup-email"
@@ -174,7 +170,7 @@ export function SubmitButton({ name }) {
     return (
         <button
             type="submit"
-            className="mt-6 rounded-lg bg-blue-600 px-4 py-2 text-center text-base font-semibold text-white shadow-md outline-none ring-blue-500 ring-offset-2 transition hover:bg-blue-700 focus:ring-2 md:w-32"
+            className="mt-3 rounded-lg bg-blue-600 px-4 py-2 text-center text-base font-semibold text-white shadow-md outline-none ring-blue-500 ring-offset-2 transition hover:bg-blue-700 focus:ring-2 md:w-32"
         >
             {name}
         </button>

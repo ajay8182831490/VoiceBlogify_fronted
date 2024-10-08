@@ -234,7 +234,7 @@ export const PostProvider = ({ children }) => {
         fetchPostByID,
         success,
         mediumUrl, hasMediumAccess, setMediumAccess
-    }), [posts, title, subtitle, tag, content, responseMessage, loading, updatePost, success, mediumUrl, hasMediumAccess, setMediumAccess]);
+    }), [responseMessage, loading, updatePost, success, mediumUrl, hasMediumAccess, setMediumAccess]);
 
     return (
         <PostContext.Provider value={postData}>

@@ -49,7 +49,7 @@ const PricingCard = () => {
                 { label: 'Unlimited edits' },
                 { label: 'Export articles as Rich Text, HTML, or Markdown' },
                 { label: '100MB audio/video file uploads' },
-                { label: 'YouTube link uploading' },
+
                 { label: 'Social media share: Blogger, Medium, LinkedIn' },
             ],
             default: true,
@@ -64,7 +64,7 @@ const PricingCard = () => {
                 { label: 'Unlimited edits' },
                 { label: 'Export articles as Rich Text, HTML, or Markdown' },
                 { label: '300MB audio/video file uploads' },
-                { label: 'YouTube link uploading' },
+
                 { label: 'Social media share: Blogger, Medium, LinkedIn' },
             ],
         },
@@ -78,7 +78,7 @@ const PricingCard = () => {
                 { label: 'Unlimited edits' },
                 { label: 'Export articles as Rich Text, HTML, or Markdown' },
                 { label: '500MB audio/video file uploads' },
-                { label: 'YouTube link uploading' },
+
                 { label: 'Social media share: Blogger, Medium, LinkedIn' },
             ],
         },
@@ -125,18 +125,18 @@ const PricingCard = () => {
     };
 
     return (
-        <div id="pricing" className="pricing-section flex flex-col items-center pt-10 pb-10">
-            <h2 className="text-3xl font-bold text-center mb-8">Pricing Plans</h2>
-            <div className="container mx-auto p-8">
-                <div className="flex justify-center items-center mb-8">
-                    <span className="mr-2 text-black">{isYearly ? 'Yearly' : 'Monthly'}</span>
+        <div id="pricing" className="pricing-section flex flex-col items-center pt-6 pb-5 " style={{ backgroundColor: '#141129' }}>
+            <h2 className="text-3xl font-bold text-white text-center mb-2">Pricing Plans</h2>
+            <div className="container mx-auto p-5">
+                <div className="flex justify-center items-center mb-4">
+                    <span className="mr-2 text-white">{isYearly ? 'Yearly' : 'Monthly'}</span>
                     <label className="relative inline-flex items-center cursor-pointer">
                         <input type="checkbox" className="sr-only" onChange={togglePaymentPlan} />
                         <div className="w-14 h-8 bg-gray-300 rounded-full toggle-track">
-                            <div className={`absolute left-0 w-6 h-6 bg-white rounded-full transition-transform duration-200 ${isYearly ? 'transform translate-x-full bg-blue-1000' : ''}`}></div>
+                            <div className={`absolute left-0 w-6 h-6 bg-white rounded-full transition-transform duration-10000 ${isYearly ? 'transform translate-x-full bg-blue' : ''}`}></div>
                         </div>
                     </label>
-                    <span className="ml-2 text-green">{isYearly ? 'Monthly' : 'Yearly'}</span>
+                    <span className="ml-2 text-white text-green">{isYearly ? 'Monthly' : 'Yearly'}</span>
                 </div>
 
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">

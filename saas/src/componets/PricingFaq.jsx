@@ -27,19 +27,19 @@ const PricingFAQ = () => {
     };
 
     return (
-        <div className="faq-section bg-gray-100 p-8 rounded-lg mt-10 w-full max-w-4xl mx-auto shadow-lg">
-            <h3 className="text-2xl font-bold text-center mb-4">Pricing FAQs</h3>
+        <div className="faq-section  p-8 rounded-lg mt-10 w-full max-w-4xl mx-auto shadow-lg" style={{ backgroundColor: "#121020" }}>
+            <h3 className="text-2xl font-bold  text-white text-center mb-4">Pricing FAQs</h3>
             <div className="space-y-4">
                 {faqs.map((faq, index) => (
                     <div key={index} className="border-b pb-2 transition-all duration-300">
                         <h4
                             onClick={() => toggleFAQ(index)}
-                            className={`cursor-pointer text-lg font-semibold text-blue-600 hover:underline ${openIndex === index ? 'text-blue-800' : 'text-blue-600'}`}
+                            className={`cursor-pointer text-lg text-white font-semibold text-blue-600 hover:underline ${openIndex === index ? 'text-blue-800' : 'text-blue-600'}`}
                         >
                             {faq.question}
                         </h4>
                         {openIndex === index && (
-                            <p className="text-sm text-gray-700 mt-2 transition-all duration-300 transform w-full max-w-xl">
+                            <p className="text-sm text-white mt-2 transition-all duration-300 transform w-full max-w-xl">
                                 {faq.answer}
                             </p>
                         )}

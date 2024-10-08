@@ -108,7 +108,7 @@ export const BloggerContextProvider = ({ children }) => {
         uploadPost,
         getPostById,
         getBlogId
-    }), [title, content, message, blogUserId, uploadPost, getBlogId]);
+    }), [blogUserId, uploadPost, getBlogId]);
 
     return (
         <BloggerContext.Provider value={{ bloggerPost }}>

@@ -1,4 +1,4 @@
-import { useState, createContext, useEffect, useContext } from "react";
+import { useState, createContext, useEffect, useContext, useMemo } from "react";
 
 const AuthContext = createContext();
 const url = "http://localhost:4000";
@@ -16,7 +16,7 @@ export function AuthProvider({ children }) {
             try {
                 const response = await fetch(`${url}/status`, {
                     method: 'GET',
-                    credentials: 'include'
+                    credentials: 'include',
                 });
 
                 if (!response.ok) {
@@ -24,7 +24,6 @@ export function AuthProvider({ children }) {
                 }
 
                 const data = await response.json();
-
 
                 setIsAuthenticated(data.authenticated);
 
@@ -51,14 +50,11 @@ export function AuthProvider({ children }) {
         checkAuth();
     }, []);
 
-
-
-
     const handleLogout = async () => {
         try {
             const response = await fetch(`${url}/logout`, {
                 method: 'GET',
-                credentials: 'include'
+                credentials: 'include',
             });
 
             if (response.ok) {
@@ -70,7 +66,6 @@ export function AuthProvider({ children }) {
                 setError("Logout failed. Please try again.");
             }
         } catch (error) {
-
             setError("Error occurred during logout.");
         }
     };
@@ -83,7 +78,7 @@ export function AuthProvider({ children }) {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ oldPassword, newPassword })
+                body: JSON.stringify({ oldPassword, newPassword }),
             });
 
             if (response.ok) {
@@ -92,11 +87,9 @@ export function AuthProvider({ children }) {
                 setMessage("Error updating password");
             }
         } catch (error) {
-
             setMessage("Error occurred");
         }
     };
-
 
     useEffect(() => {
         if (message) {
@@ -107,8 +100,9 @@ export function AuthProvider({ children }) {
         }
     }, [message]);
 
-    return (
-        <AuthContext.Provider value={{
+
+    const memoizedValue = useMemo(
+        () => ({
             isAuthenticated,
             user,
             handleLogout,
@@ -118,8 +112,13 @@ export function AuthProvider({ children }) {
             passwordUpdate,
             loading,
             error,
-            message
-        }}>
+            message,
+        }),
+        [isAuthenticated, user, isPaid, loading, error, message]
+    );
+
+    return (
+        <AuthContext.Provider value={memoizedValue}>
             {loading ? '' : children}
         </AuthContext.Provider>
     );

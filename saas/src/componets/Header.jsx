@@ -15,7 +15,7 @@ import { Link2 } from 'lucide-react'
 const url = "http://localhost:4000"
 
 const navigation = [
-    { name: 'How Its work', href: '#howitworks', current: false },
+    // { name: 'How Its work', href: '#howitworks', current: false },
     { name: 'Pricing', href: '/pricing', current: false },
     { name: 'Blog', href: '#blog', current: false },
 ]
@@ -56,7 +56,8 @@ const Header = memo(() => {
                 <meta name="twitter:description" content="Quickly convert your voice recordings into polished blog posts effortlessly." />
                 <meta name="twitter:image" content="https://voiceblogify.in/landingpage.webp" />
             </Helmet>
-            <Disclosure as="nav" className="bg-gradient-to-r from-purple-500 via-indigo-500 to-blue-500 sticky top-0 z-50 shadow-lg">
+
+            <Disclosure as="nav" className=" sticky top-0 z-50 shadow-lg" style={{ backgroundColor: "#020012" }}>
                 <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
                     <div className="relative flex h-16 items-center justify-between">
                         <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
