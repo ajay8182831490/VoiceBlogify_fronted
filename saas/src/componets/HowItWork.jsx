@@ -36,7 +36,7 @@ const VisualPath = () => {
             <h2 className="text-4xl font-bold text-center mb-6 text-gray-100">
                 Transform Your Voice into Engaging Content
             </h2>
-            <p className="text-lg text-center text-gray-400 mb-8">
+            <p className="text-xl text-center text-white mb-8">
                 VoiceBlogify empowers creators by making content creation effortless. Record your ideas anytime and transform them into polished blog posts that engage and captivate your audience.
             </p>
 
@@ -47,15 +47,15 @@ const VisualPath = () => {
                     {steps.map((step, index) => (
                         <motion.div
                             key={index}
-                            className="flex flex-col items-center justify-between w-full sm:w-[45%] md:w-[30%] h-80 m-2 rounded-lg shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-xl text-gray-100 p-6"
+                            className="flex flex-col items-center justify-between w-full sm:w-[45%] md:w-[30%] h-80 m-2 rounded-lg shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-xl text-white p-6"
                             style={{ backgroundColor: "#1E1E1E" }}
                             whileHover={{ scale: 1.08 }}
                         >
                             <div className="flex items-center justify-center h-24 mb-4 bg-gray-800 rounded-full">
                                 {step.icon}
                             </div>
-                            <h3 className="text-xl font-bold mb-2 text-center">{step.title}</h3>
-                            <p className="text-center text-gray-300 text-sm">{step.description}</p>
+                            <h3 className="text-2xl font-bold mb-2 text-center">{step.title}</h3>
+                            <p className="text-center text-gray-200 text-md">{step.description}</p>
                         </motion.div>
                     ))}
                 </div>
