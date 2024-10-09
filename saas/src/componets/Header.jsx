@@ -145,7 +145,7 @@ const Header = memo(() => {
                                             {!isPaid && (
                                                 <Link
                                                     to="/main"
-                                                    className="bg-green-600 text-white rounded-xl px-4 py-2 text-sm font-medium hover:bg-green-700 transition duration-150"
+                                                    className="bg-white text-white rounded-xl px-4 py-2 text-sm font-medium hover:bg-green-700 transition duration-150"
                                                 >
                                                     Start Free
                                                 </Link>
@@ -176,7 +176,7 @@ const Header = memo(() => {
                                         {!isPaid && (
                                             <Link
                                                 to="/main"
-                                                className="bg-green-600 text-white rounded-xl px-4 py-2 text-sm font-medium hover:bg-green-700 transition duration-150"
+                                                className="bg-white text-black rounded-xl px-4 py-2 text-sm font-medium hover:bg-green-700 transition duration-150"
                                             >
                                                 Start Free
                                             </Link>
@@ -232,7 +232,7 @@ const Header = memo(() => {
                                     Login
                                 </DisclosureButton>
                                 {!isPaid && (
-                                    <DisclosureButton as={Link} to="/main" className="block rounded-md px-3 py-2 text-base font-medium text-white bg-green-600 hover:bg-green-700">
+                                    <DisclosureButton as={Link} to="/main" className="block rounded-md px-3 py-2 text-base font-medium text-black bg-white hover:bg-green-700">
                                         Start Free
                                     </DisclosureButton>
                                 )}

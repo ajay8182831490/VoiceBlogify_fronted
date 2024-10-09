@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 const HowVoiceBlogifyHelps = () => {
     const benefits = [
         {
-            title: "Save Time Effortlessly",
+            title: "Save hours using simple voice commands",
             description: "Transform your voice ideas into well-organized text quickly. Focus on your message without the hassle of typing.",
             icon: <FaClock className="text-4xl text-blue-500" />,
         },
@@ -29,8 +29,8 @@ const HowVoiceBlogifyHelps = () => {
 
     return (
         <div className="py-10" style={{ backgroundColor: "#121212" }}>
-            <h2 className="text-3xl font-bold text-center mb-8 text-gray-100">How VoiceBlogify Can Help You</h2>
-            <p className="text-lg text-center text-gray-400 mb-6">
+            <h2 className="text-4xl font-bold text-center mb-8 text-gray-100">Discover the Benefits of Using VoiceBlogify</h2>
+            <p className="text-lg text-center text-white mb-6">
                 VoiceBlogify empowers bloggers, professionals, and business owners to create compelling content with ease.
                 Say goodbye to writer's block and hello to efficient content creation. Start transforming your voice today!
             </p>

@@ -143,6 +143,12 @@ export default function LandingPage() {
                                 <svg className="w-6 h-6 text-green-500 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
                                 </svg>
+                                <span className="text-white">Save hours using simple voice commands</span>
+                            </li>
+                            <li className="mb-4 flex items-start">
+                                <svg className="w-6 h-6 text-green-500 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
                                 <span className="text-white">Achieve human-like quality in your content, ensuring natural flow and coherence.</span>
                             </li>
                             <li className="mb-8 flex items-start">
