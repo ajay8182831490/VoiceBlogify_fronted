@@ -23,6 +23,10 @@ const FAQs = [
         answer: "Recording limits depend on your plan. Check the Plans & Pricing section for details, with some plans allowing up to 20 minutes."
     },
     {
+        question: "Does VoiceBlogify offer a free trial?",
+        answer: "Yes! VoiceBlogify allows you to create one article of up to 10 minutes for free. This gives you a chance to explore our features and experience the ease of transforming your audio into engaging blog posts before committing to a subscription."
+    },
+    {
         question: "How many languages does VoiceBlogify support for transcription ?",
         answer: "VoiceBlogify supports transcription in more than 120 languages, making it accessible for users worldwide."
     },

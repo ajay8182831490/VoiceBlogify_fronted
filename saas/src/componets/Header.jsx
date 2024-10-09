@@ -193,40 +193,46 @@ const Header = memo(() => {
                         {navigation.map((item) => (
                             <DisclosureButton
                                 key={item.name}
-                                as="Link"
+                                as={Link}  // Use Link instead of DisclosureButton
                                 to={item.href}
                                 aria-current={item.current ? 'page' : undefined}
                                 className={classNames(
                                     item.current ? 'bg-white text-gray-800' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                                     'block rounded-md px-3 py-2 text-base font-medium',
                                 )}
+                                onClick={() => {
+                                    // Close the Disclosure after clicking a link
+                                    if (document.querySelector('#mobile-menu')) {
+                                        document.querySelector('#mobile-menu').click();
+                                    }
+                                }}
                             >
                                 {item.name}
                             </DisclosureButton>
                         ))}
                         {isAuthenticated ? (
                             <>
-                                <DisclosureButton as="Link" to="/dashboard/user-profile" className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">
+                                <DisclosureButton as={Link} to="/dashboard/user-profile" className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">
                                     Dashboard
                                 </DisclosureButton>
-                                <DisclosureButton as="Link" to="/setting" className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">
+                                <DisclosureButton as={Link} to="/setting" className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">
                                     Settings
                                 </DisclosureButton>
                                 <DisclosureButton as="a" href="/#" className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white" onClick={async (e) => {
                                     e.preventDefault();
                                     await handleLogout();
-                                    Notify("You have logged out successfully")
+                                    Notify("You have logged out successfully");
                                 }}>
                                     Log Out
                                 </DisclosureButton>
                             </>
                         ) : (
                             <>
-                                <DisclosureButton as="Link" to="/login" className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">
+                                <DisclosureButton as={Link} to="/login" className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">
                                     Login
                                 </DisclosureButton>
                                 {!isPaid && (
-                                    <DisclosureButton as="Link" to="/main" className="block rounded-md px-3 py-2 text-base font-medium text-white bg-green-600 hover:bg-green-700">
+                                    <DisclosureButton as={Link} to="/main" className="block rounded-md px-3 py-2 text-base font-medium text-white bg-green-600 hover:bg-green-700">
                                         Start Free
                                     </DisclosureButton>
                                 )}
@@ -234,6 +240,7 @@ const Header = memo(() => {
                         )}
                     </div>
                 </DisclosurePanel>
+
             </Disclosure>
         </>
     )

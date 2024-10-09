@@ -4,7 +4,7 @@ import PasteUrlComponent from './PasteUrl';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import MyAudioRecordingComponent from './AudioTest';
-import { FaMicrophone, FaUpload, FaLink } from 'react-icons/fa'; // For icons
+import { FaMicrophone, FaUpload, FaLink } from 'react-icons/fa';
 
 const url = "https://voiceblogify-backend.onrender.com"
 
