@@ -68,7 +68,7 @@ const FAQComponent = () => {
                                 <span className="text-xl">{openIndex === index ? '-' : '+'}</span>
                             </button>
                             {openIndex === index && (
-                                <div className="p-4 text-white">
+                                <div className="p-4 text-gray-300">
                                     <p>{faq.answer}</p>
                                 </div>
                             )}

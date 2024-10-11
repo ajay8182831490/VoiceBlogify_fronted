@@ -12,6 +12,7 @@ import TermsAndConditions from './componets/TermsAndCondition';
 import Pri from './componets/Pri';
 import PrivateRoute from './componets/PrivateRoutes';
 import SignUp from './componets/SignUp';
+import AccountVerify from './componets/VerifyAccount';
 
 
 const ResetPassword1 = lazy(() => import('./componets/Reset'));
@@ -30,6 +31,7 @@ function App() {
         <Route path="/pricing" element={<PricingCard />} />
         <Route path="/terms-condition" element={<TermsAndConditions />} />
         <Route path="/privacy" element={<Pri />} />
+        <Route path="/verify" element={isAuthenticated ? <AccountVerify /> : <Navigate to='/login' />} />
 
         {/* Private Routes */}
         <Route

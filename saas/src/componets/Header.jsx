@@ -12,7 +12,7 @@ import { Helmet } from 'react-helmet'
 import { Link2 } from 'lucide-react'
 
 
-const url = "https://voiceblogify-backend.onrender.com"
+const url = "localhost:4000"
 
 const navigation = [
     // { name: 'How Its work', href: '#howitworks', current: false },
@@ -145,9 +145,9 @@ const Header = memo(() => {
                                             {!isPaid && (
                                                 <Link
                                                     to="/main"
-                                                    className="bg-white text-white rounded-xl px-4 py-2 text-sm font-medium hover:bg-green-700 transition duration-150"
+                                                    className="bg-blue-500 text-white rounded-xl px-4 py-2 text-sm font-medium hover:bg-green-700 transition duration-150"
                                                 >
-                                                    Start Free
+                                                    Transform Now
                                                 </Link>
                                             )}
                                             <a
@@ -176,9 +176,9 @@ const Header = memo(() => {
                                         {!isPaid && (
                                             <Link
                                                 to="/main"
-                                                className="bg-white text-black rounded-xl px-4 py-2 text-sm font-medium hover:bg-green-700 transition duration-150"
+                                                className="bg-blue-500 text-white rounded-xl px-4 py-2 text-sm font-medium hover:bg-green-700 transition duration-150"
                                             >
-                                                Start Free
+                                                Transform Now
                                             </Link>
                                         )}
                                     </div>
@@ -232,8 +232,8 @@ const Header = memo(() => {
                                     Login
                                 </DisclosureButton>
                                 {!isPaid && (
-                                    <DisclosureButton as={Link} to="/main" className="block rounded-md px-3 py-2 text-base font-medium text-black bg-white hover:bg-green-700">
-                                        Start Free
+                                    <DisclosureButton as={Link} to="/main" className="block rounded-md px-3 py-2 text-base font-medium text-white bg-blue-500 hover:bg-green-700">
+                                        Transform Now
                                     </DisclosureButton>
                                 )}
                             </>

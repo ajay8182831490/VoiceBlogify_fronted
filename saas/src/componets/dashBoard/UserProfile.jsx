@@ -34,9 +34,9 @@ const UserProfile = () => {
             />
 
 
-            {userInfo && userInfo.planPurchased !== 'FREE' && (
+            {/* {userInfo && userInfo.planPurchased !== 'FREE' && (
                 <BillingInfo onDownloadBill={handleDownloadBill} />
-            )}
+            )} */}
 
             <AccountManagement
                 onChangePassword={handleChangePassword}

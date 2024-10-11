@@ -32,18 +32,21 @@ const VisualPath = () => {
     ];
 
     return (
-        <div className="py-10 w-full" style={{ backgroundColor: "#121212" }}>
-            <h2 className="text-4xl font-bold text-center mb-6 text-gray-100">
-                Transform Your Voice into Engaging Content
-            </h2>
-            <p className="text-xl text-center text-white mb-8">
-                VoiceBlogify empowers creators by making content creation effortless. Record your ideas anytime and transform them into polished blog posts that engage and captivate your audience.
-            </p>
+        <div className="py-10 w-full" >
+            {/* Adjust the container for heading and paragraph */}
+            <div className="max-w-3xl mx-auto text-center px-6 md:px-10 lg:px-16">
+                <h2 className="text-3xl font-bold mb-4 text-gray-100">
+                    Transform Your Voice into Blog Content
+                </h2>
+                <p className="text-md text-gray-300 mb-8">
+                    With VoiceBlogify, you can seamlessly convert your spoken ideas into beautifully crafted blog posts. Our user-friendly platform allows you to capture your thoughts on the go, ensuring that no inspiration is lost. Experience the ease of content creation while maintaining a personal touch that resonates with your readers.
+                </p>
+
+            </div>
 
             {/* Outer padding for the entire component */}
             <div className="px-4 md:px-10 lg:px-20">
-
-                <div className="flex flex-wrap justify-between">
+                <div className="flex flex-wrap justify-center">
                     {steps.map((step, index) => (
                         <motion.div
                             key={index}
@@ -51,7 +54,7 @@ const VisualPath = () => {
                             style={{ backgroundColor: "#1E1E1E" }}
                             whileHover={{ scale: 1.08 }}
                         >
-                            <div className="flex items-center justify-center h-24 mb-4 bg-gray-800 rounded-full">
+                            <div className="flex items-center justify-center h-24 mb-4 ">
                                 {step.icon}
                             </div>
                             <h3 className="text-2xl font-bold mb-2 text-center">{step.title}</h3>

@@ -1,7 +1,7 @@
 import { useState, createContext, useEffect, useContext, useMemo } from "react";
 
 const AuthContext = createContext();
-const url = "https://voiceblogify-backend.onrender.com";
+const url = "http://localhost:4000";
 
 export function AuthProvider({ children }) {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -32,6 +32,7 @@ export function AuthProvider({ children }) {
                         name: data.name,
                         profilepicurl: data.profilepic,
                         userId: data.id,
+                        email: data.email
                     });
                     setPaidMember(data.isPaid);
                 } else {

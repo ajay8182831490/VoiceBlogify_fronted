@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { z } from 'zod';
 
 
-const Url = "https://voiceblogify-backend.onrender.com"
+const Url = "http://localhost:4000"
 
 
 const urlSchema = z.string().url({ message: "Invalid URL" });
