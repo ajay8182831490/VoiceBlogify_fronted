@@ -27,7 +27,9 @@ const DashboardRoutes = () => {
                                 path="user-profile"
                                 element={
 
-                                    <UserProfile />
+                              <Suspense fallback={<div>Loading User Profile...</div>}>
+                                        <UserProfile />
+                                    </Suspense>
 
                                 }
                             />
