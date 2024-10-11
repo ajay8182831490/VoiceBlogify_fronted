@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { usePost } from "./PostContext";
 
-const url = "http://localhost:4000";
+const url = "https://voiceblogify-backend.onrender.com";
 const UserContext = createContext();
 
 export const UserContextProvider = ({ children }) => {

@@ -15,25 +15,34 @@ import SignUp from './componets/SignUp';
 import AccountVerify from './componets/VerifyAccount';
 
 
+const Password = lazy(() => import('./componets/util/Password'))
+
+
 const ResetPassword1 = lazy(() => import('./componets/Reset'));
 const AudioPage = lazy(() => import('./componets/AudioPage'));
 const RichEditorText = lazy(() => import('./componets/RichEditorText'));
 const Dashboard = lazy(() => import('./componets/Dashboard'));
 
 function App() {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, isGoogle } = useAuth();
 
   return (
     <Routes>
       <Route element={<Layout />}>
-        {/* Public Routes */}
+
         <Route path="/" element={<LandingPage />} />
         <Route path="/pricing" element={<PricingCard />} />
         <Route path="/terms-condition" element={<TermsAndConditions />} />
         <Route path="/privacy" element={<Pri />} />
         <Route path="/verify" element={isAuthenticated ? <AccountVerify /> : <Navigate to='/login' />} />
+        <Route
+          path='/user/password'
+          element=<Suspense fallback={<div>Loading Sign Up...</div>}>
+            {isAuthenticated && isGoogle ? <Password /> : <Navigate to='/' />}
+          </Suspense>
+        />
 
-        {/* Private Routes */}
+
         <Route
           path="/dashboard/*"
           element={
@@ -43,7 +52,7 @@ function App() {
           }
         />
 
-        {/* Conditional Authenticated Routes */}
+
         <Route
           path="/main"
           element={
@@ -77,7 +86,6 @@ function App() {
           }
         />
 
-        {/* Redirect Unknown Paths */}
         <Route path="*" element={<Navigate to={isAuthenticated ? "/" : "/login"} />} />
       </Route>
     </Routes>

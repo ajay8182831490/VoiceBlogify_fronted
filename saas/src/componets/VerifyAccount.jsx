@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Notify, NotifyFalse } from './NotifyToast.jsx'
 
 import { useAuth } from "@/userContext/AuthContext";
-const url = "http://localhost:4000"
+const url = "https://voiceblogify-backend.onrender.com"
 export default function AccountVerify() {
 
     const [otp, setOtp] = useState("");

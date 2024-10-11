@@ -9,7 +9,7 @@ import profilepng from '../assets/profile.png'
 import { Notify } from './NotifyToast.jsx'
 import { memo, useEffect } from 'react'
 import { Helmet } from 'react-helmet'
-import { Link2 } from 'lucide-react'
+
 
 
 const url = "localhost:4000"
@@ -35,7 +35,7 @@ const Header = memo(() => {
         }
     }, [location]);
 
-    const { handleLogout, isAuthenticated, isPaid, user } = useAuth();
+    const { handleLogout, isAuthenticated, isAvialbleCreatePost, user } = useAuth();
 
     return (
 
@@ -142,14 +142,14 @@ const Header = memo(() => {
                                     </Menu>
                                     <div className="hidden sm:ml-6 sm:block">
                                         <div className="flex space-x-4">
-                                            {!isPaid && (
-                                                <Link
-                                                    to="/main"
-                                                    className="bg-blue-500 text-white rounded-xl px-4 py-2 text-sm font-medium hover:bg-green-700 transition duration-150"
-                                                >
-                                                    Transform Now
-                                                </Link>
-                                            )}
+
+                                            <Link
+                                                to="/main"
+                                                className="bg-blue-500 text-white rounded-xl px-4 py-2 text-sm font-medium hover:bg-green-700 transition duration-150"
+                                            >
+                                                Transform Now
+                                            </Link>
+
                                             <a
                                                 href="#"
                                                 className="bg-red-600 text-white rounded-md px-4 py-2 text-sm font-medium hover:bg-red-700 transition duration-150"
@@ -173,14 +173,14 @@ const Header = memo(() => {
                                         >
                                             Login
                                         </Link>
-                                        {!isPaid && (
-                                            <Link
-                                                to="/main"
-                                                className="bg-blue-500 text-white rounded-xl px-4 py-2 text-sm font-medium hover:bg-green-700 transition duration-150"
-                                            >
-                                                Transform Now
-                                            </Link>
-                                        )}
+
+                                        <Link
+                                            to="/main"
+                                            className="bg-blue-500 text-white rounded-xl px-4 py-2 text-sm font-medium hover:bg-green-700 transition duration-150"
+                                        >
+                                            Transform Now
+                                        </Link>
+
                                     </div>
                                 </div>
                             )}
@@ -231,11 +231,11 @@ const Header = memo(() => {
                                 <DisclosureButton as={Link} to="/login" className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">
                                     Login
                                 </DisclosureButton>
-                                {!isPaid && (
-                                    <DisclosureButton as={Link} to="/main" className="block rounded-md px-3 py-2 text-base font-medium text-white bg-blue-500 hover:bg-green-700">
-                                        Transform Now
-                                    </DisclosureButton>
-                                )}
+
+                                <DisclosureButton as={Link} to="/main" className="block rounded-md px-3 py-2 text-base font-medium text-white bg-blue-500 hover:bg-green-700">
+                                    Transform Now
+                                </DisclosureButton>
+
                             </>
                         )}
                     </div>

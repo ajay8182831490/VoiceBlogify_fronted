@@ -10,7 +10,7 @@ import { LinkedinContextProvider } from '@/userContext/LinkedinContext';
 
 import { htmlToText } from 'html-to-text';
 import { has } from 'draft-js/lib/DefaultDraftBlockRenderMap';
-const url = "http://localhost:4000"
+const url = "https://voiceblogify-backend.onrender.com"
 
 const options = {
     wordwrap: 130,

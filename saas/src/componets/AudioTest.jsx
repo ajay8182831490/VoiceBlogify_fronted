@@ -3,7 +3,7 @@ import { MicrophoneIcon, PauseIcon, PlayIcon, StopIcon, ArrowPathIcon, ArrowDown
 import { useNavigate } from 'react-router-dom';
 import './AudioRecordingComponent.css';
 
-const Url = "http://localhost:4000";
+const Url = "https://voiceblogify-backend.onrender.com";
 
 const recordingLimits = {
     free: 10 * 60,

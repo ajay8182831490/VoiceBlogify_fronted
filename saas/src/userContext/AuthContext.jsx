@@ -1,15 +1,16 @@
 import { useState, createContext, useEffect, useContext, useMemo } from "react";
 
 const AuthContext = createContext();
-const url = "http://localhost:4000";
+const url = "https://voiceblogify-backend.onrender.com";
 
 export function AuthProvider({ children }) {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [user, setUser] = useState(null);
-    const [isPaid, setPaidMember] = useState(false);
+    const [isAvialbleCreatePost, setAvilableCreatePost] = useState(0);
     const [message, setMessage] = useState('');
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [isGoogle, setIsGoogle] = useState(false);
 
     useEffect(() => {
         const checkAuth = async () => {
@@ -25,7 +26,11 @@ export function AuthProvider({ children }) {
 
                 const data = await response.json();
 
+
                 setIsAuthenticated(data.authenticated);
+                setIsGoogle(data.googleId)
+
+                setAvilableCreatePost(data.remainingPosts)
 
                 if (data.authenticated) {
                     setUser({
@@ -34,12 +39,12 @@ export function AuthProvider({ children }) {
                         userId: data.id,
                         email: data.email
                     });
-                    setPaidMember(data.isPaid);
+
                 } else {
                     setUser(null);
                 }
             } catch (error) {
-                console.error('Error checking auth:', error);
+
                 setError("Failed to check authentication status.");
                 setIsAuthenticated(false);
                 setUser(null);
@@ -92,6 +97,40 @@ export function AuthProvider({ children }) {
         }
     };
 
+
+    const onDisconnectLinkedIn = async () => {
+        try {
+            const response = await fetch(`${url}/user/disconnect/linkedin`, {
+                method: 'PUT',
+                credentials: 'include',
+            });
+
+            if (response.ok) {
+                setMessage("Successfully disconnected")
+            }
+        } catch (error) {
+            setError("Error occurred during disconnect.");
+        }
+    }
+
+    const onDisconnectMedium = async () => {
+        try {
+            const response = await fetch(`${url}/user/disconnect/medium`, {
+                method: 'PUT',
+                credentials: 'include',
+            });
+
+            if (response.ok) {
+                setMessage("Successfully disconnect")
+            } else {
+
+                setError("failed to disconnect. Please try again.");
+            }
+        } catch (error) {
+            setError("Error occurred during disconnect.");
+        }
+    }
+
     useEffect(() => {
         if (message) {
             const timer = setTimeout(() => {
@@ -109,13 +148,16 @@ export function AuthProvider({ children }) {
             handleLogout,
             setIsAuthenticated,
             setUser,
-            isPaid,
+            isAvialbleCreatePost,
             passwordUpdate,
             loading,
             error,
             message,
+            isGoogle,
+            onDisconnectLinkedIn,
+            onDisconnectMedium
         }),
-        [isAuthenticated, user, isPaid, loading, error, message]
+        [isAuthenticated, user, loading, error, message, onDisconnectMedium, onDisconnectMedium]
     );
 
     return (

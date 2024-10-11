@@ -3,7 +3,7 @@ import DOMPurify from 'dompurify';
 
 const PostContext = createContext();
 
-const url = "http://localhost:4000"
+const url = "https://voiceblogify-backend.onrender.com"
 
 export const PostProvider = ({ children }) => {
     const [title, setTitle] = useState("");
