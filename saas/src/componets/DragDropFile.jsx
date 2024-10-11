@@ -55,7 +55,7 @@ const AudioDropzone = ({ onFileUploaded }) => {
         >
             <div
                 {...getRootProps()}
-                className={`w-full p-6 ${isDragActive ? 'bg-blue-100 border-blue-400' : 'bg-gray-50 border-gray-300'}`}
+                className={`w-full p-6 ${isDragActive ? 'bg-black border-blue-400' : 'bg-black border-gray-300'}`}
             >
                 <input {...getInputProps()} />
                 <p className="text-blue-600">

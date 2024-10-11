@@ -7,6 +7,7 @@ const LinkedinPostProvider = lazy(() => import('./LinkedinRichEditorText'));
 
 const UserProfile = lazy(() => import('./dashBoard/UserProfile'));
 
+
 const MediumPostProvider = lazy(() => import('./dashBoard/Medium'));
 const BloggerPostProvider = lazy(() => import('./dashBoard/Blogger'));
 import { UserContextProvider } from '@/userContext/UserContext';
@@ -25,9 +26,11 @@ const DashboardRoutes = () => {
                             <Route
                                 path="user-profile"
                                 element={
-                                    <Suspense fallback={<div>Loading User Profile...</div>}>
+
+                              <Suspense fallback={<div>Loading User Profile...</div>}>
                                         <UserProfile />
                                     </Suspense>
+
                                 }
                             />
                             <Route

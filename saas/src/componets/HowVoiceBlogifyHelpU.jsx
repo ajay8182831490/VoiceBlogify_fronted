@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 const HowVoiceBlogifyHelps = () => {
     const benefits = [
         {
-            title: "Save hours using simple voice commands",
+            title: "Save Time",
             description: "Transform your voice ideas into well-organized text quickly. Focus on your message without the hassle of typing.",
             icon: <FaClock className="text-4xl text-blue-500" />,
         },
@@ -28,12 +28,13 @@ const HowVoiceBlogifyHelps = () => {
     ];
 
     return (
-        <div className="py-10" style={{ backgroundColor: "#121212" }}>
-            <h2 className="text-4xl font-bold text-center mb-8 text-gray-100">Discover the Benefits of Using VoiceBlogify</h2>
-            <p className="text-lg text-center text-white mb-6">
-                VoiceBlogify empowers bloggers, professionals, and business owners to create compelling content with ease.
-                Say goodbye to writer's block and hello to efficient content creation. Start transforming your voice today!
-            </p>
+        <div className="py-10" >
+            <div className="max-w-4xl mx-auto px-4"> {/* Centering with margins */}
+                <h2 className="text-3xl font-bold text-center mb-4 text-gray-100">Why Use VoiceBlogify?</h2>
+                <p className="text-md text-center text-gray-300 mb-8">
+                    VoiceBlogify revolutionizes the way you create content. With our intuitive voice-to-text technology, you can easily transform your ideas into blog posts without the hassle of typing. Whether you're a busy professional or a passionate blogger, our platform helps you overcome writer's block and boosts your productivity.
+                </p>
+            </div>
             <div className="flex flex-col items-center md:flex-row md:justify-center">
                 {benefits.map((benefit, index) => (
                     <motion.div
@@ -49,8 +50,11 @@ const HowVoiceBlogifyHelps = () => {
             </div>
 
             <div className="text-center mt-8">
-                <Link to="/main" className="bg-gradient-to-r from-pink-500 to-yellow-500 text-white font-medium py-3 px-6 rounded-full shadow-lg hover:from-yellow-500 hover:to-pink-500 transition-transform transform hover:scale-105">
-                    Start Your Free Blog Now!!
+                <Link
+                    to="/main"
+                    className="bg-blue-500 text-white font-semibold py-2 px-6 rounded-full shadow-lg hover:bg-blue-600 transition-transform transform hover:scale-105"
+                >
+                    Start Blogging for Free!
                 </Link>
             </div>
         </div>

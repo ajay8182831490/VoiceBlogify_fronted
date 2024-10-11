@@ -56,12 +56,12 @@ export default function AudioPage() {
     };
 
     return (
-        <div className="flex flex-col items-center p-6 bg-gradient-to-r from-gray-100 to-gray-[#0b317c] min-h-screen">
+        <div className="flex flex-col items-center p-6  min-h-screen" style={{ backgroundColor: "#020012" }}>
 
             <div className="w-full max-w-lg mb-8">
                 <div className="w-full mx-auto mb-8 pb-6 shadow-lg rounded-lg text-center">
-                    <h1 className="text-center text-xl md:text-2xl lg:text-3xl font-semibold text-gray-900 dark:text-gray-100">
-                        Capture Your Voice, Transform It Into Words!
+                    <h1 className="text-center text-xl md:text-2xl lg:text-3xl font-semibold text-white ">
+                        Speak Up: Your Voice is Being Captured!
                     </h1>
 
                 </div>
@@ -77,14 +77,14 @@ export default function AudioPage() {
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
                         >
-                            <div className="flex items-center justify-center w-14 h-14 md:w-16 md:h-16 bg-white rounded-full shadow-md">
+                            <div className="flex items-center justify-center w-14 h-14 md:w-16 md:h-16 bg-black rounded-full shadow-md">
                                 {option === 'record' && <FaMicrophone className="text-teal-500 text-xl md:text-3xl" />}
                                 {option === 'upload' && <FaUpload className="text-blue-500 text-xl md:text-3xl" />}
                                 {/* //{option === 'url' && <FaLink className="text-green-500 text-xl md:text-3xl" />} */}
                             </div>
 
                             {/* Tooltip on Hover */}
-                            <div className={`absolute bottom-0 left-1/2 transform -translate-x-1/2 mb-8 p-2 bg-gray-800 text-white text-xs md:text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity`}>
+                            <div className={`absolute bottom-0 left-1/2 transform -translate-x-1/2 mb-8 p-2 bg-black text-white text-xs md:text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity`}>
                                 {option.charAt(0).toUpperCase() + option.slice(1)}
                             </div>
                         </motion.div>
@@ -94,14 +94,14 @@ export default function AudioPage() {
             </div>
 
             <motion.div
-                className="w-full max-w-lg"
+                className="w-full max-w-lg "
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.5 }}
             >
                 {selectedOption === 'upload' && <ParentComponent onFileSelect={setFile} />}
-                {selectedOption === 'url' && <PasteUrlComponent onUrlChange={setUrl} />}
+                {/* {selectedOption === 'url' && <PasteUrlComponent onUrlChange={setUrl} />} */}
                 {selectedOption === 'record' && <MyAudioRecordingComponent setAudioData={setAudioData} />}
             </motion.div>
 

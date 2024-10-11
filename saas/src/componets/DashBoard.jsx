@@ -62,7 +62,7 @@ const Dashboard = () => {
                         <SidebarItem to="/dashboard/linkedin" icon={<SiLinkedin />} label="LinkedIn" />
                         <SidebarItem to="/dashboard/medium" icon={<AiOutlineMedium />} label="Medium" />
                         <SidebarItem to="/dashboard/blogger" icon={<FaBlogger />} label="Blogger" />
-                        <SidebarItem to="/dashboard/analytics" icon={<AiOutlineBulb />} label="Analytics" />
+                        {/* <SidebarItem to="/dashboard/analytics" icon={<AiOutlineBulb />} label="Analytics" /> */}
                     </div>
                     <button className="flex items-center p-2 mt-4 text-red-600 hover:bg-red-100 rounded transition" onClick={handleLogout}>
                         <AiOutlineLogout className="mr-2" /> Logout
@@ -91,7 +91,7 @@ const Dashboard = () => {
                                 <SidebarItem to="/dashboard/linkedin" icon={<SiLinkedin />} label="LinkedIn" />
                                 <SidebarItem to="/dashboard/medium" icon={<AiOutlineMedium />} label="Medium" />
                                 <SidebarItem to="/dashboard/blogger" icon={<FaBlogger />} label="Blogger" />
-                                <SidebarItem to="/dashboard/analytics" icon={<AiOutlineBulb />} label="Analytics" />
+                                {/* <SidebarItem to="/dashboard/analytics" icon={<AiOutlineBulb />} label="Analytics" /> */}
                             </div>
                         </div>
                     </motion.div>

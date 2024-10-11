@@ -7,7 +7,8 @@ import { useAuth } from "@/userContext/AuthContext";
 import { useProfile, UserContextProvider } from '@/userContext/UserContext';
 
 const UserProfile = () => {
-    const { handleLogout, handleChangePassword } = useAuth();
+    const { handleLogout, handleChangePassword, isGoogle, onDisconnectLinkedIn,
+        onDisconnectMedium } = useAuth();
     const { userInfo } = useProfile();
 
 
@@ -34,13 +35,15 @@ const UserProfile = () => {
             />
 
 
-            {userInfo && userInfo.planPurchased !== 'FREE' && (
+            {/* {userInfo && userInfo.planPurchased !== 'FREE' && (
                 <BillingInfo onDownloadBill={handleDownloadBill} />
-            )}
+            )} */}
 
-            <AccountManagement
+            <AccountManagement isGoogle={isGoogle}
                 onChangePassword={handleChangePassword}
                 onLogout={handleLogout}
+                onDisconnectLinkedIn={onDisconnectLinkedIn}
+                onDisconnectMedium={onDisconnectMedium}
             />
         </div>
     );

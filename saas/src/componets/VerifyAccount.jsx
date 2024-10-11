@@ -2,11 +2,20 @@ import { useState } from "react";
 import { SubmitButton } from "./SignUpForm";
 import { useNavigate } from "react-router-dom";
 import { Notify, NotifyFalse } from './NotifyToast.jsx'
+
+import { useAuth } from "@/userContext/AuthContext";
 const url = "https://voiceblogify-backend.onrender.com"
-export default function ResetPassword1() {
-    const [email, setEmail] = useState("");
+export default function AccountVerify() {
+
     const [otp, setOtp] = useState("");
-    const [password, setPassword] = useState("");
+
+    const { user } = useAuth();
+    const email = user?.email;
+
+
+
+
+
     const [step, setStep] = useState(1);
     const [message, setMessage] = useState("");
     const [sendOtp, setSendOtp] = useState(false);
@@ -65,72 +74,58 @@ export default function ResetPassword1() {
         }
     };
 
-    const handleOtpAndPasswordSubmit = async (e) => {
+    const handleOtp = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch(`${url}/resetPassword`, {
-                method: 'PUT',
+            const response = await fetch(`${url}/user/verfied`, {
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ email, otp, password }),
+                credentials: 'include',
+                body: JSON.stringify({ email, otp }),
             });
 
             const data = await response.json();
             if (response.ok) {
-                setMessage("Password has been reset successfully!");
-                Notify("Password has been reset successfully!")
-                navigate('/login');
+                Notify("Account has been verified successfully!");
+                navigate('/dashboard');
             } else {
-                setMessage(data.message || "Invalid OTP or something went wrong.");
-                NotifyFalse("Invalid OTP or something went wrong.")
+                NotifyFalse(data.message || "OTP verification failed.");
             }
         } catch (error) {
-            setMessage("An error occurred. Please try again.");
-
+            NotifyFalse("An error occurred during OTP verification. Please try again.");
         }
     };
+
 
     return (
         <div className="min-h-screen flex items-center justify-center px-4" style={{ backgroundColor: "#020012" }}>
             <div className="w-full max-w-lg p-8 rounded-xl shadow shadow-slate-300 flex flex-col justify-center" style={{ backgroundColor: "#020012" }}>
-                <h1 className="text-4xl font-medium text-white text-center mb-4">Reset Password</h1>
-                <p className="text-slate-400 text-center mb-6">Fill up the form to reset your password</p>
+                <h1 className="text-4xl font-medium text-white text-center mb-4">Verify Account</h1>
 
-                {/* Display error message */}
+
+
                 {message && <p className="text-center text-red-500 mb-4">{message}</p>}
 
                 {/* Step 1: Email Submission */}
                 {step === 1 && (
                     <form onSubmit={handleEmailSubmit}>
-                        <div className="space-y-5">
-                            <label htmlFor="email" className="block">
-                                <span className="font-medium text-slate-400">Email Address</span>
-                                <input
-                                    id="email"
-                                    name="email"
-                                    type="email"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    className="w-full mt-1 py-3 px-4 bg-transparent border border-slate-700 rounded-lg text-slate-300 focus:outline-none focus:border-indigo-500 focus:bg-slate-800"
-                                    placeholder="Enter email address"
-                                    required
-                                />
-                            </label>
 
-                            <button
-                                type="submit"
-                                className="w-full py-3 mt-4 font-medium text-white bg-indigo-600 hover:bg-indigo-500 rounded-lg hover:shadow-md transition duration-300"
-                            >
-                                Send OTP
-                            </button>
-                        </div>
+
+                        <button
+                            type="submit"
+                            className="w-full py-3 mt-4 font-medium text-white bg-indigo-600 hover:bg-indigo-500 rounded-lg hover:shadow-md transition duration-300"
+                        >
+                            Send OTP for Verification
+                        </button>
+
                     </form>
                 )}
 
                 {/* Step 2: OTP and Password Submission */}
                 {step === 2 && (
-                    <form onSubmit={handleOtpAndPasswordSubmit}>
+                    <form onSubmit={handleOtp}>
                         <div className="space-y-5">
                             <label htmlFor="otp" className="block">
                                 <span className="font-medium text-slate-400">Enter OTP</span>
@@ -146,19 +141,6 @@ export default function ResetPassword1() {
                                 />
                             </label>
 
-                            <label htmlFor="password" className="block">
-                                <span className="font-medium text-slate-400">New Password</span>
-                                <input
-                                    id="password"
-                                    name="password"
-                                    type="password"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    className="w-full mt-1 py-3 px-4 bg-transparent border border-slate-700 rounded-lg text-slate-300 focus:outline-none focus:border-indigo-500 focus:bg-slate-800"
-                                    placeholder="Enter new password"
-                                    required
-                                />
-                            </label>
 
                             <div className="flex flex-col md:flex-row md:justify-between items-center mt-6 space-y-4 md:space-y-0">
                                 <SubmitButton name="Submit" />

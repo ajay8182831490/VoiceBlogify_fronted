@@ -3,15 +3,22 @@ import { MicrophoneIcon, PauseIcon, PlayIcon, StopIcon, ArrowPathIcon, ArrowDown
 import { useNavigate } from 'react-router-dom';
 import './AudioRecordingComponent.css';
 
-const Url = "https://voiceblogify-backend.onrender.com"
+const Url = "https://voiceblogify-backend.onrender.com";
 
-export default function MyAudioRecordingComponent() {
+const recordingLimits = {
+    free: 10 * 60,
+    basic: 20 * 60,
+    premium: 60 * 60,
+    business: 90 * 60,
+};
+
+export default function MyAudioRecordingComponent({ userPlan }) {
     const [isRecording, setIsRecording] = useState(false);
     const [isPaused, setIsPaused] = useState(false);
     const [isUploading, setIsUploading] = useState(false);
     const [audioBlob, setAudioBlob] = useState(null);
     const [audioURL, setAudioURL] = useState(null);
-    const [timer, setTimer] = useState(0);
+    const [timer, setTimer] = useState(recordingLimits[userPlan] || recordingLimits.basic);
     const [showTimer, setShowTimer] = useState(false);
     const [showControls, setShowControls] = useState(false);
     const mediaRecorderRef = useRef(null);
@@ -20,14 +27,18 @@ export default function MyAudioRecordingComponent() {
     const navigate = useNavigate();
 
     useEffect(() => {
+        setTimer(recordingLimits[userPlan] || recordingLimits.free);
+    }, [userPlan]);
+
+    useEffect(() => {
         if (isRecording) {
             startRecording();
             startTimer();
             setShowTimer(true);
         } else {
             stopRecording();
-            stopTimer();
             if (!isPaused) {
+                stopTimer();
                 setShowTimer(false);
             }
         }
@@ -38,13 +49,12 @@ export default function MyAudioRecordingComponent() {
             }
             stopTimer();
         };
-    }, [isRecording]);
+    }, [isRecording, userPlan]);
 
     const startRecording = async () => {
         try {
             const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
             mediaRecorderRef.current = new MediaRecorder(stream);
-
 
             mediaRecorderRef.current.ondataavailable = (event) => {
                 if (event.data.size > 0) {
@@ -54,19 +64,16 @@ export default function MyAudioRecordingComponent() {
 
             mediaRecorderRef.current.onstop = () => {
                 createAudioBlob();
-                setShowTimer(false);
+                setShowControls(true);
             };
 
             mediaRecorderRef.current.start(1000);
-
-            startTimer();
-
-            setShowTimer(true); // Show timer UI here
+            setShowTimer(true);
         } catch (error) {
             console.error('Error starting recording:', error);
             alert('Could not start recording. Please ensure microphone access is allowed.');
-            setShowTimer(false)
-            handleReset()
+            setShowTimer(false);
+            handleReset();
         }
     };
 
@@ -97,6 +104,7 @@ export default function MyAudioRecordingComponent() {
         setAudioBlob(blob);
         setAudioURL(URL.createObjectURL(blob));
         audioChunks.current = [];
+
     };
 
     const uploadAudio = async () => {
@@ -132,7 +140,7 @@ export default function MyAudioRecordingComponent() {
         } else {
             setIsRecording((prev) => !prev);
             if (!isRecording) {
-                setTimer(0);
+                setTimer(recordingLimits[userPlan] || recordingLimits.free);
                 setAudioURL(null);
                 setShowControls(true);
             }
@@ -145,7 +153,7 @@ export default function MyAudioRecordingComponent() {
         setAudioURL(null);
         setIsRecording(false);
         setIsPaused(false);
-        setTimer(0);
+        setTimer(recordingLimits[userPlan] || recordingLimits.basic);
         setShowTimer(false);
         setShowControls(false);
         stopTimer();
@@ -163,7 +171,14 @@ export default function MyAudioRecordingComponent() {
     const startTimer = () => {
         if (timerRef.current) return;
         timerRef.current = setInterval(() => {
-            setTimer((prev) => prev + 1);
+            setTimer((prev) => {
+                if (prev <= 1) {
+                    stopRecording();
+                    setTimer(0);
+                    return 0;
+                }
+                return prev - 1;
+            });
         }, 1000);
     };
 
@@ -181,23 +196,22 @@ export default function MyAudioRecordingComponent() {
     };
 
     return (
-        <div className="flex flex-col items-center p-6 bg-gradient-to-r from-blue-100 via-blue-200 to-blue-300 rounded-lg shadow-lg max-w-md mx-auto">
-            <div className="w-full bg-white p-6 rounded-lg shadow-md flex flex-col items-center space-y-4">
+        <div className="flex flex-col items-center p-6  rounded-lg shadow-lg max-w-md mx-auto" style={{ backgroundColor: "black" }}>
+            <div className="w-full  p-6 rounded-lg shadow-md flex flex-col items-center space-y-4" style={{ backgroundColor: "#1E1E1E" }} >
                 {/* Audio playback controls */}
-                {audioURL && !isRecording && !isUploading && !isPaused && (
+                {audioURL && !isRecording && !isUploading && (
                     <div className="w-full mb-4 flex justify-center">
                         <audio controls src={audioURL} className="w-full max-w-md" />
                     </div>
                 )}
 
-                {/* Timer Display */}
+
                 {showTimer && (
                     <div className="text-3xl font-semibold mb-4 text-blue-600">
                         {formatTime(timer)}
                     </div>
                 )}
 
-                {/* Unified Recording Button */}
                 <div className="flex flex-col items-center space-y-4">
                     <button
                         onClick={handleRecord}
@@ -207,7 +221,6 @@ export default function MyAudioRecordingComponent() {
                         {isRecording ? (isPaused ? <PlayIcon className="h-10 w-10" /> : <StopIcon className="h-10 w-10" />) : <MicrophoneIcon className="h-10 w-10" />}
                     </button>
 
-                    {/* Conditional rendering of additional buttons */}
                     {showControls && (
                         <div className="flex flex-wrap justify-center space-x-4">
                             {isRecording && !isPaused && (
@@ -228,26 +241,26 @@ export default function MyAudioRecordingComponent() {
                                     <PlayIcon className="h-6 w-6" />
                                 </button>
                             )}
+                            {/* Show download icon only when audio is available */}
+                            {audioBlob && !isUploading && (
+                                <button
+                                    onClick={handleSave}
+                                    className="flex items-center p-4 bg-gradient-to-r from-green-400 to-green-600 text-white rounded-full transition-transform transform hover:bg-green-500 shadow-lg hover:scale-105"
+                                    title="Download Recording"
+                                >
+                                    <ArrowDownTrayIcon className="h-6 w-6" />
+                                </button>
+                            )}
+
                             <button
                                 onClick={handleReset}
-                                className="flex items-center p-4 bg-gradient-to-r from-gray-400 to-gray-600 text-white rounded-full transition-transform transform hover:bg-gray-500 shadow-lg hover:scale-105"
-                                title="Reset"
+                                className="flex items-center p-4 bg-gradient-to-r from-red-400 to-red-600 text-white rounded-full transition-transform transform hover:bg-red-500 shadow-lg hover:scale-105"
+                                title="Reset Recording"
                             >
                                 <ArrowPathIcon className="h-6 w-6" />
                             </button>
-
-                            <button
-                                onClick={handleSave}
-                                className="flex items-center p-4 bg-gradient-to-r from-green-400 to-green-600 text-white rounded-full transition-transform transform hover:bg-green-500 shadow-lg hover:scale-105"
-                                disabled={!audioBlob || isUploading || isRecording}
-                                title="Save"
-                            >
-                                <ArrowDownTrayIcon className="h-6 w-6" />
-                            </button>
                         </div>
                     )}
-
-                    {/* Submit Audio for Processing Button */}
                     {showControls && (
                         <button
                             onClick={uploadAudio}

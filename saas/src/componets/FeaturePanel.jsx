@@ -12,21 +12,15 @@ export default function FeaturePanel() {
             transition={{ duration: 1.5 }}
         >
             <motion.div
-                className="mx-auto py-8 px-8 text-purple-800 xl:w-[40rem]" // Reduced top padding
+                className="mx-auto py-8 px-8 text-purple-800 xl:w-[40rem]"
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ duration: 1, delay: 0.5 }}
             >
-                <motion.span
-                    className="rounded-full bg-violet-600 px-3 py-1 font-xl text-white" // Highlight color
-                    whileHover={{ scale: 1.1 }}
-                    transition={{ duration: 0.3 }}
-                >
-                    Introducing VoiceBlogify
-                </motion.span>
+
 
                 <motion.p
-                    className="my-6 text-4xl font-semibold leading-10 text-wite" // Increased font size
+                    className="my-6 text-5xl font-semibold leading-10 text-white"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 1 }}
