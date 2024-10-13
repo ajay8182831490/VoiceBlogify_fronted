@@ -39,7 +39,7 @@ const PricingFAQ = () => {
                             {faq.question}
                         </h4>
                         {openIndex === index && (
-                            <p className="text-sm text-white mt-2 transition-all duration-300 transform w-full max-w-xl">
+                            <p className="text-sm text-gray-300 mt-2 transition-all duration-300 transform w-full max-w-xl">
                                 {faq.answer}
                             </p>
                         )}

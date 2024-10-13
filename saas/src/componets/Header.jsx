@@ -37,6 +37,8 @@ const Header = memo(() => {
 
     const { handleLogout, isAuthenticated, isAvialbleCreatePost, user } = useAuth();
 
+    console.log(isAvialbleCreatePost);
+
     return (
 
 

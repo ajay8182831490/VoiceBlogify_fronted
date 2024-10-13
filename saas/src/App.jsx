@@ -13,6 +13,7 @@ import Pri from './componets/Pri';
 import PrivateRoute from './componets/PrivateRoutes';
 import SignUp from './componets/SignUp';
 import AccountVerify from './componets/VerifyAccount';
+import { NotifyFalse } from './componets/NotifyToast';
 
 
 const Password = lazy(() => import('./componets/util/Password'))
@@ -24,7 +25,7 @@ const RichEditorText = lazy(() => import('./componets/RichEditorText'));
 const Dashboard = lazy(() => import('./componets/Dashboard'));
 
 function App() {
-  const { isAuthenticated, isGoogle } = useAuth();
+  const { isAuthenticated, isGoogle, isAvialbleCreatePost, isVerified } = useAuth();
 
   return (
     <Routes>
@@ -34,11 +35,20 @@ function App() {
         <Route path="/pricing" element={<PricingCard />} />
         <Route path="/terms-condition" element={<TermsAndConditions />} />
         <Route path="/privacy" element={<Pri />} />
-        <Route path="/verify" element={isAuthenticated ? <AccountVerify /> : <Navigate to='/login' />} />
+        <Route
+          path="/verify"
+          element={
+            isAuthenticated ? (
+              !isVerified ? <AccountVerify /> : <Navigate to="/main" />
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
+        />
         <Route
           path='/user/password'
           element=<Suspense fallback={<div>Loading Sign Up...</div>}>
-            {isAuthenticated && isGoogle ? <Password /> : <Navigate to='/' />}
+            {isAuthenticated && !isGoogle ? <Password /> : <Navigate to='/' />}
           </Suspense>
         />
 
@@ -52,15 +62,30 @@ function App() {
           }
         />
 
-
         <Route
           path="/main"
           element={
             <Suspense fallback={<div>Loading Audio Page...</div>}>
-              {isAuthenticated ? <AudioPage /> : <Navigate to="/login" />}
+              {isAuthenticated ? (
+                isVerified ? (
+                  isAvialbleCreatePost > 0 ? (
+                    <AudioPage />
+                  ) : (
+                    <>
+                      {NotifyFalse("You need to upgrade/buy plan to create posts!")}
+                      <Navigate to="/pricing" />
+                    </>
+                  )
+                ) : (
+                  <Navigate to="/verify" />  // Redirect to verification page
+                )
+              ) : (
+                <Navigate to="/login" />  // Redirect to login page if not authenticated
+              )}
             </Suspense>
           }
         />
+
 
 
         <Route

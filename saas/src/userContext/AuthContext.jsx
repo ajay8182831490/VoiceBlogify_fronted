@@ -11,6 +11,7 @@ export function AuthProvider({ children }) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [isGoogle, setIsGoogle] = useState(false);
+    const [isVerified, setVerified] = useState(false);
 
     useEffect(() => {
         const checkAuth = async () => {
@@ -27,8 +28,10 @@ export function AuthProvider({ children }) {
                 const data = await response.json();
 
 
+
                 setIsAuthenticated(data.authenticated);
                 setIsGoogle(data.googleId)
+                setVerified(data.isVerified);
 
                 setAvilableCreatePost(data.remainingPosts)
 
@@ -155,7 +158,7 @@ export function AuthProvider({ children }) {
             message,
             isGoogle,
             onDisconnectLinkedIn,
-            onDisconnectMedium
+            onDisconnectMedium, isVerified
         }),
         [isAuthenticated, user, loading, error, message, onDisconnectMedium, onDisconnectMedium]
     );

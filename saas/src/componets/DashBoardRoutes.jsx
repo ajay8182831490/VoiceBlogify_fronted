@@ -5,6 +5,7 @@ import UserPostProvider from './dashBoard/UserPostProvider';
 const UserPost = lazy(() => import('./dashBoard/UserPost').then(module => ({ default: module.UserPosts })));
 const LinkedinPostProvider = lazy(() => import('./LinkedinRichEditorText'));
 
+// const UserProfile = lazy(() => import('./dashBoard/UserProfile'));
 const UserProfile = lazy(() => import('./dashBoard/UserProfile'));
 
 

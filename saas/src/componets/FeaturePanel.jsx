@@ -20,7 +20,7 @@ export default function FeaturePanel() {
 
 
                 <motion.p
-                    className="my-6 text-5xl font-semibold leading-10 text-white"
+                    className="my-6 text-4xl font-semibold leading-10 text-white"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 1 }}

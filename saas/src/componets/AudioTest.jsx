@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { MicrophoneIcon, PauseIcon, PlayIcon, StopIcon, ArrowPathIcon, ArrowDownTrayIcon } from '@heroicons/react/24/outline';
 import { useNavigate } from 'react-router-dom';
 import './AudioRecordingComponent.css';
+import { Notify, NotifyFalse } from './NotifyToast';
 
 const Url = "https://voiceblogify-backend.onrender.com";
 
@@ -70,7 +71,7 @@ export default function MyAudioRecordingComponent({ userPlan }) {
             mediaRecorderRef.current.start(1000);
             setShowTimer(true);
         } catch (error) {
-            console.error('Error starting recording:', error);
+
             alert('Could not start recording. Please ensure microphone access is allowed.');
             setShowTimer(false);
             handleReset();
@@ -100,19 +101,46 @@ export default function MyAudioRecordingComponent({ userPlan }) {
     };
 
     const createAudioBlob = () => {
-        const blob = new Blob(audioChunks.current, { type: 'audio/wav' });
+        let mimeType = 'audio/wav'; // Default
+
+        // Check for supported formats
+        const audioElement = document.createElement('audio');
+        if (audioElement.canPlayType('audio/webm')) {
+            mimeType = 'video/webm';
+        } else if (audioElement.canPlayType('audio/mp3')) {
+            mimeType = 'audio/mp3';
+        } else if (audioElement.canPlayType('audio/ogg')) {
+            mimeType = 'audio/ogg';
+        }
+
+        const blob = new Blob(audioChunks.current, { type: mimeType });
         setAudioBlob(blob);
         setAudioURL(URL.createObjectURL(blob));
         audioChunks.current = [];
-
     };
 
-    const uploadAudio = async () => {
+
+    const uploadAudio = async (e) => {
+
+        e.preventDefault();
         if (!audioBlob) return;
         setIsUploading(true);
 
         const formData = new FormData();
-        formData.append('audio', audioBlob, 'recording.wav');
+
+        // Determine file extension based on MIME type
+        let fileName = 'recording.wav'; // Default file name
+        const mimeType = audioBlob.type;
+
+        if (mimeType === 'video/webm') {
+            fileName = 'recording.webm';
+        } else if (mimeType === 'audio/mp3') {
+            fileName = 'recording.mp3';
+        } else if (mimeType === 'audio/ogg') {
+            fileName = 'recording.ogg';
+        }
+
+        formData.append('audio', audioBlob, fileName);
 
         try {
             const response = await fetch(`${Url}/transcription/audioRecord`, {
@@ -120,19 +148,47 @@ export default function MyAudioRecordingComponent({ userPlan }) {
                 credentials: 'include',
                 body: formData,
             });
-
+            const data = await response.json();
             if (response.ok) {
                 handleReset();
-                navigate('/loading');
+                Notify(data.message);
+                navigate('/')
             } else {
-                console.error('Failed to upload audio');
+                NotifyFalse('Failed to upload audio')
+
             }
         } catch (error) {
-            console.error('Error uploading audio:', error);
+
+            NotifyFalse("Error occured during uploading audio")
         } finally {
             setIsUploading(false);
         }
     };
+
+    const handleSave = () => {
+        if (!audioBlob) return;
+
+        // Determine file extension based on MIME type
+        let fileName = 'recording.wav'; // Default file name
+        const mimeType = audioBlob.type;
+
+        if (mimeType === 'video/webm') {
+            fileName = 'recording.webm';
+        } else if (mimeType === 'audio/mp3') {
+            fileName = 'recording.mp3';
+        } else if (mimeType === 'audio/ogg') {
+            fileName = 'recording.ogg';
+        }
+
+        const url = URL.createObjectURL(audioBlob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = fileName; // Use the dynamic file name
+        document.body.appendChild(link); // Append to the body for Firefox compatibility
+        link.click(); // Trigger the download
+        document.body.removeChild(link); // Clean up after the download
+    };
+
 
     const handleRecord = () => {
         if (isPaused) {
@@ -159,14 +215,7 @@ export default function MyAudioRecordingComponent({ userPlan }) {
         stopTimer();
     };
 
-    const handleSave = () => {
-        if (!audioBlob) return;
-        const url = URL.createObjectURL(audioBlob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = 'recording.wav';
-        link.click();
-    };
+
 
     const startTimer = () => {
         if (timerRef.current) return;
