@@ -225,6 +225,7 @@ const PricingCard = () => {
 
                                         });
                                         const data = await response.json()
+                                        console.log(data);
                                         if (response.status === 400) {
 
                                             setShowPayPal(false);
@@ -273,7 +274,7 @@ const PricingCard = () => {
                                             }),
                                         });
                                         const details = await response.json();
-
+                                        console.log(details)
 
                                         if (details.status === "COMPLETED") {
                                             handleSuccess(details);

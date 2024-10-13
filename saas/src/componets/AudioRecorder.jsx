@@ -2,6 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { Notify, NotifyFalse } from './NotifyToast';
 
 const Url = "https://voiceblogify-backend.onrender.com";
 
@@ -12,6 +13,7 @@ const AudioDropzone = ({ onFileUploaded }) => {
     const [selectedFile, setSelectedFile] = useState(null);
     const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
+    const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
 
     const onDrop = useCallback((acceptedFiles) => {
         setErrorMessage('');
@@ -20,12 +22,14 @@ const AudioDropzone = ({ onFileUploaded }) => {
         setDuration(null);
         setSelectedFile(null);
 
+
         const file = acceptedFiles[0];
         const url = URL.createObjectURL(file);
 
         if (file && file.type.startsWith('audio/')) {
             setAudioUrl(url);
             setSelectedFile(file);
+            setIsSubmitDisabled(false);
 
             if (onFileUploaded) {
                 onFileUploaded(file);
@@ -38,6 +42,7 @@ const AudioDropzone = ({ onFileUploaded }) => {
         } else if (file.type.startsWith('video/')) {
             setVideoUrl(url);
             setSelectedFile(file);
+            setIsSubmitDisabled(false);
 
             if (onFileUploaded) {
                 onFileUploaded(file);
@@ -63,22 +68,38 @@ const AudioDropzone = ({ onFileUploaded }) => {
         }
 
         const formData = new FormData();
-        formData.append('file', selectedFile); // Change key to 'file' for general use
+        formData.append('file', selectedFile);
+        setIsSubmitDisabled(true);
 
         try {
-            const response = await fetch(`${Url}/transcription/audioRecord`, {
+            const response = await fetch(`${Url}/transcription/audiofile`, {
                 method: 'POST',
                 body: formData,
                 credentials: 'include',
             });
 
+            const data = await response.json();
+
+
             if (response.ok) {
-                navigate('/loading');
-            } else {
+                Notify(data.message);
+
+
+                navigate('/');
+            } else if (response.status == 403) {
+
+                NotifyFalse(data.message);
+                navigate('/pricing');
                 const errorMessage = await response.text();
                 throw new Error(`Failed to upload the file: ${errorMessage}`);
             }
+            else {
+                NotifyFalse(data.message);
+                navigate('/main');
+
+            }
         } catch (error) {
+
 
             setErrorMessage('There was an issue uploading the file.');
         }
@@ -89,6 +110,7 @@ const AudioDropzone = ({ onFileUploaded }) => {
         setVideoUrl('');
         setSelectedFile(null);
         setDuration(null);
+        setIsSubmitted(false);
     };
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -154,6 +176,7 @@ const AudioDropzone = ({ onFileUploaded }) => {
             {(audioUrl || videoUrl) && (
                 <button
                     onClick={handleSubmit}
+                    disabled={isSubmitDisabled}
                     className="mt-4 px-6 py-3 bg-teal-600 text-white rounded-lg shadow-lg hover:bg-teal-500 transition-colors duration-300"
                 >
                     Submit File for Processing

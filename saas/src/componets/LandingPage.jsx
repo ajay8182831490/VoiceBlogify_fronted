@@ -14,7 +14,7 @@ export default function LandingPage() {
 
 
                 <motion.section
-                    className="relative w-full  text-white pt-20 pb-2 overflow-hidden"
+                    className="relative w-full  text-white pt-18 pb-2 overflow-hidden"
                     style={{ backgroundColor: "#020012" }}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}

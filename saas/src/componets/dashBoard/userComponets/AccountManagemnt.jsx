@@ -4,9 +4,11 @@ import { FaLock, FaSignOutAlt } from 'react-icons/fa';
 import { AiFillLinkedin } from 'react-icons/ai';
 import { SiMedium } from 'react-icons/si';
 import { usePost } from '@/userContext/PostContext';
+import { useAuth } from '@/userContext/AuthContext';
 
 const AccountManagement = ({ onLogout, isGoogle, onDisconnectLinkedIn, onDisconnectMedium }) => {
-    const { hasMediumAccess, hasLinkedinAccess } = usePost();
+    const { hasLinkedinAccess, hasMediumAccess } = usePost()
+    const { isVerified } = useAuth()
     return (
         <motion.div
             className="p-6 bg-white shadow-lg rounded-lg mb-6 border border-gray-200"
@@ -36,6 +38,17 @@ const AccountManagement = ({ onLogout, isGoogle, onDisconnectLinkedIn, onDisconn
                     <FaSignOutAlt />
                     <span>Logout</span>
                 </button>
+
+                {!isVerified && (
+                    <Link
+                        to="/verify"
+                        className="inline-flex items-center space-x-2 bg-yellow-500 text-white px-4 py-2 rounded-lg hover:bg-yellow-600 transition duration-200 ease-in-out shadow-md"
+                        style={{ width: "fit-content" }}
+                    >
+                        <FaLock />
+                        <span>Verify Account</span>
+                    </Link>
+                )}
 
 
                 {hasLinkedinAccess && (<button

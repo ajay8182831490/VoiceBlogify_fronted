@@ -61,6 +61,10 @@ export const UserPosts = () => {
             <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
                 {loading ? (
                     <p className="text-center text-white">Loading...</p>
+                ) : currentPosts.length === 0 ? (
+                    <div className="flex items-center justify-center h-full">
+                        <p className="text-center text-white">Looks like you haven't created any posts yet.</p>
+                    </div>
                 ) : (
                     currentPosts.map((post) => (
                         <div
@@ -68,8 +72,12 @@ export const UserPosts = () => {
                             className="flex flex-col p-6 bg-white shadow-lg rounded-xl border border-transparent hover:border-blue-300 transition duration-300 transform hover:scale-105"
                         >
                             <div className="flex-1">
-                                <h3 className="text-xl font-semibold text-gray-800 mb-2">{post.title.substring(0, 50) + '...'}</h3>
-                                <p className="text-sm text-gray-500 mb-4">Posted on: {new Date(post.dateOfCreation).toLocaleDateString()}</p>
+                                <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                                    {post.title.substring(0, 50) + '...'}
+                                </h3>
+                                <p className="text-sm text-gray-500 mb-4">
+                                    Posted on: {new Date(post.dateOfCreation).toLocaleDateString()}
+                                </p>
                                 <p
                                     className="text-gray-700 text-ellipsis overflow-hidden h-16"
                                     dangerouslySetInnerHTML={{ __html: post.content.substring(0, 100) + '...' }}
@@ -106,6 +114,7 @@ export const UserPosts = () => {
                     ))
                 )}
             </div>
+
 
             <div className="flex justify-center items-center mt-8 space-x-4">
                 <button

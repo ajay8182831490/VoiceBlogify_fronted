@@ -218,14 +218,6 @@ export const PostProvider = ({ children }) => {
         }
     }
 
-    const LinkedinAccess = async () => {
-        try {
-            const response = await fetch(' ')
-        } catch (error) {
-
-        }
-    }
-
 
 
     const postData = useMemo(() => ({
