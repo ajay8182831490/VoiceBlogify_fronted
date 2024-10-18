@@ -39,13 +39,20 @@ export const LinkedinContextProvider = ({ children }) => {
 
             const responseData = await response.json();
 
+            if (response.status === 422) {
+                NotifyFalse("Duplicate post found");
+            }
+            else if (response.status === 400) {
+                NotifyFalse(responseData.message)
+            }
 
 
-            if (response.ok) {
+
+            else if (response.ok) {
                 Notify('Post successfully shared on LinkedIn!')
                 setResponseMessage("Post successfully shared on LinkedIn!");
             } else {
-                NotifyFalse(responseData.message)
+                NotifyFalse("Failed to share post")
                 setResponseMessage(`Failed to share post: ${responseData.message || "Unknown error"}`);
             }
         } catch (error) {
