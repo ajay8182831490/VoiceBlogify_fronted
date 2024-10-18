@@ -9,7 +9,6 @@ import { useLinkedin } from '@/userContext/LinkedinContext';
 import { LinkedinContextProvider } from '@/userContext/LinkedinContext';
 
 import { htmlToText } from 'html-to-text';
-import { has } from 'draft-js/lib/DefaultDraftBlockRenderMap';
 const url = import.meta.env.VITE_API_URL
 
 const options = {
@@ -121,9 +120,11 @@ export function LinkedinRET() {
 
 
 
-
     const handleContentChange = (value) => {
         setSelectedPost((prev) => ({ ...prev, content: value }));
+
+
+
     };
 
     const handleSubmit = async (e) => {
@@ -133,6 +134,15 @@ export function LinkedinRET() {
 
 
         const plainContent = cleanHtmlContent(contentToSubmit)
+
+        if (plainContent.length > 3000) {
+            alert(`Due to LinkedIn's character limit constraints, you can share content with a maximum of 3000 characters. Current character count is ${plainContent.length}.`);
+
+            return;
+        }
+
+
+
 
 
 
