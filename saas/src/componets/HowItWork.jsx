@@ -36,11 +36,12 @@ const VisualPath = () => {
             {/* Adjust the container for heading and paragraph */}
             <div className="max-w-3xl mx-auto text-center px-6 md:px-10 lg:px-16">
                 <h2 className="text-3xl font-bold mb-4 text-gray-100">
-                    Transform Your Voice into Blog Content
+                    How It Works
                 </h2>
-                <p className="text-md text-gray-300 mb-8">
-                    With VoiceBlogify, you can seamlessly convert your spoken ideas into beautifully crafted blog posts. Our user-friendly platform allows you to capture your thoughts on the go, ensuring that no inspiration is lost. Experience the ease of content creation while maintaining a personal touch that resonates with your readers.
-                </p>
+                <h4 className="text-2xl font-bold mb-4 text-gray-100">
+                    Choose between live recording or upload your audio/video
+                </h4>
+
 
             </div>
 
@@ -51,7 +52,7 @@ const VisualPath = () => {
                         <motion.div
                             key={index}
                             className="flex flex-col items-center justify-between w-full sm:w-[45%] md:w-[30%] h-80 m-2 rounded-lg shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-xl text-white p-6"
-                            style={{ backgroundColor: "#1E1E1E" }}
+                            style={{ backgroundColor: "#293338" }}
                             whileHover={{ scale: 1.08 }}
                         >
                             <div className="flex items-center justify-center h-24 mb-4 ">

@@ -1,8 +1,9 @@
 import { useContext, createContext, useMemo, useState, useEffect } from "react";
 import DOMPurify from 'dompurify';
+import { Notify, NotifyFalse } from "@/componets/NotifyToast";
 
 const BloggerContext = createContext();
-const url = "https://voiceblogify-backend.onrender.com"
+const url = import.meta.env.VITE_API_URL
 
 export const BloggerContextProvider = ({ children }) => {
     const [title, setTitle] = useState('');
@@ -10,9 +11,9 @@ export const BloggerContextProvider = ({ children }) => {
     const [message, setResponseMessage] = useState('');
     const [blogUserId, setUserBlogID] = useState([]);
 
-    useEffect((effect => {
+    useEffect(() => {
         getBlogId();
-    }), []);
+    }, []);
 
     const DeletebloggerPost = async (blogId, postId) => {
         try {
@@ -51,8 +52,10 @@ export const BloggerContextProvider = ({ children }) => {
             const data = await response.json();
 
             if (response.ok) {
+                Notify(data.message)
                 setResponseMessage(data.message);
             } else {
+                NotifyFalse("Error occurred during uploading post")
                 setResponseMessage(data.message || 'Error occurred during uploading post');
             }
         } catch (error) {
@@ -91,8 +94,13 @@ export const BloggerContextProvider = ({ children }) => {
             const data = await response.json();
             if (response.ok) {
                 setUserBlogID(data);
-            } else {
+
+            } else if (response.status == 403) {
+                NotifyFalse(data.message);
                 setResponseMessage(data.message || 'Error occurred during fetching the user blog ID');
+            }
+            else {
+                NotifyFalse('Error occurred during fetching the user blog ID');
             }
         } catch (error) {
             setResponseMessage('Error occurred during fetching the user blog ID');
@@ -108,7 +116,8 @@ export const BloggerContextProvider = ({ children }) => {
         uploadPost,
         getPostById,
         getBlogId
-    }), [blogUserId, uploadPost, getBlogId]);
+    }), [title, content, message, blogUserId, DeletebloggerPost, uploadPost, getPostById, getBlogId]);
+
 
     return (
         <BloggerContext.Provider value={{ bloggerPost }}>

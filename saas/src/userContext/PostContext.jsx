@@ -3,7 +3,7 @@ import DOMPurify from 'dompurify';
 
 const PostContext = createContext();
 
-const url = "https://voiceblogify-backend.onrender.com"
+const url = import.meta.env.VITE_API_URL
 
 export const PostProvider = ({ children }) => {
     const [title, setTitle] = useState("");
@@ -235,7 +235,7 @@ export const PostProvider = ({ children }) => {
         fetchPostByID,
         success,
         mediumUrl, hasMediumAccess, setMediumAccess, hasLinkedinAccess, setLinkedinAccess
-    }), [updatePost, success, mediumUrl, hasMediumAccess, setMediumAccess, hasLinkedinAccess, setLinkedinAccess]);
+    }), [updatePost, mediumUrl, hasMediumAccess, setMediumAccess, hasLinkedinAccess, setLinkedinAccess]);
 
     return (
         <PostContext.Provider value={postData}>

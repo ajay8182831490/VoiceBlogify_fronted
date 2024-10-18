@@ -12,7 +12,7 @@ import { Helmet } from 'react-helmet'
 
 
 
-const url = "localhost:4000"
+const url = import.meta.env.VITE_API_URL
 
 const navigation = [
     // { name: 'How Its work', href: '#howitworks', current: false },
@@ -37,7 +37,7 @@ const Header = memo(() => {
 
     const { handleLogout, isAuthenticated, isAvialbleCreatePost, user } = useAuth();
 
-    console.log(isAvialbleCreatePost);
+
 
     return (
 

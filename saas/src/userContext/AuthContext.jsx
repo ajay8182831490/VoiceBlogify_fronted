@@ -1,7 +1,8 @@
+import { Notify } from "@/componets/NotifyToast";
 import { useState, createContext, useEffect, useContext, useMemo } from "react";
 
 const AuthContext = createContext();
-const url = "https://voiceblogify-backend.onrender.com";
+const url = import.meta.env.VITE_API_URL
 
 export function AuthProvider({ children }) {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -40,7 +41,10 @@ export function AuthProvider({ children }) {
                         name: data.name,
                         profilepicurl: data.profilepic,
                         userId: data.id,
-                        email: data.email
+                        email: data.email,
+                        plan: data.plan
+
+
                     });
 
                 } else {
@@ -109,6 +113,8 @@ export function AuthProvider({ children }) {
             });
 
             if (response.ok) {
+                setUser(prevUser => ({ ...prevUser, linkedInConnected: false }));
+                Notify("Successfully disconnected")
                 setMessage("Successfully disconnected")
             }
         } catch (error) {
@@ -125,6 +131,8 @@ export function AuthProvider({ children }) {
 
             if (response.ok) {
                 setMessage("Successfully disconnect")
+                Notify("Successfully disconnected")
+                setUser(prevUser => ({ ...prevUser, mediumConnected: false }))
             } else {
 
                 setError("failed to disconnect. Please try again.");
@@ -160,7 +168,7 @@ export function AuthProvider({ children }) {
             onDisconnectLinkedIn,
             onDisconnectMedium, isVerified
         }),
-        [isAuthenticated, user, loading, error, message, onDisconnectMedium, onDisconnectMedium]
+        [setIsAuthenticated, user, loading, error, message, setVerified, onDisconnectLinkedIn, onDisconnectMedium]
     );
 
     return (

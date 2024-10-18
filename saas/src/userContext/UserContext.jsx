@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { usePost } from "./PostContext";
 
-const url = "https://voiceblogify-backend.onrender.com";
+const url = import.meta.env.VITE_API_URL
 const UserContext = createContext();
 
 export const UserContextProvider = ({ children }) => {

@@ -92,6 +92,7 @@ export function Medium() {
 
 
         await uploadPost({ title: selectedPost.title, tag: selectedPost.tags, content: content })
+        handleCloseModal()
     };
 
     return (

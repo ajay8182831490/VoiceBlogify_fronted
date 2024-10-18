@@ -9,11 +9,14 @@ import { ToastContainer, toast } from 'react-toastify';
 
 
 import 'react-toastify/dist/ReactToastify.css';
+import UserProfileWithProvider from './componets/dashBoard/UserProfile.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
 
     <AuthProvider>
+
+
 
       <BrowserRouter>
         <App />
@@ -31,6 +34,7 @@ createRoot(document.getElementById('root')).render(
       </BrowserRouter>
 
     </AuthProvider>
+
 
 
 

@@ -17,8 +17,6 @@ const Dashboard = () => {
     const navigate = useNavigate();
     const { isAuthenticated, handleLogout } = useAuth();
 
-
-
     useEffect(() => {
         if (!isAuthenticated) {
             navigate('/login');
@@ -43,6 +41,7 @@ const Dashboard = () => {
 
     return (
         <div className="flex min-h-screen bg-gray-100">
+            {/* Sidebar toggle button */}
             {!isMobile && (
                 <button
                     className="fixed top-4 left-4 z-50 bg-white rounded-full p-2 shadow-lg hover:bg-gray-200 transition"
@@ -52,9 +51,9 @@ const Dashboard = () => {
                 </button>
             )}
 
-
+            {/* Sidebar */}
             {isSidebarVisible && !isMobile && (
-                <div className=" w-1/4 p-4 shadow-lg sticky top-0 h-screen" style={{ backgroundColor: "#020012" }}>
+                <div className="w-1/4 p-4 shadow-lg sticky top-0 h-screen" style={{ backgroundColor: "#020012" }}>
                     <h2 className="text-2xl font-bold text-center mb-4 text-white">Dashboard</h2>
                     <div className="flex flex-col space-y-4">
                         <SidebarItem to="/dashboard/user-profile" icon={<AiOutlineUser />} label="User Profile" />
@@ -70,7 +69,7 @@ const Dashboard = () => {
                 </div>
             )}
 
-
+            {/* Mobile modal for sidebar */}
             {isMobile && (
                 <>
                     <motion.div
@@ -80,25 +79,26 @@ const Dashboard = () => {
                         exit={{ opacity: 0 }}
                         transition={{ type: 'spring', stiffness: 300 }}
                     >
-                        <div className=" p-5 w-3/4 md:w-1/3 relative mt-16" style={{ backgroundColor: "#020012" }}>
+                        <div className="p-5 w-3/4 md:w-1/3 relative mt-16" style={{ backgroundColor: "#020012" }}>
                             <button onClick={toggleModal} className="absolute top-4 right-4 text-white hover:text-gray-100">
                                 <AiOutlineClose size={24} />
                             </button>
                             <h3 className="text-lg font-bold mb-4 text-white">Dashboard</h3>
                             <div className="flex flex-col space-y-2">
-                                <SidebarItem to="/dashboard/user-profile" icon={<AiOutlineUser />} label="User Profile" />
-                                <SidebarItem to="/dashboard/user-posts" icon={<MdPostAdd />} label="Your Posts" />
-                                <SidebarItem to="/dashboard/linkedin" icon={<SiLinkedin />} label="LinkedIn" />
-                                <SidebarItem to="/dashboard/medium" icon={<AiOutlineMedium />} label="Medium" />
-                                <SidebarItem to="/dashboard/blogger" icon={<FaBlogger />} label="Blogger" />
+                                <SidebarItem to="/dashboard/user-profile" icon={<AiOutlineUser />} label="User Profile" onClick={toggleModal} />
+                                <SidebarItem to="/dashboard/user-posts" icon={<MdPostAdd />} label="Your Posts" onClick={toggleModal} />
+                                <SidebarItem to="/dashboard/linkedin" icon={<SiLinkedin />} label="LinkedIn" onClick={toggleModal} />
+                                <SidebarItem to="/dashboard/medium" icon={<AiOutlineMedium />} label="Medium" onClick={toggleModal} />
+                                <SidebarItem to="/dashboard/blogger" icon={<FaBlogger />} label="Blogger" onClick={toggleModal} />
                                 {/* <SidebarItem to="/dashboard/analytics" icon={<AiOutlineBulb />} label="Analytics" /> */}
                             </div>
                         </div>
                     </motion.div>
 
+                    {/* Button to open the modal on the left side */}
                     {!isModalOpen && (
                         <button
-                            className="fixed top-20 right-5 z-50 bg-purple-600 text-white rounded-full p-3 shadow-lg hover:bg-purple-700 transition"
+                            className="fixed top-20 left-5 z-50 bg-purple-600 text-white rounded-full p-3 shadow-lg hover:bg-purple-700 transition"
                             onClick={toggleModal}
                         >
                             <MdPostAdd />
@@ -112,17 +112,17 @@ const Dashboard = () => {
     );
 };
 
-const SidebarItem = ({ to, icon, label }) => {
+
+const SidebarItem = ({ to, icon, label, onClick }) => {
     const { isAuthenticated } = useAuth();
 
     return (
-        <Link to={isAuthenticated ? to : '/login'}>
+        <Link to={isAuthenticated ? to : '/login'} onClick={onClick}>
             <div className="flex items-center p-4 mb-2 bg-white bg-opacity-20 rounded-none shadow-md cursor-pointer transition-transform transform hover:scale-105 hover:bg-opacity-30">
                 <span className='text-white'> {icon}</span>
                 <span className="ml-2 text-white font-semibold">{label}</span>
             </div>
         </Link>
     );
-};
-
+}
 export default Dashboard;

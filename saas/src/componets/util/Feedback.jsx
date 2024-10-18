@@ -1,7 +1,7 @@
 // FeedbackForm.jsx
 import React, { useState } from 'react';
 import { Notify, NotifyFalse } from '../NotifyToast';
-const Url = "https://voiceblogify-backend.onrender.com";
+const Url = import.meta.env.VITE_API_URL;
 import { useNavigate } from 'react-router-dom';
 
 import { useAuth } from '@/userContext/AuthContext';

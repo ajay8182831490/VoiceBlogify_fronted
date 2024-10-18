@@ -88,7 +88,7 @@ const RichEditorText = ({ initialData, handleCloseModal }) => {
     };
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+        <div className="fixed inset-0 bg-black pt-16 md:pt-24 bg-opacity-50 flex justify-center items-center z-50">
             <div className="bg-white p-8 rounded-lg shadow-lg relative w-full max-w-5xl h-auto max-h-[80vh] overflow-y-auto">
                 <button onClick={handleCloseModal} className="absolute top-4 right-4 text-gray-600 hover:text-gray-800">✖</button>
                 <h1 className="text-3xl font-extrabold text-gray-800 mb-6 text-center">Edit Post</h1>
@@ -156,6 +156,7 @@ const RichEditorText = ({ initialData, handleCloseModal }) => {
             </div>
         </div>
     );
+
 
 
 

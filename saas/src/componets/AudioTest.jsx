@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import './AudioRecordingComponent.css';
 import { Notify, NotifyFalse } from './NotifyToast';
 
-const Url = "https://voiceblogify-backend.onrender.com";
+const Url = import.meta.env.VITE_API_URL
 
 const recordingLimits = {
     free: 10 * 60,
@@ -149,6 +149,8 @@ export default function MyAudioRecordingComponent({ userPlan }) {
                 body: formData,
             });
             const data = await response.json();
+
+
             if (response.ok) {
                 handleReset();
                 Notify(data.message);

@@ -6,7 +6,7 @@ import React from 'react';
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { useAuth } from '@/userContext/AuthContext';
 import { useNavigate } from 'react-router-dom';
-const url = "https://voiceblogify-backend.onrender.com"
+const url = import.meta.env.VITE_API_URL
 
 import { Notify, NotifyFalse } from './NotifyToast';
 
@@ -22,7 +22,7 @@ const PricingCard = () => {
 
     const navigate = useNavigate();
     const initialOptions = {
-        "client-id": "AXDSMtGR3wtcpAC22RkkpDnkrNDVJ_9bM1zZbFSbN-slKgXukgqEFa-O1GWrSW1fBYt4fCDdLhLXfGgP",
+        "client-id": import.meta.env.VITE_PAYPAL_CLIENT_ID,
         "enable-funding": "paylater,venmo",
         "data-sdk-integration-source": "integrationbuilder_sc",
     };
@@ -225,7 +225,7 @@ const PricingCard = () => {
 
                                         });
                                         const data = await response.json()
-                                        console.log(data);
+
                                         if (response.status === 400) {
 
                                             setShowPayPal(false);

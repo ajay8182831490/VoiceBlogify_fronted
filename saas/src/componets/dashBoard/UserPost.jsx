@@ -138,14 +138,20 @@ export const UserPosts = () => {
 
             {/* Viewing Modal */}
             {isViewing && selectedPost && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-                    <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-4xl relative">
+                <div className="fixed inset-0 mt-20 bg-black bg-opacity-50 flex justify-center items-center z-50">
+                    <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-4xl relative overflow-y-auto max-h-[80vh] my-20"> {/* Increased vertical margin */}
                         <button onClick={handleCloseModal} className="absolute top-4 right-4 text-gray-600 hover:text-gray-800">✖</button>
                         <h1 className="text-3xl font-bold mb-4">{selectedPost.title}</h1>
                         <div dangerouslySetInnerHTML={{ __html: selectedPost.content }} className="text-gray-700"></div>
                     </div>
                 </div>
             )}
+
+
+
+
+
+
 
             {/* Editing Modal */}
             {isEditing && selectedPost && (

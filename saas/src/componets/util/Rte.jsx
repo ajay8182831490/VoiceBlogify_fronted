@@ -3,6 +3,7 @@ import JoditEditor from 'jodit-react';
 import DOMPurify from 'dompurify';
 
 
+
 const RTE = forwardRef(({ placeholder, initialContent, onClose }, ref) => {
     const editor = useRef(null);
     const editorContent = useRef(initialContent || '');
@@ -47,7 +48,10 @@ const RTE = forwardRef(({ placeholder, initialContent, onClose }, ref) => {
                         'redo',
                         'source',
                     ],
-                    height: 250,
+
+                    height: 300,
+
+
                 }}
                 onChange={(newContent) => {
 
@@ -56,9 +60,10 @@ const RTE = forwardRef(({ placeholder, initialContent, onClose }, ref) => {
                     editorContent.current = sanitizedContent;
                 }}
                 className="w-full"
+
             />
 
         </div>
     );
 });
-export default RTE
+export default RTE 

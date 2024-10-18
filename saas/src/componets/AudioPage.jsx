@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import MyAudioRecordingComponent from './AudioTest';
 import { FaMicrophone, FaUpload, FaLink } from 'react-icons/fa';
 
-const url = "https://voiceblogify-backend.onrender.com"
+const url = import.meta.env.VITE_API_URL
 
 export default function AudioPage() {
     const [selectedOption, setSelectedOption] = useState('record');

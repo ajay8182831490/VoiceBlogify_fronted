@@ -49,14 +49,14 @@ const HowVoiceBlogifyHelps = () => {
                 ))}
             </div>
 
-            <div className="text-center mt-8">
+            {/* <div className="text-center mt-8">
                 <Link
                     to="/main"
                     className="bg-blue-500 text-white font-semibold py-2 px-6 rounded-full shadow-lg hover:bg-blue-600 transition-transform transform hover:scale-105"
                 >
                     Start Blogging for Free!
                 </Link>
-            </div>
+            </div> */}
         </div>
     );
 };

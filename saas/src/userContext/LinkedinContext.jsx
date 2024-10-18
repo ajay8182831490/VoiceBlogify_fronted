@@ -1,7 +1,8 @@
+import { Notify, NotifyFalse } from "@/componets/NotifyToast";
 import { useContext, createContext, useEffect, useMemo, useState } from "react";
 
 const LinkedinContext = createContext();
-const url = "https://voiceblogify-backend.onrender.com"
+const url = import.meta.env.VITE_API_URL
 
 
 export const LinkedinContextProvider = ({ children }) => {
@@ -39,9 +40,12 @@ export const LinkedinContextProvider = ({ children }) => {
             const responseData = await response.json();
 
 
+
             if (response.ok) {
+                Notify('Post successfully shared on LinkedIn!')
                 setResponseMessage("Post successfully shared on LinkedIn!");
             } else {
+                NotifyFalse(responseData.message)
                 setResponseMessage(`Failed to share post: ${responseData.message || "Unknown error"}`);
             }
         } catch (error) {

@@ -3,7 +3,7 @@ import DOMPurify from 'dompurify';
 
 const MediumContext = createContext();
 
-const url = "https://voiceblogify-backend.onrender.com"
+const url = import.meta.env.VITE_API_URL
 
 export const MediumContextProvider = ({ children }) => {
     const [title, setTitle] = useState('');
@@ -112,9 +112,16 @@ export const MediumContextProvider = ({ children }) => {
 
 
     const mediumPost = useMemo(() => ({
-        title, tag, content, message,
-        DeleteMediumPost, uploadPost, uploadImage, getPostById,
-    }), [message, uploadPost]);
+        title,
+        tag,
+        content,
+        message,
+        DeleteMediumPost,
+        uploadPost,
+        uploadImage,
+        getPostById,
+    }), [title, tag, content, message, DeleteMediumPost, uploadPost, uploadImage, getPostById]);
+
 
     return (
         <MediumContext.Provider value={{ mediumPost }}>

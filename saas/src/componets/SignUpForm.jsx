@@ -7,8 +7,9 @@ import { Notify, NotifyFalse } from './NotifyToast.jsx';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
+import { noSniff } from 'helmet';
 
-const url = "https://voiceblogify-backend.onrender.com"
+const url = import.meta.env.VITE_API_URL
 
 const loginSchema = z.object({
     email: z.string().email('Please enter a valid email address.'),
@@ -116,20 +117,25 @@ function LoginForm1() {
             }
 
 
-
-
-            if (responseData.authenticated) {
+            if (response.status === 429) {
+                NotifyFalse("You have already created an account. Please log in with your credentials.");
+                navigate('/login');
+            } else if (response.status >= 400 && response.status < 500) {
+                NotifyFalse("Client error occurred. Please check your input and try again.");
+            } else if (response.status >= 500) {
+                NotifyFalse("Server error occurred. Please try again later.");
+            } else if (responseData.authenticated) {
                 Notify('Account created successfully');
                 setIsAuthenticated(true);
                 setUser({
                     name: responseData.name,
-
                 });
                 navigate('/');
             } else {
                 NotifyFalse('User already exists!');
                 navigate('/login');
             }
+
         } catch (error) {
             NotifyFalse('Error occurred during registration');
         }

@@ -3,7 +3,7 @@ import { SubmitButton } from "../SignUpForm.jsx";
 import { useNavigate } from "react-router-dom";
 
 import { Notify, NotifyFalse } from "../NotifyToast.jsx";
-const url = "https://voiceblogify-backend.onrender.com"
+const url = import.meta.env.VITE_API_URL
 
 import { useAuth } from "@/userContext/AuthContext";
 export default function Password() {

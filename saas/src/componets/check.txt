@@ -4,23 +4,7 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { Notify, NotifyFalse } from './NotifyToast';
 
-import { useAuth } from '@/userContext/AuthContext';
-
 const Url = import.meta.env.VITE_API_URL
-const getPlanMaxDuration = (plan) => {
-    switch (plan) {
-        case 'FREE':
-            return 10 * 60; // 10 minutes
-        case 'BASIC':
-            return 20 * 60; // 20 minutes
-        case 'PREMIUM':
-            return 60 * 60; // 60 minutes
-        case 'BUSINESS':
-            return 90 * 60; // 90 minutes
-        default:
-            return 0; // Default if plan is not recognized
-    }
-};
 
 const AudioDropzone = ({ onFileUploaded }) => {
     const [audioUrl, setAudioUrl] = useState('');
@@ -31,25 +15,13 @@ const AudioDropzone = ({ onFileUploaded }) => {
     const navigate = useNavigate();
     const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
 
-
-    const { user } = useAuth();
-    const plan = user?.plan;
-
-    const MAX_DURATION = getPlanMaxDuration(plan);
-
-
-
-
-
-
-
-
     const onDrop = useCallback((acceptedFiles) => {
         setErrorMessage('');
         setAudioUrl('');
         setVideoUrl('');
         setDuration(null);
         setSelectedFile(null);
+
 
         const file = acceptedFiles[0];
         const url = URL.createObjectURL(file);
@@ -65,14 +37,7 @@ const AudioDropzone = ({ onFileUploaded }) => {
 
             const audio = new Audio(url);
             audio.onloadedmetadata = () => {
-                const audioDuration = audio.duration;
-                setDuration(audioDuration);
-
-                // Check duration
-                if (audioDuration > MAX_DURATION) {
-                    setErrorMessage(`Audio duration exceeds the maximum limit of ${MAX_DURATION / 60} minutes.`);
-                    setIsSubmitDisabled(true);
-                }
+                setDuration(audio.duration);
             };
         } else if (file.type.startsWith('video/')) {
             setVideoUrl(url);
@@ -88,16 +53,12 @@ const AudioDropzone = ({ onFileUploaded }) => {
             video.onloadedmetadata = () => {
                 const videoDuration = video.duration;
                 setDuration(videoDuration);
-
-                // Check duration
-                if (videoDuration > MAX_DURATION) {
-                    setErrorMessage(`Video duration exceeds the maximum limit of ${MAX_DURATION / 60} minutes.`);
-                    setIsSubmitDisabled(true);
-                }
             };
         } else {
             setErrorMessage('Please upload a valid audio or video file.');
         }
+
+
     }, [onFileUploaded]);
 
     const handleSubmit = async () => {
@@ -119,19 +80,27 @@ const AudioDropzone = ({ onFileUploaded }) => {
 
             const data = await response.json();
 
+
             if (response.ok) {
                 Notify(data.message);
+
+
                 navigate('/');
             } else if (response.status == 403) {
+
                 NotifyFalse(data.message);
                 navigate('/pricing');
                 const errorMessage = await response.text();
                 throw new Error(`Failed to upload the file: ${errorMessage}`);
-            } else {
+            }
+            else {
                 NotifyFalse(data.message);
                 navigate('/main');
+
             }
         } catch (error) {
+
+
             setErrorMessage('There was an issue uploading the file.');
         }
     };
@@ -141,7 +110,7 @@ const AudioDropzone = ({ onFileUploaded }) => {
         setVideoUrl('');
         setSelectedFile(null);
         setDuration(null);
-        setIsSubmitDisabled(true); // Reset submit button state
+        setIsSubmitted(false);
     };
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -225,7 +194,5 @@ const AudioDropzone = ({ onFileUploaded }) => {
         </motion.div>
     );
 };
-
-
 
 export default AudioDropzone;

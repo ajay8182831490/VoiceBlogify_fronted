@@ -2,7 +2,7 @@ import { useState } from "react";
 import { SubmitButton } from "./SignUpForm";
 import { useNavigate } from "react-router-dom";
 import { Notify, NotifyFalse } from './NotifyToast.jsx'
-const url = "https://voiceblogify-backend.onrender.com"
+const url = import.meta.env.VITE_API_URL
 export default function ResetPassword1() {
     const [email, setEmail] = useState("");
     const [otp, setOtp] = useState("");

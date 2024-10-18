@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Notify, NotifyFalse } from './NotifyToast.jsx'
 
 import { useAuth } from "@/userContext/AuthContext";
-const url = "https://voiceblogify-backend.onrender.com"
+const url = import.meta.env.VITE_API_URL
 export default function AccountVerify() {
 
     const [otp, setOtp] = useState("");
@@ -12,6 +12,8 @@ export default function AccountVerify() {
     const { user } = useAuth();
     const email = user?.email;
 
+
+    console.log(email)
 
 
 
