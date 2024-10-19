@@ -2,11 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FaMicrophone, FaYoutube, FaVideo, FaFileAudio, FaMedium, FaBlogger, FaLinkedin, FaEdit, FaCode } from 'react-icons/fa';
+import { MessageSquare } from 'lucide-react';
 
 
 import MainComponent from './mainComponetsWork';
 import FAQComponent from './util/Faq';
 import FeedbackForm from './util/Feedback';
+import PASSection from './util/PasSction';
+
 export default function LandingPage() {
     return (
         <>
@@ -37,7 +40,7 @@ export default function LandingPage() {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 1, delay: 0.2 }}
                         >
-                            <span className='text-white'>Turn Audio & Video into Engaging Blog Posts in Minutes</span>
+                            <span className='text-slate-300'>Turn Audio & Video into Engaging Blog Posts in Minutes</span>
 
                         </motion.h3>
                         <motion.div
@@ -48,11 +51,11 @@ export default function LandingPage() {
                         >
                             <Link
                                 to="/main"
-                                className="bg-blue-500 text-white font-semibold py-2 px-6 rounded-full shadow-lg hover:bg-blue-600 transition-transform transform hover:scale-105"
+                                className="bg-indigo-600 hover:bg-indigo-700 transition-all px-10 py-4 rounded-full text-white text-lg font-semibold inline-flex items-center gap-2"
                             >
-                                Try VoiceBlogify Now
+                                Try Voiceblogify Now For Free
+                                <MessageSquare className="w-5 h-5" />
                             </Link>
-
                         </motion.div>
 
 
@@ -61,7 +64,11 @@ export default function LandingPage() {
 
                 </motion.section>
 
+
+                <PASSection />
+
                 <MainComponent />
+
 
 
                 {/* <motion.section
@@ -140,7 +147,7 @@ export default function LandingPage() {
 
 
 
-                <motion.section
+                {/* <motion.section
                     className=" py-16 px-6"
                     style={{ backgroundColor: "#020012" }}
                     initial={{ opacity: 0 }}
@@ -188,7 +195,7 @@ export default function LandingPage() {
                             </motion.div>
                         </div>
                     </div>
-                </motion.section>
+                </motion.section> */}
                 <motion.section
                     className="container mx-auto px-6 py-16"
 
@@ -206,8 +213,8 @@ export default function LandingPage() {
 
                     <div className="grid md:grid-cols-2 gap-10">
                         <motion.div
-                            className="p-8 bg-white rounded-lg shadow-lg hover:shadow-2xl transition relative overflow-hidden text-center"
-                            style={{ backgroundColor: "#293338" }}
+                            className="p-8  rounded-lg shadow-lg hover:shadow-2xl transition relative overflow-hidden text-center bg-slate-900"
+
                             whileHover={{ scale: 1.05 }}
                         >
                             <FaEdit className="text-5xl text-blue-600 mb-4 mx-auto" />
@@ -217,9 +224,9 @@ export default function LandingPage() {
                             </p>
                         </motion.div>
                         <motion.div
-                            className="p-8 bg-white rounded-lg shadow-lg hover:shadow-2xl transition relative overflow-hidden text-center"
+                            className="p-8 bg-slate-900 rounded-lg shadow-lg hover:shadow-2xl transition relative overflow-hidden text-center"
                             whileHover={{ scale: 1.05 }}
-                            style={{ backgroundColor: "#293338" }}
+
                         >
                             <FaCode className="text-5xl text-blue-600 mb-4 mx-auto" />
                             <h4 className="text-xl font-semibold text-white mb-2">Export Anywhere</h4>
@@ -295,9 +302,10 @@ export default function LandingPage() {
                         </p>
                         <Link
                             to="/main"
-                            className="bg-blue-500 text-white font-semibold py-2 px-6 rounded-full shadow-lg hover:bg-blue-600 transition-transform transform hover:scale-105"
+                            className="bg-indigo-600 hover:bg-indigo-700 transition-all px-10 py-4 rounded-full text-white text-lg font-semibold inline-flex items-center gap-2"
                         >
-                            Start Creating for Free
+                            Start Creating for free
+                            <MessageSquare className="w-5 h-5" />
                         </Link>
                     </div>
                 </motion.section>

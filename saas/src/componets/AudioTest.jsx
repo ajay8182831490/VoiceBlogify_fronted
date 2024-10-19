@@ -26,6 +26,9 @@ export default function MyAudioRecordingComponent({ userPlan }) {
     const audioChunks = useRef([]);
     const timerRef = useRef(null);
     const navigate = useNavigate();
+    const [showDropdowns, setShowDropdowns] = useState(false);
+    const [blogType, setBlogType] = useState('');
+    const [blogTone, setBlogTone] = useState('');
 
     useEffect(() => {
         setTimer(recordingLimits[userPlan] || recordingLimits.free);
@@ -50,7 +53,7 @@ export default function MyAudioRecordingComponent({ userPlan }) {
             }
             stopTimer();
         };
-    }, [isRecording, userPlan]);
+    }, [isRecording, userPlan,]);
 
     const startRecording = async () => {
         try {
@@ -81,6 +84,7 @@ export default function MyAudioRecordingComponent({ userPlan }) {
     const stopRecording = () => {
         if (mediaRecorderRef.current) {
             mediaRecorderRef.current.stop();
+            setShowDropdowns(true);
         }
     };
 
@@ -122,6 +126,11 @@ export default function MyAudioRecordingComponent({ userPlan }) {
 
     const uploadAudio = async (e) => {
 
+        if (!audioBlob || !blogType || !blogTone) {
+            setErrorMessage('Please select a file, blog type, and blog tone for processing.');
+            return;
+        }
+
         e.preventDefault();
         if (!audioBlob) return;
         setIsUploading(true);
@@ -141,6 +150,10 @@ export default function MyAudioRecordingComponent({ userPlan }) {
         }
 
         formData.append('audio', audioBlob, fileName);
+        formData.append('blogType', blogType);
+        formData.append('blogTone', blogTone);
+
+
 
         try {
             const response = await fetch(`${Url}/transcription/audioRecord`, {
@@ -156,7 +169,7 @@ export default function MyAudioRecordingComponent({ userPlan }) {
                 Notify(data.message);
                 navigate('/')
             } else {
-                NotifyFalse('Failed to upload audio')
+                NotifyFalse(data.message)
 
             }
         } catch (error) {
@@ -215,6 +228,7 @@ export default function MyAudioRecordingComponent({ userPlan }) {
         setShowTimer(false);
         setShowControls(false);
         stopTimer();
+        setShowDropdowns(false)
     };
 
 
@@ -247,8 +261,8 @@ export default function MyAudioRecordingComponent({ userPlan }) {
     };
 
     return (
-        <div className="flex flex-col items-center p-6  rounded-lg shadow-lg max-w-md mx-auto" style={{ backgroundColor: "black" }}>
-            <div className="w-full  p-6 rounded-lg shadow-md flex flex-col items-center space-y-4" style={{ backgroundColor: "#1E1E1E" }} >
+        <div className="flex flex-col items-center p-6  rounded-lg shadow-lg max-w-md mx-auto bg-slate-900" >
+            <div className="w-full  p-6 rounded-lg shadow-md flex flex-col items-center space-y-4"  >
                 {/* Audio playback controls */}
                 {audioURL && !isRecording && !isUploading && (
                     <div className="w-full mb-4 flex justify-center">
@@ -312,15 +326,60 @@ export default function MyAudioRecordingComponent({ userPlan }) {
                             </button>
                         </div>
                     )}
+
+                    {showDropdowns && (
+                        <div className="mt-4 w-full">
+                            <label className="block text-left text-white font-semibold mb-2">Select Blog Type (required):</label>
+                            <select
+                                value={blogType}
+                                onChange={(e) => setBlogType(e.target.value)}
+                                className="w-full p-2 border rounded-lg bg-gray-800 text-slate-200 focus:outline-none focus:ring focus:ring-teal-500"
+                                required
+                            >
+                                <option value="">Select a type</option>
+                                <option value="technical">Technical Tutorial/Guide</option>
+                                <option value="personal">Personal Story/Experience</option>
+                                <option value="industry">Industry Analysis/Trends</option>
+                                <option value="how-to">How-To/Instructional</option>
+                                <option value="opinion">Opinion/Editorial</option>
+                                <option value="product">Product Review</option>
+                                <option value="case-study">Case Study</option>
+                                <option value="news">News Analysis</option>
+                                <option value="research">Research Summary</option>
+                                <option value="lifestyle">Lifestyle/Personal Development</option>
+                            </select>
+                        </div>
+                    )}
+
+                    {showDropdowns && (
+                        <div className="mt-4 w-full">
+                            <label className="block text-left text-white font-semibold mb-2">Select Blog Tone (required):</label>
+                            <select
+                                value={blogTone}
+                                onChange={(e) => setBlogTone(e.target.value)}
+                                className="w-full p-2 border rounded-lg bg-gray-800 text-slate-200 focus:outline-none focus:ring focus:ring-teal-500"
+                                required
+                            >
+                                <option value="">Select a tone</option>
+                                <option value="casual">Casual & Friendly</option>
+                                <option value="professional">Professional but Warm</option>
+                                <option value="expert">Expert & Engaging</option>
+                                <option value="story-driven">Story-driven</option>
+                                <option value="analytical">Analytical but Accessible</option>
+                            </select>
+                        </div>
+                    )}
                     {showControls && (
                         <button
                             onClick={uploadAudio}
                             className={`mt-4 px-6 py-3 rounded-lg text-white transition-transform transform ${isRecording ? 'bg-gradient-to-r from-gray-400 to-gray-600' : (audioBlob ? (isUploading ? 'bg-gradient-to-r from-blue-300 to-blue-500' : 'bg-gradient-to-r from-blue-400 to-blue-600') : 'bg-gradient-to-r from-blue-200 to-blue-400')} shadow-lg hover:scale-105`}
                             disabled={isRecording || isUploading || !audioBlob}
                         >
-                            {isUploading ? 'Uploading...' : 'Submit Audio'}
+                            {isUploading ? 'Uploading...' : 'Submit Audio for processing'}
                         </button>
                     )}
+
+
                 </div>
             </div>
         </div>

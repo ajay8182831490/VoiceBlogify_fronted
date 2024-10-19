@@ -51,15 +51,15 @@ const VisualPath = () => {
                     {steps.map((step, index) => (
                         <motion.div
                             key={index}
-                            className="flex flex-col items-center justify-between w-full sm:w-[45%] md:w-[30%] h-80 m-2 rounded-lg shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-xl text-white p-6"
-                            style={{ backgroundColor: "#293338" }}
+                            className="flex flex-col items-center justify-between w-full sm:w-[45%] md:w-[30%] h-80 m-2 rounded-lg shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-xl text-white p-6 bg-slate-900"
+
                             whileHover={{ scale: 1.08 }}
                         >
                             <div className="flex items-center justify-center h-24 mb-4 ">
                                 {step.icon}
                             </div>
                             <h3 className="text-2xl font-bold mb-2 text-center">{step.title}</h3>
-                            <p className="text-center text-gray-200 text-md">{step.description}</p>
+                            <p className="text-center text-slate-300 text-md">{step.description}</p>
                         </motion.div>
                     ))}
                 </div>
