@@ -53,7 +53,7 @@ export default function LandingPage() {
                                 to="/main"
                                 className="bg-indigo-600 hover:bg-indigo-700 transition-all px-10 py-4 rounded-full text-white text-lg font-semibold inline-flex items-center gap-2"
                             >
-                                Try Voiceblogify Now For Free
+                                Try Voiceblogify Now
                                 <MessageSquare className="w-5 h-5" />
                             </Link>
                         </motion.div>

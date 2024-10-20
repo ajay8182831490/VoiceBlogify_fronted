@@ -14,7 +14,7 @@ const AccountManagement = ({ onLogout, isGoogle, onDisconnectLinkedIn, onDisconn
             className="p-6 bg-white shadow-lg rounded-lg mb-6 border border-gray-200"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.01 }}
         >
             <h3 className="text-xl font-semibold mb-4 text-gray-800">Account Management</h3>
 

@@ -71,7 +71,7 @@ const MainComponent = () => {
                         to="/main"
                         className="bg-indigo-600 hover:bg-indigo-700 transition-all px-10 py-4 rounded-full text-white text-lg font-semibold inline-flex items-center gap-2"
                     >
-                        Start Blogging for free
+                        GET STARTED (FREE)
                         <MessageSquare className="w-5 h-5" />
                     </Link>
                 </motion.div>

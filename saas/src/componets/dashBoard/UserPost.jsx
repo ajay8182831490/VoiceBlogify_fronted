@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { FaEdit, FaTrash, FaEye, FaArrowRight, FaArrowLeft } from 'react-icons/fa';
 import { usePost } from '@/userContext/PostContext';
 import RichEditorText from '../RichEditorText';
+import { IoSearch } from 'react-icons/io5';
 
 export const UserPosts = () => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -22,6 +23,7 @@ export const UserPosts = () => {
     const [isViewing, setIsViewing] = useState(false);
     const [isConfirming, setIsConfirming] = useState(false);
     const [postToDelete, setPostToDelete] = useState(null);
+    const [searchTerm, setSearchTerm] = useState('');
 
     const handleEdit = (post) => {
         setSelectedPost(post);
@@ -49,6 +51,10 @@ export const UserPosts = () => {
         }
     };
 
+    const filteredPosts = searchTerm
+        ? posts.filter(post => post.title.toLowerCase().includes(searchTerm.toLowerCase()))
+        : currentPosts;
+
     return (
         <motion.div
             className="container mx-auto px-4 py-8 bg-black rounded-lg shadow-xl"
@@ -57,16 +63,33 @@ export const UserPosts = () => {
             transition={{ duration: 0.5 }}
         >
             <h2 className="text-4xl font-bold text-center mb-8 text-white">Your Posts</h2>
+            <div className="flex justify-center mb-6">
+                <div className="flex w-full max-w-md">
+                    <input
+                        type="text"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        placeholder="Search by title..."
+                        className="w-full p-4 border border-gray-300 rounded-l-md focus:ring-2 focus:ring-blue-500 transition duration-300 ease-in-out"
+                    />
+                    <button className="p-4 bg-blue-600 text-white rounded-r-md hover:bg-blue-700 transition duration-300">
+                        <IoSearch size={20} />
+                    </button>
+                </div>
+            </div>
 
             <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
                 {loading ? (
                     <p className="text-center text-white">Loading...</p>
-                ) : currentPosts.length === 0 ? (
+                ) : filteredPosts.length === 0 ? (
                     <div className="flex items-center justify-center h-full">
-                        <p className="text-center text-white">Looks like you haven't created any posts yet.</p>
+                        <p className="text-center text-white">No posts found.</p>
                     </div>
                 ) : (
-                    currentPosts.map((post) => (
+
+
+
+                    filteredPosts.map((post) => (
                         <div
                             key={post.id}
                             className="flex flex-col p-6 bg-white shadow-lg rounded-xl border border-transparent hover:border-blue-300 transition duration-300 transform hover:scale-105"
@@ -76,7 +99,7 @@ export const UserPosts = () => {
                                     {post.title.substring(0, 50) + '...'}
                                 </h3>
                                 <p className="text-sm text-gray-500 mb-4">
-                                    Posted on: {new Date(post.dateOfCreation).toLocaleDateString()}
+                                    Created on: {new Date(post.dateOfCreation).toLocaleDateString()}
                                 </p>
                                 <p
                                     className="text-gray-700 text-ellipsis overflow-hidden h-16"

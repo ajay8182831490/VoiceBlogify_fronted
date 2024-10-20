@@ -11,65 +11,65 @@ import { LinkedinContextProvider } from '@/userContext/LinkedinContext';
 import { htmlToText } from 'html-to-text';
 const url = import.meta.env.VITE_API_URL
 
-const options = {
-    wordwrap: 130,
-    format: {
-        strong: {
-            format: (text) => `**${text}**` // Markdown-style bold
-        },
+function htmlToLinkedInPost1(htmlContent) {
+    // First, mark headers and handle HTML
+    let content = htmlContent
+        // Mark headers
+        .replace(/<h1[^>]*>(.*?)<\/h1>/gi, '###HEADER###$1\n')
+        .replace(/<h2[^>]*>(.*?)<\/h2>/gi, '###HEADER###$1\n')
+        .replace(/<h3[^>]*>(.*?)<\/h3>/gi, '###HEADER###$1\n')
+        // Keep paragraph breaks but don't add extra
+        .replace(/<p[^>]*>(.*?)<\/p>/gi, '$1\n')
+        // Handle br tags
+        .replace(/<br\s*\/?>/gi, '\n')
+        // Remove remaining HTML tags
+        .replace(/<[^>]*>/g, '')
+        // Handle HTML entities
+        .replace(/&nbsp;/g, ' ')
+        .replace(/&amp;/g, '&')
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>')
+        .replace(/&quot;/g, '"')
+        .replace(/&#39;/g, "'");
 
-        ul: {
-            format: (items) => items.map((item) => `- ${item}`).join('\n') // Markdown-style list
-        },
+    // Clean up whitespace while preserving intentional spacing
+    content = content
+        // Remove multiple spaces
+        .replace(/[ \t]+/g, ' ')
+        // Keep existing line breaks but limit to max two
+        .replace(/\n{3,}/g, '\n\n')
+        // Clean up spaces around line breaks
+        .replace(/[ \t]*\n[ \t]*/g, '\n')
+        .trim();
 
-        blockquote: {
-            format: (text) => `> ${text}`
-        },
+    // Process lines
+    let lines = content.split('\n');
+    let formattedLines = [];
 
-        table: {
-            format: (text) => {
-                return text.split('\n')
-                    .map((line) => `| ${line.replace(/<\/?[^>]+(>|$)/g, '')} |`)
-                    .join('\n');
+    for (let i = 0; i < lines.length; i++) {
+        let line = lines[i].trim();
+
+        if (line) {
+            // Check if current line is a header
+            const isHeader = line.startsWith('###HEADER###');
+            // Remove the header marker
+            line = line.replace('###HEADER###', '');
+
+            // Add line break before header (except for first line)
+            if (isHeader && formattedLines.length > 0) {
+                // Check if there isn't already a blank line
+                if (formattedLines[formattedLines.length - 1] !== '') {
+                    formattedLines.push('');
+                }
             }
-        },
 
-        code: {
-            format: (text) => `\`${text}\``
-        },
-
-        pre: {
-            format: (text) => {
-                const cleanedText = text.replace(/<\/?[^>]+(>|$)/g, ''); // Strip HTML tags
-                return formatText(cleanedText);
-            }
+            formattedLines.push(line);
         }
     }
-};
-const cleanHtmlContent = (html) => {
 
-    let text = htmlToText(html, {
-        wordwrap: 130,
-
-        formatters: {
-
-            p: (content) => content.replace(/\n{2,}/g, '\n').trim(),
-
-
-            code: (content) => `\n\`${content}\`\n`,
-
-
-            ul: (items) => items.map(item => `- ${item.trim()}`).join('\n'),
-        },
-    });
-
-    text = text.replace(/[\n]{2,}/g, '\n');
-
-
-    text = text.replace(/^\s*[\r\n]/gm, '');
-
-    return text.trim();
-};
+    // Join lines preserving existing spacing
+    return formattedLines.join('\n');
+}
 
 
 
@@ -133,7 +133,10 @@ export function LinkedinRET() {
         const contentToSubmit = editorRef.current.getContent();
 
 
-        const plainContent = cleanHtmlContent(contentToSubmit)
+
+        const plainContent = htmlToLinkedInPost1(contentToSubmit)
+
+
 
         if (plainContent.length > 3000) {
             alert(`Due to LinkedIn's character limit constraints, you can share content with a maximum of 3000 characters. Current character count is ${plainContent.length}.`);
@@ -345,7 +348,7 @@ export function LinkedinRET() {
 
                     {modalOpen && selectedPost && (
                         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-                            <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-screen-lg relative">
+                            <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-screen-lg relative overflow-hidden">
                                 <button
                                     onClick={handleCloseModal}
                                     className="absolute top-4 right-4 text-gray-600 hover:text-gray-800"
@@ -403,7 +406,7 @@ export function LinkedinRET() {
                                             </div>
                                         </div>
                                     )}
-                                    <div>
+                                    <div className="max-h-[70vh] overflow-auto"> {/* Scrollable content area */}
                                         <label
                                             htmlFor="content"
                                             className="block text-lg font-semibold text-gray-700 mb-2"
@@ -429,6 +432,7 @@ export function LinkedinRET() {
                             </div>
                         </div>
                     )}
+
 
                     {showMediaConflict && (
                         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">

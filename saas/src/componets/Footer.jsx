@@ -29,7 +29,7 @@ const Footer = () => {
                         </a>
                     </div>
                     <p className="mt-4 md:mt-0 text-center">
-                        &copy; {new Date().getFullYear()} VoiceBlogify. All rights reserved.
+                        &copy; {new Date().getFullYear()} VoiceBlogify. All rights reserved. <span> Made by Ajay Kumar Gupta</span>
                     </p>
                 </div>
             </div>

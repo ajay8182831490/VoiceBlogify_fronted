@@ -6,6 +6,7 @@ import { BloggerContextProvider } from '@/userContext/BloggerContext';
 import { usePost } from '@/userContext/PostContext';
 import { useblogger } from '@/userContext/BloggerContext';
 import RTE from '../util/Rte';
+import { Notify } from '../NotifyToast';
 
 export function Blogger() {
     const { posts, updatePost } = usePost();
@@ -93,7 +94,11 @@ export function Blogger() {
             <div className="space-y-4">
                 {filteredPosts.length ? filteredPosts.map(post => (
                     <div key={post.id} className="flex justify-between items-center bg-white p-4 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
-                        <h2 className="text-xl font-semibold text-gray-800">{post.title}</h2>
+                        <h2 className="text-xl font-semibold text-gray-800">
+                            {post.title.length > 60
+                                ? `${post.title.substring(0, 60)}...`  // Truncate after 30 characters
+                                : post.title}
+                        </h2>
                         <button
                             onClick={() => handleOpenModal(post)}
                             className="text-yellow-600 hover:text-yellow-800 flex items-center transition duration-300"
@@ -163,7 +168,7 @@ export function Blogger() {
                                 required
                             >
                                 <option value="" disabled>
-                                    Select a Blog to Share or Create a New Blog on Blogger
+                                    Select a Blog to Share or Create a New Blog on Blogger (if you have already created and not visible. please logout and try again)
                                 </option>
                                 {Array.isArray(blogUserId) &&
                                     blogUserId.map((blog) => (

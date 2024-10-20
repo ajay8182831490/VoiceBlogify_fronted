@@ -53,4 +53,4 @@ export const UserContextProvider = ({ children }) => {
 
 export const useProfile = () => useContext(UserContext);
 
-export default UserContext;
+export { UserContext }; 

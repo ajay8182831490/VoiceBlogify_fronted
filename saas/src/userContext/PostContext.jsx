@@ -1,5 +1,6 @@
 import { useContext, createContext, useState, useEffect, useMemo } from "react";
 import DOMPurify from 'dompurify';
+import { Notify, NotifyFalse } from "@/componets/NotifyToast";
 
 const PostContext = createContext();
 
@@ -112,9 +113,12 @@ export const PostProvider = ({ children }) => {
             });
             const data = await response.json();
             if (response.ok) {
+
+                Notify("Blog updated successfully")
                 setSuccess(true);
                 setResponseMessage(data.message || "Post updated successfully");
             } else {
+                NotifyFalse("something error occured during updating the post")
                 setResponseMessage("Failed to update post");
             }
         } catch (error) {

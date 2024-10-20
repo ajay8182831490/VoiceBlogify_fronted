@@ -3,17 +3,20 @@ import { MicrophoneIcon, PauseIcon, PlayIcon, StopIcon, ArrowPathIcon, ArrowDown
 import { useNavigate } from 'react-router-dom';
 import './AudioRecordingComponent.css';
 import { Notify, NotifyFalse } from './NotifyToast';
+import { useAuth } from '@/userContext/AuthContext';
 
 const Url = import.meta.env.VITE_API_URL
 
 const recordingLimits = {
-    free: 10 * 60,
-    basic: 20 * 60,
-    premium: 60 * 60,
-    business: 90 * 60,
+    FREE: 10 * 60,
+    BASIC: 20 * 60,
+    PREMIUM: 60 * 60,
+    BUISNESS: 90 * 60,
 };
 
-export default function MyAudioRecordingComponent({ userPlan }) {
+export default function MyAudioRecordingComponent() {
+    const { user } = useAuth();
+    const userPlan = user?.plan;
     const [isRecording, setIsRecording] = useState(false);
     const [isPaused, setIsPaused] = useState(false);
     const [isUploading, setIsUploading] = useState(false);
@@ -30,8 +33,11 @@ export default function MyAudioRecordingComponent({ userPlan }) {
     const [blogType, setBlogType] = useState('');
     const [blogTone, setBlogTone] = useState('');
 
+
+
+
     useEffect(() => {
-        setTimer(recordingLimits[userPlan] || recordingLimits.free);
+        setTimer(recordingLimits[userPlan] || recordingLimits.FREE);
     }, [userPlan]);
 
     useEffect(() => {
@@ -211,7 +217,7 @@ export default function MyAudioRecordingComponent({ userPlan }) {
         } else {
             setIsRecording((prev) => !prev);
             if (!isRecording) {
-                setTimer(recordingLimits[userPlan] || recordingLimits.free);
+                setTimer(recordingLimits[userPlan] || recordingLimits.FREE);
                 setAudioURL(null);
                 setShowControls(true);
             }

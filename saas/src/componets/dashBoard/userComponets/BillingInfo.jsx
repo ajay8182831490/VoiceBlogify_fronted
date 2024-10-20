@@ -8,7 +8,7 @@ const BillingInfo = ({ onDownloadBill }) => {
             className="p-6 bg-white shadow-lg rounded-lg mb-6 border border-gray-200"
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.01 }}
         >
             <h3 className="text-xl font-semibold mb-4 text-gray-800">Billing Information</h3>
             <div className="flex justify-between items-center mb-4">

@@ -1,5 +1,6 @@
 import { useContext, createContext, useMemo, useState } from "react";
 import DOMPurify from 'dompurify';
+import { Notify, NotifyFalse } from "@/componets/NotifyToast";
 
 const MediumContext = createContext();
 
@@ -54,8 +55,10 @@ export const MediumContextProvider = ({ children }) => {
             const data = await response.json();
 
             if (response.ok) {
+                Notify("Post successfully published on medium")
                 setResponseMessage(data.message);
             } else {
+                NotifyFalse('something error occured during publish post on medium')
                 setResponseMessage(data.message || 'Error occurred during uploading post');
             }
         } catch (error) {

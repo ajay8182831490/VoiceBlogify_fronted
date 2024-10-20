@@ -119,7 +119,9 @@ const PASSection = () => {
                             <div className="flex justify-center mb-4">
                                 <pain.icon className="w-12 h-12 text-indigo-400" />
                             </div>
-                            <h3 className="text-2xl font-semibold mb-3 text-slate-200">{pain.title}</h3>
+                            <div className="flex justify-center mb-3">
+                                <h3 className="text-2xl font-semibold text-slate-200">{pain.title}</h3>
+                            </div>
                             <p className="text-slate-300">{pain.description}</p>
                         </div>
                     ))}
@@ -132,7 +134,9 @@ const PASSection = () => {
                             <div className="flex justify-center mb-4">
                                 <category.icon className="w-12 h-12 text-indigo-400" />
                             </div>
-                            <h3 className="text-2xl font-semibold mb-4 text-slate-200">{category.title}</h3>
+                            <div className="flex justify-center mb-3">
+                                <h3 className="text-2xl font-semibold mb-4 text-slate-200">{category.title}</h3>
+                            </div>
                             <ul className="space-y-3">
                                 {category.problems.map((problem, idx) => (
                                     <li key={idx} className="flex items-start space-x-2">

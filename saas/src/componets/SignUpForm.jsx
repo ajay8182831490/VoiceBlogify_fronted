@@ -7,7 +7,7 @@ import { Notify, NotifyFalse } from './NotifyToast.jsx';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
-import { noSniff } from 'helmet';
+
 
 const url = import.meta.env.VITE_API_URL
 

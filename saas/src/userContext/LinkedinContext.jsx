@@ -19,6 +19,8 @@ export const LinkedinContextProvider = ({ children }) => {
             setLoading(true);
 
 
+
+
             const formData = new FormData();
             formData.append("description", content);
             for (let [key, value] of file.entries()) {

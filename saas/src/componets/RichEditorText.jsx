@@ -4,6 +4,7 @@ import TurndownService from 'turndown';
 import RTE from './util/Rte';
 import { usePost } from '@/userContext/PostContext';
 import { useNavigate } from 'react-router-dom';
+import { Notify, NotifyFalse } from './NotifyToast';
 
 const RichEditorText = ({ initialData, handleCloseModal }) => {
     const { updatePost, responseMessage, success, createPost } = usePost();
@@ -20,7 +21,7 @@ const RichEditorText = ({ initialData, handleCloseModal }) => {
     useEffect(() => {
         if (success) {
             handleCloseModal();
-            navigate('/dashboard/user-profile');
+            navigate('/dashboard/user-posts');
         }
     }, [success, navigate, handleCloseModal]);
 
@@ -66,25 +67,29 @@ const RichEditorText = ({ initialData, handleCloseModal }) => {
 
     const copyAsMarkdown = () => {
         try {
-            const markdownContent = new TurndownService().turndown(editorRef.current.getContent());
+            const markdownService = new TurndownService();
+            const markdownContent = `**${title}**\n\n\n${markdownService.turndown(editorRef.current.getContent())}`;
             navigator.clipboard.writeText(markdownContent)
-                .then(() => alert('Markdown content copied to clipboard!'))
+                .then(() => Notify('Markdown content copied to clipboard!'))
                 .catch((err) => console.error('Failed to copy:', err));
         } catch (error) {
-            console.error('Failed to convert content:', error);
+            NotifyFalse('Failed to convert content');
         }
     };
 
     const exportHTML = () => {
-        const blob = new Blob([editorRef.current.getContent()], { type: 'text/html' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'blog-post.html';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
+        const htmlContent = `<strong>${title}</strong><br>${editorRef.current.getContent({ format: 'html' })}`;
+
+
+        const tempTextArea = document.createElement('textarea');
+        tempTextArea.value = htmlContent;
+
+        document.body.appendChild(tempTextArea);
+        tempTextArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(tempTextArea);
+
+        Notify('HTML content copied to clipboard!');
     };
 
     return (

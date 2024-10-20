@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
-import { lazy, Suspense } from 'react';
+
 import UserPostProvider from './dashBoard/UserPostProvider';
 
 
@@ -62,7 +62,7 @@ const DashboardRoutes = () => {
 
                             }
                         />
-                        <Route path="*" element={<UserProfileWithProvider />} />
+                        <Route path="*" element={<UserPosts />} />
                     </Routes>
 
                 </div>

@@ -52,7 +52,7 @@ export const BloggerContextProvider = ({ children }) => {
             const data = await response.json();
 
             if (response.ok) {
-                Notify(data.message)
+                Notify('Post shared successfully on blogger')
                 setResponseMessage(data.message);
             } else {
                 NotifyFalse("Error occurred during uploading post")

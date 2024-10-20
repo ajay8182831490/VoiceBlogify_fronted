@@ -40,7 +40,7 @@ export function AuthProvider({ children }) {
                     setUser({
                         name: data.name,
                         profilepicurl: data.profilepic,
-                        userId: data.id,
+                        // userId: data.id,
                         email: data.email,
                         plan: data.plan
 

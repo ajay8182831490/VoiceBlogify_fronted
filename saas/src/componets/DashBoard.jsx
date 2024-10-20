@@ -56,11 +56,12 @@ const Dashboard = () => {
                 <div className="w-1/4 p-4 shadow-lg sticky top-0 h-screen" style={{ backgroundColor: "#020012" }}>
                     <h2 className="text-2xl font-bold text-center mb-4 text-white">Dashboard</h2>
                     <div className="flex flex-col space-y-4">
-                        <SidebarItem to="/dashboard/user-profile" icon={<AiOutlineUser />} label="User Profile" />
+
                         <SidebarItem to="/dashboard/user-posts" icon={<MdPostAdd />} label="Your Posts" />
                         <SidebarItem to="/dashboard/linkedin" icon={<SiLinkedin />} label="LinkedIn" />
                         <SidebarItem to="/dashboard/medium" icon={<AiOutlineMedium />} label="Medium" />
                         <SidebarItem to="/dashboard/blogger" icon={<FaBlogger />} label="Blogger" />
+                        <SidebarItem to="/dashboard/user-profile" icon={<AiOutlineUser />} label="User Profile" />
                         {/* <SidebarItem to="/dashboard/analytics" icon={<AiOutlineBulb />} label="Analytics" /> */}
                     </div>
                     <button className="flex items-center p-2 mt-4 text-red-600 hover:bg-red-100 rounded transition" onClick={handleLogout}>
@@ -85,11 +86,12 @@ const Dashboard = () => {
                             </button>
                             <h3 className="text-lg font-bold mb-4 text-white">Dashboard</h3>
                             <div className="flex flex-col space-y-2">
-                                <SidebarItem to="/dashboard/user-profile" icon={<AiOutlineUser />} label="User Profile" onClick={toggleModal} />
+
                                 <SidebarItem to="/dashboard/user-posts" icon={<MdPostAdd />} label="Your Posts" onClick={toggleModal} />
                                 <SidebarItem to="/dashboard/linkedin" icon={<SiLinkedin />} label="LinkedIn" onClick={toggleModal} />
                                 <SidebarItem to="/dashboard/medium" icon={<AiOutlineMedium />} label="Medium" onClick={toggleModal} />
                                 <SidebarItem to="/dashboard/blogger" icon={<FaBlogger />} label="Blogger" onClick={toggleModal} />
+                                <SidebarItem to="/dashboard/user-profile" icon={<AiOutlineUser />} label="User Profile" onClick={toggleModal} />
                                 {/* <SidebarItem to="/dashboard/analytics" icon={<AiOutlineBulb />} label="Analytics" /> */}
                             </div>
                         </div>

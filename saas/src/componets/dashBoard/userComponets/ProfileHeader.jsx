@@ -7,7 +7,7 @@ const ProfileHeader = ({ name, email, ProfilePicUrl }) => {
             className="p-6 bg-gradient-to-r from-blue-500 to-purple-500 shadow-lg rounded-lg mb-6"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.01 }}
         >
             <div className="flex items-center space-x-4">
                 {ProfilePicUrl ? (
