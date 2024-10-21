@@ -8,7 +8,7 @@ import { usePost } from '@/userContext/PostContext';
 import { useLinkedin } from '@/userContext/LinkedinContext';
 import { LinkedinContextProvider } from '@/userContext/LinkedinContext';
 
-import { htmlToText } from 'html-to-text';
+
 const url = import.meta.env.VITE_API_URL
 
 function htmlToLinkedInPost1(htmlContent) {

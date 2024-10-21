@@ -32,6 +32,7 @@ export default function MyAudioRecordingComponent() {
     const [showDropdowns, setShowDropdowns] = useState(false);
     const [blogType, setBlogType] = useState('');
     const [blogTone, setBlogTone] = useState('');
+    const [errorMessage, setErrorMessage] = useState('')
 
 
 
@@ -129,6 +130,35 @@ export default function MyAudioRecordingComponent() {
         audioChunks.current = [];
     };
 
+    const getAudioDuration = (audioBlob) => {
+        return new Promise((resolve, reject) => {
+            const audio = new Audio();
+            const blobURL = URL.createObjectURL(audioBlob); // Create a blob URL for the audio
+
+            audio.src = blobURL;
+
+            audio.addEventListener('loadedmetadata', () => {
+                if (audio.duration === Infinity) {
+                    // Handle cases where the metadata isn't loaded
+                    audio.currentTime = Number.MAX_SAFE_INTEGER;
+                    audio.ontimeupdate = () => {
+                        audio.ontimeupdate = null; // Remove event listener
+                        audio.currentTime = 0; // Reset current time
+                        resolve(audio.duration);
+                        URL.revokeObjectURL(blobURL); // Cleanup blob URL
+                    };
+                } else {
+                    resolve(audio.duration);
+                    URL.revokeObjectURL(blobURL); // Cleanup blob URL
+                }
+            });
+
+            audio.addEventListener('error', (err) => {
+                reject('Error loading audio file: ' + err.message);
+            });
+        });
+    };
+
 
     const uploadAudio = async (e) => {
 
@@ -139,6 +169,18 @@ export default function MyAudioRecordingComponent() {
 
         e.preventDefault();
         if (!audioBlob) return;
+
+        const duration = await getAudioDuration(audioBlob);
+
+
+        if (duration < 60) {
+            setErrorMessage('Audio duration should be at least 1 minute.');
+
+            setIsUploading(false);
+
+            return;
+        }
+
         setIsUploading(true);
 
         const formData = new FormData();
@@ -234,7 +276,8 @@ export default function MyAudioRecordingComponent() {
         setShowTimer(false);
         setShowControls(false);
         stopTimer();
-        setShowDropdowns(false)
+        setShowDropdowns(false);
+        setErrorMessage('')
     };
 
 
@@ -267,7 +310,7 @@ export default function MyAudioRecordingComponent() {
     };
 
     return (
-        <div className="flex flex-col items-center p-6  rounded-lg shadow-lg max-w-md mx-auto bg-slate-900" >
+        <div className="flex flex-col items-center p-6  rounded-lg shadow-lg max-w-md mx-auto bg-gray-800" >
             <div className="w-full  p-6 rounded-lg shadow-md flex flex-col items-center space-y-4"  >
                 {/* Audio playback controls */}
                 {audioURL && !isRecording && !isUploading && (
@@ -275,7 +318,11 @@ export default function MyAudioRecordingComponent() {
                         <audio controls src={audioURL} className="w-full max-w-md" />
                     </div>
                 )}
-
+                {errorMessage && (
+                    <div className="text-red-500 mb-4">
+                        {errorMessage} {/* Display error message */}
+                    </div>
+                )}
 
                 {showTimer && (
                     <div className="text-3xl font-semibold mb-4 text-blue-600">

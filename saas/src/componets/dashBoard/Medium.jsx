@@ -251,8 +251,16 @@ export function Medium() {
                 <div className="bg-white p-8 rounded-lg shadow-lg">
                     <h2 className="text-2xl font-semibold mb-4 text-center">Integrate with Medium</h2>
                     <p className="text-lg text-gray-700 mb-4">
-                        To access Medium API and publish posts, please provide your Medium integration token key.
-                        This allows us to authenticate your account and post on your behalf.
+                        To access the Medium API and publish posts, please provide your Medium integration token key. This allows us to authenticate your account and post on your behalf.
+                        <br />
+                        <a
+                            href="https://medium.com/me/settings/security"
+                            className="text-blue-500 underline"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Get your Medium integration token here
+                        </a>
                     </p>
                     <form onSubmit={handleTokenSubmit} className="space-y-4">
                         <div>

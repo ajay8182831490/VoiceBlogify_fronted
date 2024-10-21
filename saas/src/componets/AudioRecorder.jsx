@@ -38,6 +38,7 @@ const AudioDropzone = ({ onFileUploaded }) => {
     const plan = user?.plan;
 
     const MAX_DURATION = getPlanMaxDuration(plan);
+    const MIN_DURATION = 60
 
 
 
@@ -76,6 +77,10 @@ const AudioDropzone = ({ onFileUploaded }) => {
                     setErrorMessage(`Audio duration exceeds the maximum limit of ${MAX_DURATION / 60} minutes.`);
                     setIsSubmitDisabled(true);
                 }
+                if (audioDuration < MIN_DURATION) {
+                    setErrorMessage(`The audio duration should be at least one minute for processing.`);
+                    setIsSubmitDisabled(true);
+                }
             };
         } else if (file.type.startsWith('video/')) {
             setVideoUrl(url);
@@ -97,6 +102,10 @@ const AudioDropzone = ({ onFileUploaded }) => {
                 // Check duration
                 if (videoDuration > MAX_DURATION) {
                     setErrorMessage(`Video duration exceeds the maximum limit of ${MAX_DURATION / 60} minutes.`);
+                    setIsSubmitDisabled(true);
+                }
+                if (videoDuration < MIN_DURATION) {
+                    setErrorMessage(`The video duration should be at least one minute for processing.`);
                     setIsSubmitDisabled(true);
                 }
             };
@@ -136,6 +145,7 @@ const AudioDropzone = ({ onFileUploaded }) => {
                 throw new Error(`Failed to upload the file: ${errorMessage}`);
             } else {
                 NotifyFalse(data.message);
+                handleDelete()
                 navigate('/main');
             }
         } catch (error) {
@@ -170,115 +180,123 @@ const AudioDropzone = ({ onFileUploaded }) => {
     });
 
     return (
-        <motion.div
-            className="w-full max-w-3xl mx-auto p-8 border-2 border-dashed rounded-lg flex flex-col justify-center items-center text-center cursor-pointer bg-gray-900 shadow-lg hover:shadow-xl transition-shadow duration-300"
-            animate={{ scale: isDragActive ? 1.05 : 1 }}
-            transition={{ duration: 0.3 }}
-        >
-            <div
-                {...getRootProps()}
-                className={`w-full p-6 rounded-lg ${isDragActive ? 'bg-teal-500 border-teal-400' : 'bg-gray-800 border-gray-600'} border-2 transition-colors duration-300 shadow-md`}
+        <>
+            <motion.div
+                className="w-full max-w-3xl mx-auto p-8 border-2 border-dashed rounded-lg flex flex-col justify-center items-center text-center cursor-pointer bg-gray-800 shadow-lg hover:shadow-xl transition-shadow duration-300"
+                animate={{ scale: isDragActive ? 1.05 : 1 }}
+                transition={{ duration: 0.3 }}
             >
-                <input {...getInputProps()} />
-                <p className="text-white text-lg font-semibold">
-                    {isDragActive
-                        ? 'Drop your audio or video file here...'
-                        : 'Drag & drop your audio or video files here, or click to select files'}
-                </p>
-            </div>
 
-            {/* Display error message if any */}
-            {errorMessage && (
-                <motion.div
-                    className="text-red-600 mt-4 px-4 py-2 bg-red-100 rounded-md shadow-md"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.5 }}
+                <div
+                    {...getRootProps()}
+                    className={`w-full p-6 rounded-lg ${isDragActive ? 'bg-teal-500 border-teal-400' : 'bg-gray-800 border-gray-600'} border-2 transition-colors duration-300 shadow-md`}
                 >
-                    {errorMessage}
-                </motion.div>
-            )}
-
-            {/* Display audio player if audio is uploaded */}
-            {audioUrl && (
-                <div className="mt-4 w-full">
-                    <audio controls src={audioUrl} className="w-full rounded-lg shadow-md" />
+                    <input {...getInputProps()} />
+                    <p className="text-white text-lg font-semibold">
+                        {isDragActive
+                            ? 'Drop your audio or video file here...'
+                            : 'Drag & drop your audio or video files here, or click to select files'}
+                    </p>
                 </div>
-            )}
 
-            {/* Display video player if video is uploaded with fixed size */}
-            {videoUrl && (
-                <div className="mt-4 w-full max-w-xl">
-                    <video controls className="w-full h-auto rounded-lg shadow-md">
-                        <source src={videoUrl} type="video/mp4" />
-                        Your browser does not support the video element.
-                    </video>
-                </div>
-            )}
 
-            {/* Display blog type and tone dropdowns after file upload */}
-            {(audioUrl || videoUrl) && (
-                <>
-                    <div className="mt-6 w-full">
-                        <label className="block text-left text-white font-semibold mb-2">Select Blog Type (required):</label>
-                        <select
-                            value={blogType}
-                            onChange={(e) => setBlogType(e.target.value)}
-                            className="w-full p-3 border rounded-lg bg-gray-800 text-slate-200 focus:outline-none focus:ring focus:ring-teal-500"
-                        >
-                            <option value="">Select a type</option>
-                            <option value="technical">Technical Tutorial/Guide</option>
-                            <option value="personal">Personal Story/Experience</option>
-                            <option value="industry">Industry Analysis/Trends</option>
-                            <option value="how-to">How-To/Instructional</option>
-                            <option value="opinion">Opinion/Editorial</option>
-                            <option value="product">Product Review</option>
-                            <option value="case-study">Case Study</option>
-                            <option value="news">News Analysis</option>
-                            <option value="research">Research Summary</option>
-                            <option value="lifestyle">Lifestyle/Personal Development</option>
-                        </select>
-                    </div>
 
+
+
+
+                {/* Display error message if any */}
+                {errorMessage && (
+                    <motion.div
+                        className="text-red-600 mt-4 px-4 py-2 bg-red-100 rounded-md shadow-md"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.5 }}
+                    >
+                        {errorMessage}
+                    </motion.div>
+                )}
+
+                {/*Display audio player if audio is uploaded */}
+                {audioUrl && (
                     <div className="mt-4 w-full">
-                        <label className="block text-left text-white font-semibold mb-2">Select Blog Tone (required):</label>
-                        <select
-                            value={blogTone}
-                            onChange={(e) => setBlogTone(e.target.value)}
-                            className="w-full p-3 border rounded-lg bg-gray-800 text-slate-200 focus:outline-none focus:ring focus:ring-teal-500"
-                        >
-                            <option value="">Select a tone</option>
-                            <option value="casual">Casual & Friendly</option>
-                            <option value="professional">Professional but Warm</option>
-                            <option value="expert">Expert & Engaging</option>
-                            <option value="story-driven">Story-driven</option>
-                            <option value="analytical">Analytical but Accessible</option>
-                        </select>
+                        <audio controls src={audioUrl} className="w-full rounded-lg shadow-md" />
                     </div>
-                </>
-            )}
+                )}
 
-            {/* Buttons to submit or delete file */}
-            {(audioUrl || videoUrl) && (
-                <div className="mt-6 flex flex-col space-y-4 w-full">
-                    <button
-                        onClick={handleSubmit}
-                        disabled={isSubmitDisabled}
-                        className={`w-full py-3 text-white rounded-lg shadow-lg transition-colors duration-300 ${isSubmitDisabled ? 'bg-gray-500 cursor-not-allowed' : 'bg-teal-600 hover:bg-teal-500'
-                            }`}
-                    >
-                        Submit File for Processing
-                    </button>
+                {/* Display video player if video is uploaded with fixed size */}
+                {videoUrl && (
+                    <div className="mt-4 w-full max-w-xl">
+                        <video controls className="w-full h-auto rounded-lg shadow-md">
+                            <source src={videoUrl} type="video/mp4" />
+                            Your browser does not support the video element.
+                        </video>
+                    </div>
+                )}
 
-                    <button
-                        onClick={handleDelete}
-                        className="w-full py-3 bg-red-600 text-white rounded-lg shadow-lg hover:bg-red-500 transition-colors duration-300"
-                    >
-                        Delete File
-                    </button>
-                </div>
-            )}
-        </motion.div>
+                {/* Display blog type and tone dropdowns after file upload */}
+                {(audioUrl || videoUrl) && (
+                    <>
+                        <div className="mt-6 w-full">
+                            <label className="block text-left text-white font-semibold mb-2">Select Blog Type (required):</label>
+                            <select
+                                value={blogType}
+                                onChange={(e) => setBlogType(e.target.value)}
+                                className="w-full p-3 border rounded-lg bg-gray-800 text-slate-200 focus:outline-none focus:ring focus:ring-teal-500"
+                            >
+                                <option value="">Select a type</option>
+                                <option value="technical">Technical Tutorial/Guide</option>
+                                <option value="personal">Personal Story/Experience</option>
+                                <option value="industry">Industry Analysis/Trends</option>
+                                <option value="how-to">How-To/Instructional</option>
+                                <option value="opinion">Opinion/Editorial</option>
+                                <option value="product">Product Review</option>
+                                <option value="case-study">Case Study</option>
+                                <option value="news">News Analysis</option>
+                                <option value="research">Research Summary</option>
+                                <option value="lifestyle">Lifestyle/Personal Development</option>
+                            </select>
+                        </div>
+
+                        <div className="mt-4 w-full">
+                            <label className="block text-left text-white font-semibold mb-2">Select Blog Tone (required):</label>
+                            <select
+                                value={blogTone}
+                                onChange={(e) => setBlogTone(e.target.value)}
+                                className="w-full p-3 border rounded-lg bg-gray-800 text-slate-200 focus:outline-none focus:ring focus:ring-teal-500"
+                            >
+                                <option value="">Select a tone</option>
+                                <option value="casual">Casual & Friendly</option>
+                                <option value="professional">Professional but Warm</option>
+                                <option value="expert">Expert & Engaging</option>
+                                <option value="story-driven">Story-driven</option>
+                                <option value="analytical">Analytical but Accessible</option>
+                            </select>
+                        </div>
+                    </>
+                )}
+
+                {/* Buttons to submit or delete file */}
+                {(audioUrl || videoUrl) && (
+                    <div className="mt-6 flex flex-col space-y-4 w-full">
+                        <button
+                            onClick={handleSubmit}
+                            disabled={isSubmitDisabled}
+                            className={`w-full py-3 text-white rounded-lg shadow-lg transition-colors duration-300 ${isSubmitDisabled ? 'bg-gray-500 cursor-not-allowed' : 'bg-teal-600 hover:bg-teal-500'
+                                }`}
+                        >
+                            Submit File for Processing
+                        </button>
+
+                        <button
+                            onClick={handleDelete}
+                            className="w-full py-3 bg-red-600 text-white rounded-lg shadow-lg hover:bg-red-500 transition-colors duration-300"
+                        >
+                            Delete File
+                        </button>
+                    </div>
+                )}
+            </motion.div>
+        </>
 
     );
 };

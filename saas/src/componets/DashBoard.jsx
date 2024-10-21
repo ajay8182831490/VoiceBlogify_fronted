@@ -9,6 +9,7 @@ import { HiOutlineChevronLeft, HiOutlineChevronRight } from 'react-icons/hi';
 import { useAuth } from '@/userContext/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import DashboardRoutes from './DashBoardRoutes';
+import { Mic } from 'lucide-react';
 
 const Dashboard = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -58,6 +59,7 @@ const Dashboard = () => {
                     <div className="flex flex-col space-y-4">
 
                         <SidebarItem to="/dashboard/user-posts" icon={<MdPostAdd />} label="Your Posts" />
+                        <SidebarItem to="/main" icon={<Mic />} label="Record Now" />
                         <SidebarItem to="/dashboard/linkedin" icon={<SiLinkedin />} label="LinkedIn" />
                         <SidebarItem to="/dashboard/medium" icon={<AiOutlineMedium />} label="Medium" />
                         <SidebarItem to="/dashboard/blogger" icon={<FaBlogger />} label="Blogger" />
@@ -88,6 +90,7 @@ const Dashboard = () => {
                             <div className="flex flex-col space-y-2">
 
                                 <SidebarItem to="/dashboard/user-posts" icon={<MdPostAdd />} label="Your Posts" onClick={toggleModal} />
+                                <SidebarItem to="/main" icon={<Mic />} label="Record Now" onClick={toggleModal} />
                                 <SidebarItem to="/dashboard/linkedin" icon={<SiLinkedin />} label="LinkedIn" onClick={toggleModal} />
                                 <SidebarItem to="/dashboard/medium" icon={<AiOutlineMedium />} label="Medium" onClick={toggleModal} />
                                 <SidebarItem to="/dashboard/blogger" icon={<FaBlogger />} label="Blogger" onClick={toggleModal} />
