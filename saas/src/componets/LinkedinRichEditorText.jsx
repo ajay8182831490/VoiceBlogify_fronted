@@ -8,7 +8,7 @@ import { usePost } from '@/userContext/PostContext';
 import { useLinkedin } from '@/userContext/LinkedinContext';
 import { LinkedinContextProvider } from '@/userContext/LinkedinContext';
 
-import { htmlToText } from 'html-to-text';
+
 const url = import.meta.env.VITE_API_URL
 
 function htmlToLinkedInPost1(htmlContent) {
@@ -179,7 +179,7 @@ export function LinkedinRET() {
         handleCloseModal();
     };
     const filteredPosts = posts.filter((post) =>
-        post.title.toLowerCase().includes(searchQuery.toLowerCase())
+        post && post.title && post.title.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
     const handleDrop = (acceptedFiles) => {
@@ -301,7 +301,7 @@ export function LinkedinRET() {
                                     key={post.id}
                                     className="flex justify-between items-center bg-white p-4 rounded-lg shadow-lg"
                                 >
-                                    <h2 className="text-xl font-semibold text-gray">{post.title}</h2>
+                                    <h2 className="text-xl font-semibold text-gray">{post && post.title}</h2>
                                     <div className="flex space-x-4">
                                         <button
                                             onClick={() => handleOpenModal(post)}

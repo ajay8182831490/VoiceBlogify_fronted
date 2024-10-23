@@ -80,12 +80,12 @@ const PASSection = () => {
         {
             icon: Clock,
             title: "Time is Precious",
-            description: "Whether you're a busy student, creator, or professional - writing takes too much time."
+            description: "Whether you're a busy student, creator, or professional, writing takes too much time."
         },
         {
             icon: Globe,
             title: "Language Barriers",
-            description: "Express yourself freely in your native language, let AI perfect the written form."
+            description: "Express yourself freely in your native language; let AI perfect the written form"
         },
         {
             icon: Video,
@@ -105,7 +105,7 @@ const PASSection = () => {
                 {/* Hero Section */}
                 <div className="mb-16 text-center">
                     <h2 className="text-4xl md:text-6xl font-bold leading-tight mb-6 text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-blue-400">
-                        Your Voice Has Power. Let It Be Heard.
+                        Struggling to Share Your Ideas? Let Your Voice Be Heard Effortlessly.
                     </h2>
                     <p className="text-xl md:text-2xl text-slate-400 mb-12">
                         Everyone has something valuable to share. Don't let the writing process hold you back.
@@ -160,7 +160,7 @@ const PASSection = () => {
                                 <span className="text-yellow-400">Students:</span> Your lecture notes could help thousands of other learners.
                             </p>
                             <p className="text-xl text-slate-200">
-                                <span className="text-yellow-400">Creators:</span> Your voice content is missing its reading audience.
+                                <span className="text-yellow-400">Creators:</span> Your voice content is missing a reading audience
                             </p>
                             <p className="text-xl text-slate-200">
                                 <span className="text-yellow-400">Educators:</span> Your knowledge is limited to those who can attend.
@@ -168,13 +168,13 @@ const PASSection = () => {
                         </div>
                         <div className="space-y-4">
                             <p className="text-xl text-slate-200">
-                                <span className="text-yellow-400">Professionals:</span> Your expertise stays trapped in meetings.
+                                <span className="text-yellow-400">Professionals:</span> Your expertise remains trapped in meetings.
                             </p>
                             <p className="text-xl text-slate-200">
                                 <span className="text-yellow-400">YouTubers:</span> Your videos could be powerful articles.
                             </p>
                             <p className="text-xl text-slate-200">
-                                <span className="text-yellow-400">Personal Users:</span> Your stories deserve to be shared.
+                                <span className="text-yellow-400">Personal Users:</span> Your stories deserve sharing.
                             </p>
                         </div>
                     </div>

@@ -95,7 +95,7 @@ export function Blogger() {
                 {filteredPosts.length ? filteredPosts.map(post => (
                     <div key={post.id} className="flex justify-between items-center bg-white p-4 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
                         <h2 className="text-xl font-semibold text-gray-800">
-                            {post.title.length > 60
+                            {post && post.title && post.title.length > 60
                                 ? `${post.title.substring(0, 60)}...`  // Truncate after 30 characters
                                 : post.title}
                         </h2>

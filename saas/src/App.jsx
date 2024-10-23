@@ -2,7 +2,7 @@ import './App.css';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 import { useAuth } from './userContext/AuthContext';
-
+import { useState } from 'react';
 
 import Layout from './componets/Layout';
 import Login from './componets/Login';
@@ -26,6 +26,9 @@ const Dashboard = lazy(() => import('./componets/Dashboard'));
 
 function App() {
   const { isAuthenticated, isGoogle, isAvialbleCreatePost, isVerified } = useAuth();
+  const [showNotification, setShowNotification] = useState(false);
+
+
 
   return (
     <Routes>
@@ -72,7 +75,8 @@ function App() {
                     <AudioPage />
                   ) : (
                     <>
-                      {NotifyFalse("You need to upgrade/buy plan to create posts!")}
+                      NotifyFalse("You need to upgrade/buy plan to create posts!")
+
                       <Navigate to="/pricing" />
                     </>
                   )

@@ -30,7 +30,7 @@ export function Medium() {
 
 
     const filteredPosts = posts.filter((post) =>
-        post.title.toLowerCase().includes(searchQuery.toLowerCase())
+        post && post.title && post.title.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
     const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
@@ -130,7 +130,7 @@ export function Medium() {
                             >
                                 <h2 className="text-xl font-semibold text-gray-800">
 
-                                    {post.title.length > 30
+                                    {post && post.title && post.title.length > 30
                                         ? `${post.title.substring(0, 60)}...`
                                         : post.title}
                                 </h2>
@@ -251,8 +251,16 @@ export function Medium() {
                 <div className="bg-white p-8 rounded-lg shadow-lg">
                     <h2 className="text-2xl font-semibold mb-4 text-center">Integrate with Medium</h2>
                     <p className="text-lg text-gray-700 mb-4">
-                        To access Medium API and publish posts, please provide your Medium integration token key.
-                        This allows us to authenticate your account and post on your behalf.
+                        To access the Medium API and publish posts, please provide your Medium integration token key. This allows us to authenticate your account and post on your behalf.
+                        <br />
+                        <a
+                            href="https://medium.com/me/settings/security"
+                            className="text-blue-500 underline"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Get your Medium integration token here
+                        </a>
                     </p>
                     <form onSubmit={handleTokenSubmit} className="space-y-4">
                         <div>

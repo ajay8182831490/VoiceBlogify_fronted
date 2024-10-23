@@ -1,5 +1,5 @@
 import { Notify, NotifyFalse } from "@/componets/NotifyToast";
-import { useContext, createContext, useEffect, useMemo, useState } from "react";
+import { useContext, createContext, useState } from "react";
 
 const LinkedinContext = createContext();
 const url = import.meta.env.VITE_API_URL

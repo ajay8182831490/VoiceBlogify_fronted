@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { z } from 'zod';
 
 
-const Url = import.meta.env.VITE_API_URL
+
 
 
 const urlSchema = z.string().url({ message: "Invalid URL" });

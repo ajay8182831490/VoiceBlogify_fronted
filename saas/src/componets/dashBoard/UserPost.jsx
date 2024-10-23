@@ -96,7 +96,7 @@ export const UserPosts = () => {
                         >
                             <div className="flex-1">
                                 <h3 className="text-xl font-semibold text-gray-800 mb-2">
-                                    {post.title.substring(0, 50) + '...'}
+                                    {post && post.title && post.title.substring(0, 50) + '...'}
                                 </h3>
                                 <p className="text-sm text-gray-500 mb-4">
                                     Created on: {new Date(post.dateOfCreation).toLocaleDateString()}

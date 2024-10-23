@@ -274,7 +274,7 @@ const PricingCard = () => {
                                             }),
                                         });
                                         const details = await response.json();
-                                        console.log(details)
+
 
                                         if (details.status === "COMPLETED") {
                                             handleSuccess(details);

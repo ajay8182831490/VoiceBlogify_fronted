@@ -22,7 +22,7 @@ const HowVoiceBlogifyHelps = () => {
         },
         {
             title: "Personalized AI Drafts",
-            description: "Our AI captures your unique voice, making sure your personality shines in every article. Authenticity is key!",
+            description: "Our AI captures your unique voice, making sure your personality shines in every article. Realness is key!",
             icon: <FaRegHandshake className="text-4xl text-purple-500" />,
         },
     ];
@@ -32,7 +32,7 @@ const HowVoiceBlogifyHelps = () => {
             <div className="max-w-4xl mx-auto px-4"> {/* Centering with margins */}
                 <h2 className="text-3xl font-bold text-center mb-4 text-gray-100">Why Use VoiceBlogify?</h2>
                 <p className="text-md text-center text-slate-300 mb-8">
-                    VoiceBlogify revolutionizes the way you create content. With our intuitive voice-to-text technology, you can easily transform your ideas into blog posts without the hassle of typing. Whether you're a busy professional or a passionate blogger, our platform helps you overcome writer's block and boosts your productivity.
+                    VoiceBlogify changes how you make content. With our intuitive voice-to-text technology, you can easily transform your ideas into blog posts without the hassle of typing. Whether you're a busy professional or a passionate blogger, our platform helps you overcome writer's block and boosts your productivity.
                 </p>
             </div>
             <div className="flex flex-col items-center md:flex-row md:justify-center ">

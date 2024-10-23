@@ -13,7 +13,7 @@ const ParentComponent = () => {
     };
 
     return (
-        <div className="p-6 bg-slate-900  ">
+        <div className="p-6 bg-gray-800  ">
 
             <AudioDropzone onFileUploaded={handleFileUploaded} />
 

@@ -28,6 +28,7 @@ const DashboardRoutes = () => {
                             path="user-posts"
                             element={<UserPosts />}
                         />
+
                         <Route
                             path="user-profile"
                             element={
