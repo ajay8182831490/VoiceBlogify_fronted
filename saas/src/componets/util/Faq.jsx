@@ -8,7 +8,7 @@ const FAQs = [
     },
     {
         question: "What audio and video formats are supported?",
-        answer: "We support various formats: Audio: .mp3, .wav, .ogg, .m4a, .aiff; Video: .mp4, .avi, .m4v, .ogv, .webm."
+        answer: "We support various formats: Audio: .mp3, .wav,.mpeg, .ogg, .m4a; Video: .mp4,  .m4v, .ogg, .webm."
     },
     {
         question: "Can I customize content for different platforms?",

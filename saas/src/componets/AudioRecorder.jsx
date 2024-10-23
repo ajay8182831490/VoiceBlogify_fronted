@@ -247,10 +247,10 @@ const AudioDropzone = ({ onFileUploaded }) => {
                                 <option value="technical">Technical Tutorial/Guide</option>
                                 <option value="personal">Personal Story/Experience</option>
                                 <option value="industry">Industry Analysis/Trends</option>
-                                <option value="how-to">How-To/Instructional</option>
+                                <option value="howTo">How-To/Instructional</option>
                                 <option value="opinion">Opinion/Editorial</option>
                                 <option value="product">Product Review</option>
-                                <option value="case-study">Case Study</option>
+                                <option value="caseStudy">Case Study</option>
                                 <option value="news">News Analysis</option>
                                 <option value="research">Research Summary</option>
                                 <option value="lifestyle">Lifestyle/Personal Development</option>
@@ -268,7 +268,7 @@ const AudioDropzone = ({ onFileUploaded }) => {
                                 <option value="casual">Casual & Friendly</option>
                                 <option value="professional">Professional but Warm</option>
                                 <option value="expert">Expert & Engaging</option>
-                                <option value="story-driven">Story-driven</option>
+                                <option value="storyDriven">Story-driven</option>
                                 <option value="analytical">Analytical but Accessible</option>
                             </select>
                         </div>

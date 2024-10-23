@@ -30,7 +30,7 @@ export function Medium() {
 
 
     const filteredPosts = posts.filter((post) =>
-        post.title.toLowerCase().includes(searchQuery.toLowerCase())
+        post && post.title && post.title.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
     const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
@@ -130,7 +130,7 @@ export function Medium() {
                             >
                                 <h2 className="text-xl font-semibold text-gray-800">
 
-                                    {post.title.length > 30
+                                    {post && post.title && post.title.length > 30
                                         ? `${post.title.substring(0, 60)}...`
                                         : post.title}
                                 </h2>

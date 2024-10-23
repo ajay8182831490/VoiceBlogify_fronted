@@ -6,11 +6,11 @@ const VisualPath = () => {
     const steps = [
         {
             title: "Capture Your Ideas",
-            description: "Effortlessly record your voice or upload videos to transform spontaneous thoughts into structured blog posts. Perfect for creators on-the-go, whether you’re walking, driving, or brainstorming.",
+            description: "Record your voice. Upload videos. Turn thoughts into blog posts. Perfect for creators on-the-go, whether you’re walking, driving, or brainstorming.",
             icon: <FaMicrophone className="text-4xl text-blue-500" />,
         },
         {
-            title: "Effortless File Upload",
+            title: "Easily File Upload",
             description: "Easily upload audio files or videos in various formats. VoiceBlogify ensures a smooth transition from raw ideas to polished content.",
             icon: <FaUpload className="text-4xl text-green-500" />,
         },
@@ -26,7 +26,7 @@ const VisualPath = () => {
         },
         {
             title: "Instant Publishing & Sharing",
-            description: "Export your articles in rich text, plain HTML, or Markdown. Share directly to LinkedIn, Medium, or Blogger with one click to amplify your reach effortlessly.",
+            description: "Export your articles in rich text, plain HTML, or Markdown. Share directly to LinkedIn, Medium, or Blogger with one click to amplify your reach easily.",
             icon: <FaShareAlt className="text-4xl text-red-500" />,
         },
     ];

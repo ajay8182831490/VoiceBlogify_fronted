@@ -44,7 +44,7 @@ export default function LandingPage() {
 
                         </motion.h3>
                         <motion.div
-                            className="flex justify-center pt-12"
+                            className="flex flex-col justify-center items-center pt-12"
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ duration: 1, delay: 0.6 }}
@@ -53,9 +53,10 @@ export default function LandingPage() {
                                 to="/main"
                                 className="bg-indigo-600 hover:bg-indigo-700 transition-all px-10 py-4 rounded-full text-white text-lg font-semibold inline-flex items-center gap-2"
                             >
-                                Try Voiceblogify Now
+                                Transform Your Voice Now
                                 <MessageSquare className="w-5 h-5" />
                             </Link>
+                            <p className="text-sm text-gray-500 mt-2">No credit card required</p>
                         </motion.div>
 
 
@@ -285,15 +286,12 @@ export default function LandingPage() {
 
                 </motion.section >
 
-
-
-                <FAQComponent />
                 <motion.section
                     className=" py-16 px-6 "
                     style={{ backgroundColor: "#020012" }}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    transition={{ duration: 1, delay: 3.5 }}
+                    transition={{ duration: 1, delay: 1.5 }}
                 >
                     <div className="container mx-auto text-center">
                         <h3 className="text-3xl font-bold text-white mb-6">Ready to Transform Your Content?</h3>
@@ -310,7 +308,11 @@ export default function LandingPage() {
                     </div>
                 </motion.section>
 
-                <FeedbackForm />
+                <FAQComponent />
+
+
+
+                {/* <FeedbackForm /> */}
 
 
 
