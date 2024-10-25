@@ -7,32 +7,33 @@ const HowVoiceBlogifyHelps = () => {
     const benefits = [
         {
             title: "Save Time",
-            description: "Transform your voice ideas into well-organized text quickly. Focus on your message without the hassle of typing.",
+            description: "Quickly convert your voice ideas into organized text. Focus on your message, not typing.",
             icon: <FaClock className="text-4xl text-blue-500" />,
         },
         {
-            title: "Create Anywhere, Anytime",
-            description: "Capture inspiration on the go! Whether you’re commuting or traveling, your ideas can flow effortlessly.",
+            title: "Create Anywhere",
+            description: "Capture inspiration on the go! Whether commuting or traveling, your ideas flow effortlessly.",
             icon: <FaCommentDots className="text-4xl text-green-500" />,
         },
         {
             title: "Instant Publishing",
-            description: "Share your posts directly to major platforms like LinkedIn, Medium, and Blogger with a single click. Reach your audience instantly!",
+            description: "Share posts directly to LinkedIn, Medium, and Blogger with one click. Reach your audience instantly!",
             icon: <FaClipboardCheck className="text-4xl text-yellow-500" />,
         },
         {
             title: "Personalized AI Drafts",
-            description: "Our AI captures your unique voice, making sure your personality shines in every article. Realness is key!",
+            description: "Our AI captures your unique voice, ensuring your personality shines in every article.",
             icon: <FaRegHandshake className="text-4xl text-purple-500" />,
         },
     ];
+
 
     return (
         <div className="py-10" >
             <div className="max-w-4xl mx-auto px-4"> {/* Centering with margins */}
                 <h2 className="text-3xl font-bold text-center mb-4 text-gray-100">Why Use VoiceBlogify?</h2>
                 <p className="text-md text-center text-slate-300 mb-8">
-                    VoiceBlogify changes how you make content. With our intuitive voice-to-text technology, you can easily transform your ideas into blog posts without the hassle of typing. Whether you're a busy professional or a passionate blogger, our platform helps you overcome writer's block and boosts your productivity.
+                    VoiceBlogify revolutionizes content creation. Our voice-to-text technology transforms your ideas into blog posts effortlessly, helping busy professionals and passionate bloggers overcome writer's block and enhance productivity.
                 </p>
             </div>
             <div className="flex flex-col items-center md:flex-row md:justify-center ">

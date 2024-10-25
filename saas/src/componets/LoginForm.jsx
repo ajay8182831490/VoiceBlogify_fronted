@@ -18,13 +18,13 @@ const loginSchema = z.object({
 
 export default function LoginForm() {
     return (
-        <div className="flex w-full pb-6 flex-col md:w-1/2">
+        <div className="flex w-full pb-6 flex-col md:w-1/2 bg-slate-900" >
 
             <div className="my-auto mx-auto flex flex-col justify-center px-6 pt-6 md:justify-start lg:w-[28rem]">
-                <p className="text-center text-3xl font-bold md:text-left md:leading-tight">Login to your account</p>
-                <p className="mt-2 text-center font-medium md:text-left">
+                <p className="text-center text-3xl font-bold md:text-left md:leading-tight text-white">Login to your account</p>
+                <p className="mt-2 text-center font-medium md:text-left text-slate-400">
                     Don't have an account?{' '}
-                    <Link to="/signup" className="whitespace-nowrap font-semibold text-blue-700">
+                    <Link to="/signup" className="whitespace-nowrap font-semibold text-blue-500">
                         Sign up here
                     </Link>
                 </p>
@@ -65,19 +65,20 @@ export function GoogleButton() {
                         <path fill="#cf2d48" d="m352.167 159.833 10.606 10.606 84.853-84.852-10.606-10.606C388.668 26.629 324.381 0 256 0l-60 60 60 60c36.326 0 70.479 14.146 96.167 39.833z" />
                         <path fill="#eb4132" d="M256 120V0C187.62 0 123.333 26.629 74.98 74.98a259.849 259.849 0 0 0-22.158 25.235l86.308 86.308C162.883 146.72 206.376 120 256 120z" />
                     </svg>
-                    Get started with Google
+                    <span className="ml-2 text-white">Get started with Google</span> {/* Add margin-left for spacing */}
                 </>
             )}
         </button>
     );
 }
 
+
 export function Divider() {
     return (
-        <div className="relative mt-5 flex h-px place-items-center bg-gray-200">
-            <div className="absolute left-1/2 h-6 -translate-x-1/2 bg-white px-4 text-center text-sm text-gray-500">
-                Or use email instead
-            </div>
+        <div className="relative mt-8 flex items-center">
+            <div className="flex-grow h-px bg-gray-300" />
+            <div className="flex-shrink mx-4 text-slate-400 text-sm">Or use email instead</div>
+            <div className="flex-grow h-px bg-gray-300" />
         </div>
     );
 }

@@ -4,8 +4,8 @@ import { motion } from 'framer-motion';
 export default function FeaturePanel() {
     return (
         <motion.div
-            className="relative hidden h-screen select-none flex-col justify-center  text-center md:flex md:w-1/2"
-            style={{ backgroundColor: "#020012" }}
+            className="relative hidden h-screen select-none flex-col justify-center  text-center md:flex md:w-1/2 bg-slate-900"
+
 
             initial={{ opacity: 0, x: -100 }}
             animate={{ opacity: 1, x: 0 }}
@@ -20,7 +20,7 @@ export default function FeaturePanel() {
 
 
                 <motion.p
-                    className="my-6 text-4xl font-semibold leading-10 text-white"
+                    className="my-6 text-3xl font-semibold leading-10 text-white"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: .1 }}
@@ -36,7 +36,7 @@ export default function FeaturePanel() {
                 </motion.p>
 
                 <motion.p
-                    className="mb-4 text-2xl text-white" // Reduced text content and increased font size
+                    className="mb-4 text-xl text-slate-300" // Reduced text content and increased font size
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: .1 }}

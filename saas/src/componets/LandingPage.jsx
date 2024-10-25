@@ -69,6 +69,46 @@ export default function LandingPage() {
                 <PASSection />
 
                 <MainComponent />
+                {/* <motion.section
+                    className="container mx-auto px-6 py-16"
+
+
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 1, delay: 2.5 }}
+                >
+                    <div className="text-center mb-12">
+                        <h3 className="text-3xl font-bold text-white mb-4">Edit and Export with Ease</h3>
+                        <p className="text-lg text-gray-300 max-w-3xl mx-auto">
+                            Enhance your articles with our rich text editor, available even on your phone. Customize and refine your content to perfection before publishing.
+                        </p>
+                    </div>
+
+                    <div className="grid md:grid-cols-2 gap-10">
+                        <motion.div
+                            className="p-8  rounded-lg shadow-lg hover:shadow-2xl transition relative overflow-hidden text-center bg-slate-900"
+
+                            whileHover={{ scale: 1.05 }}
+                        >
+                            <FaEdit className="text-5xl text-blue-600 mb-4 mx-auto" />
+                            <h4 className="text-xl font-semibold text-white mb-2">Edit with Ease</h4>
+                            <p className="text-gray-300">
+                                Our rich text editor allows you to make modifications to your articles seamlessly. Whether on desktop or mobile, adjust your content as needed.
+                            </p>
+                        </motion.div>
+                        <motion.div
+                            className="p-8 bg-slate-900 rounded-lg shadow-lg hover:shadow-2xl transition relative overflow-hidden text-center"
+                            whileHover={{ scale: 1.05 }}
+
+                        >
+                            <FaCode className="text-5xl text-blue-600 mb-4 mx-auto" />
+                            <h4 className="text-xl font-semibold text-white mb-2">Export Anywhere</h4>
+                            <p className="text-gray-300">
+                                Export your articles in Rich Text, plain HTML, or Markdown format. Perfect for publishing directly on any platform or website.
+                            </p>
+                        </motion.div>
+                    </div>
+                </motion.section> */}
 
 
 
@@ -197,94 +237,55 @@ export default function LandingPage() {
                         </div>
                     </div>
                 </motion.section> */}
-                <motion.section
-                    className="container mx-auto px-6 py-16"
-
-
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 1, delay: 2.5 }}
-                >
-                    <div className="text-center mb-12">
-                        <h3 className="text-3xl font-bold text-white mb-4">Edit and Export with Ease</h3>
-                        <p className="text-lg text-gray-300 max-w-3xl mx-auto">
-                            Enhance your articles with our rich text editor, available even on your phone. Customize and refine your content to perfection before publishing.
-                        </p>
-                    </div>
-
-                    <div className="grid md:grid-cols-2 gap-10">
-                        <motion.div
-                            className="p-8  rounded-lg shadow-lg hover:shadow-2xl transition relative overflow-hidden text-center bg-slate-900"
-
-                            whileHover={{ scale: 1.05 }}
-                        >
-                            <FaEdit className="text-5xl text-blue-600 mb-4 mx-auto" />
-                            <h4 className="text-xl font-semibold text-white mb-2">Edit with Ease</h4>
-                            <p className="text-gray-300">
-                                Our rich text editor allows you to make modifications to your articles seamlessly. Whether on desktop or mobile, adjust your content as needed.
-                            </p>
-                        </motion.div>
-                        <motion.div
-                            className="p-8 bg-slate-900 rounded-lg shadow-lg hover:shadow-2xl transition relative overflow-hidden text-center"
-                            whileHover={{ scale: 1.05 }}
-
-                        >
-                            <FaCode className="text-5xl text-blue-600 mb-4 mx-auto" />
-                            <h4 className="text-xl font-semibold text-white mb-2">Export Anywhere</h4>
-                            <p className="text-gray-300">
-                                Export your articles in Rich Text, plain HTML, or Markdown format. Perfect for publishing directly on any platform or website.
-                            </p>
-                        </motion.div>
-                    </div>
-                </motion.section>
 
 
 
-                <motion.section
+
+                {/* <motion.section
                     className=" py-16 px-6"
                     style={{ backgroundColor: "#020012" }}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    transition={{ duration: 1, delay: 2 }}
+                    transition={{ duration: 1, delay: 1 }}
                 >
                     <div className="container mx-auto text-center">
                         <h3 className="text-3xl font-bold text-white mb-6">Why Choose VoiceBlogify?</h3>
                         <p className="text-md text-gray-300 max-w-2xl mx-auto mb-8">
-                            VoiceBlogify effortlessly transforms your recordings into polished blog posts that boost your online visibility. Our smart tools save you time while ensuring the content feels authentic and engaging, just like your own voice.
+                            Transform your recordings into engaging blog posts that enhance your online presence. Our smart tools save time while keeping your content authentic.
                         </p>
                         <ul className="text-left mx-auto max-w-xl">
                             <li className="mb-4 flex items-start">
                                 <svg className="w-6 h-6 text-green-500 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
                                 </svg>
-                                <span className="text-white">Effortlessly convert your audio into polished, professional blog posts that rank in search engines.</span>
+                                <span className="text-white">Convert audio into polished blog posts that rank in search engines.</span>
                             </li>
                             <li className="mb-4 flex items-start">
                                 <svg className="w-6 h-6 text-green-500 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
                                 </svg>
-                                <span className="text-white">Save hours using simple voice commands</span>
+                                <span className="text-white">Use simple voice commands to save time.</span>
                             </li>
                             <li className="mb-4 flex items-start">
                                 <svg className="w-6 h-6 text-green-500 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
                                 </svg>
-                                <span className="text-white">Achieve human-like quality in your content, ensuring natural flow and coherence.</span>
+                                <span className="text-white">Achieve human-like quality for natural and coherent content.</span>
                             </li>
                             <li className="mb-8 flex items-start">
                                 <svg className="w-6 h-6 text-green-500 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
                                 </svg>
-                                <span className="text-white">Streamline your content creation process with versatile input options tailored to your needs.</span>
+                                <span className="text-white">Streamline content creation with versatile input options.</span>
                             </li>
                         </ul>
-
                     </div>
 
 
 
 
-                </motion.section >
+
+                </motion.section > */}
 
                 <motion.section
                     className=" py-16 px-6 "

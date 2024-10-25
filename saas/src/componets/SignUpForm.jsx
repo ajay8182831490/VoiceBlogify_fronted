@@ -19,15 +19,15 @@ const loginSchema = z.object({
 
 export default function SignUpForm() {
     return (
-        <div className="flex w-full flex-col md:w-1/2 pb-6">
+        <div className="flex w-full flex-col md:w-1/2 pb-6 bg-slate-900">
 
             <div className="my-auto mx-auto flex flex-col justify-center px-6 pt-6 md:justify-start lg:w-[28rem]">
-                <p className="text-center text-3xl font-bold md:text-left md:leading-tight">
+                <p className="text-center text-3xl font-bold md:text-left md:leading-tight text-white">
                     Create your account
                 </p>
-                <p className="mt-4 text-center font-medium md:text-left">
+                <p className="mt-4 text-center font-medium md:text-left text-slate-400">
                     Already using VoiceBlogify?{' '}
-                    <Link to="/login" className="whitespace-nowrap font-semibold text-blue-700">
+                    <Link to="/login" className="whitespace-nowrap font-semibold text-blue-500">
                         Login here
                     </Link>
                 </p>
@@ -68,22 +68,24 @@ export function GoogleButton() {
                         <path fill="#cf2d48" d="m352.167 159.833 10.606 10.606 84.853-84.852-10.606-10.606C388.668 26.629 324.381 0 256 0l-60 60 60 60c36.326 0 70.479 14.146 96.167 39.833z" />
                         <path fill="#eb4132" d="M256 120V0C187.62 0 123.333 26.629 74.98 74.98a259.849 259.849 0 0 0-22.158 25.235l86.308 86.308C162.883 146.72 206.376 120 256 120z" />
                     </svg>
-                    Get started with Google
+                    <span className="ml-2 text-white">Get started with Google</span> {/* Add margin-left for spacing */}
                 </>
             )}
         </button>
     );
 }
 
+
 export function Divider() {
     return (
-        <div className="relative mt-4 flex h-px place-items-center bg-gray-200">
-            <div className="absolute left-1/2 h-6 -translate-x-1/2 bg-white px-4 text-center text-sm text-gray-500">
-                Or use email instead
-            </div>
+        <div className="relative mt-8 flex items-center">
+            <div className="flex-grow h-px bg-gray-300" />
+            <div className="flex-shrink mx-4 text-slate-400 text-sm">Or use email instead</div>
+            <div className="flex-grow h-px bg-gray-300" />
         </div>
     );
 }
+
 
 function LoginForm1() {
     const navigate = useNavigate();
@@ -148,6 +150,7 @@ function LoginForm1() {
                 id="signup-email"
                 placeholder="Email"
                 {...register('email')}
+
                 error={errors.email?.message}
             />
             <InputField
@@ -155,6 +158,7 @@ function LoginForm1() {
                 id="signup-name"
                 placeholder="Name"
                 {...register('name')}
+
                 error={errors.name?.message}
             />
             <InputField
@@ -162,6 +166,7 @@ function LoginForm1() {
                 id="signup-password"
                 placeholder="Password (minimum 6 characters)"
                 {...register('password')}
+
                 error={errors.password?.message}
             />
             <SubmitButton name="Sign Up" />
@@ -171,11 +176,11 @@ function LoginForm1() {
 export const InputField = React.forwardRef(({ type, id, placeholder, error, ...rest }, ref) => {
     return (
         <div className="flex flex-col pt-4">
-            <div className="relative flex overflow-hidden rounded-md border-2 transition focus-within:border-blue-600">
+            <div className="relative flex overflow-hidden rounded-md  transition focus-within:border-blue-600">
                 <input
                     type={type}
                     id={id}
-                    className={`w-full flex-shrink appearance-none border-gray-300 bg-white py-2 px-4 text-base text-gray-700 placeholder-gray-400 focus:outline-none ${error ? 'border-red-500' : ''}`}
+                    className={`w-full mt-1 py-3 px-4 bg-transparent border  rounded-lg text-slate-300 focus:outline-none focus:border-indigo-500 focus:bg-slate-800 focus:outline-none ${error ? 'border-red-500' : ''}`}
                     placeholder={placeholder}
                     ref={ref}
                     {...rest}

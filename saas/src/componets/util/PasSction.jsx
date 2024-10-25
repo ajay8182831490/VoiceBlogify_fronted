@@ -113,6 +113,15 @@ const PASSection = () => {
                 </div>
 
                 {/* Common Pain Points */}
+
+                <div className="text-center mb-12">
+                    <h2 className="text-3xl md:text-4xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-blue-400">
+                        <span className='text-white'>Why Content Creation Is Hard</span>
+                    </h2>
+                    <p className="text-xl text-slate-300">
+                        Common challenges we help you overcome
+                    </p>
+                </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
                     {commonPains.map((pain, index) => (
                         <div key={index} className="bg-slate-900 p-8 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300">
@@ -128,6 +137,14 @@ const PASSection = () => {
                 </div>
 
                 {/* Audience Specific Problems */}
+                <div className="text-center mb-12">
+                    <h2 className="text-3xl md:text-4xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-blue-400">
+                        <span className='text-white'>Created For Content Creators Like You</span>
+                    </h2>
+                    <p className="text-xl text-slate-300">
+                        Tailored solutions for every type of creator
+                    </p>
+                </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {audienceCategories.map((category, index) => (
                         <div key={index} className="bg-slate-900 p-8 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300">
@@ -185,7 +202,7 @@ const PASSection = () => {
                     <h2 className="text-4xl md:text-5xl font-bold text-indigo-300 mb-8">
                         Your Voice, Your Story, Your Way
                     </h2>
-                    <div className="max-w-4xl mx-auto mb-10">
+                    {/*  <div className="max-w-4xl mx-auto mb-10">
                         <p className="text-xl md:text-2xl text-slate-400 mb-6">
                             Voiceblogify transforms any voice or video content into beautifully written posts - perfect for your needs.
                         </p>
@@ -200,7 +217,7 @@ const PASSection = () => {
                                 <p className="text-indigo-800 text-lg">Share Everywhere</p>
                             </div>
                         </div>
-                    </div>
+                    </div>*/ }
 
                     <Link2
                         to="/main"
