@@ -113,6 +113,15 @@ const PASSection = () => {
                 </div>
 
                 {/* Common Pain Points */}
+
+                <div className="text-center mb-12">
+                    <h2 className="text-3xl md:text-4xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-blue-400">
+                        <span className='text-white'>Why Content Creation Is Hard</span>
+                    </h2>
+                    <p className="text-xl text-slate-300">
+                        Common challenges we help you overcome
+                    </p>
+                </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
                     {commonPains.map((pain, index) => (
                         <div key={index} className="bg-slate-900 p-8 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300">
@@ -128,6 +137,14 @@ const PASSection = () => {
                 </div>
 
                 {/* Audience Specific Problems */}
+                <div className="text-center mb-12">
+                    <h2 className="text-3xl md:text-4xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-blue-400">
+                        <span className='text-white'>Created For Content Creators Like You</span>
+                    </h2>
+                    <p className="text-xl text-slate-300">
+                        Tailored solutions for every type of creator
+                    </p>
+                </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {audienceCategories.map((category, index) => (
                         <div key={index} className="bg-slate-900 p-8 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300">
