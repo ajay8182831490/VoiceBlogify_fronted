@@ -9,8 +9,9 @@ import { Link } from 'react-router-dom';
 const MainComponent = () => {
     return (
         <>
+            <VisualPath />
             <HowVoiceBlogifyHelps />
-            <motion.section
+            {/*<motion.section
                 className="container mx-auto px-6 py-10"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -75,8 +76,8 @@ const MainComponent = () => {
                         <MessageSquare className="w-5 h-5" />
                     </Link>
                 </motion.div>
-            </motion.section>
-            <VisualPath />
+            </motion.section>*/}
+
         </>
     );
 };

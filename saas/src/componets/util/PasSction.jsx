@@ -185,7 +185,7 @@ const PASSection = () => {
                     <h2 className="text-4xl md:text-5xl font-bold text-indigo-300 mb-8">
                         Your Voice, Your Story, Your Way
                     </h2>
-                    <div className="max-w-4xl mx-auto mb-10">
+                    {/*  <div className="max-w-4xl mx-auto mb-10">
                         <p className="text-xl md:text-2xl text-slate-400 mb-6">
                             Voiceblogify transforms any voice or video content into beautifully written posts - perfect for your needs.
                         </p>
@@ -200,7 +200,7 @@ const PASSection = () => {
                                 <p className="text-indigo-800 text-lg">Share Everywhere</p>
                             </div>
                         </div>
-                    </div>
+                    </div>*/ }
 
                     <Link2
                         to="/main"
